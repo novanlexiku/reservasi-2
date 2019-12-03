@@ -21,7 +21,13 @@
                 <div class="subtitle-1 text-uppercase pl-2 mb-4">
                   Comfortable and cozy place to stay
                 </div>
-              
+              <v-btn
+                color="primary"
+                depressed
+                round
+              >
+                Berlangganan
+              </v-btn>
       </v-col>
     </v-row></v-parallax>
 </v-card>

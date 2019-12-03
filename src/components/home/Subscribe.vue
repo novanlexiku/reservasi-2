@@ -32,7 +32,14 @@
               wrap
               pa-2
             >
-              
+              <v-btn
+                :block="$vuetify.breakpoint.xsOnly"
+                class="ma-0"
+                color="secondary"
+                style="height: 48px"
+              >
+                Subscribe
+              </v-btn>
             </v-layout>
           </v-flex>
           <v-flex
