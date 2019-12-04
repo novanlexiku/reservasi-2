@@ -47,9 +47,10 @@
                   </v-col>
                   <v-col cols="6" md="2">
                       <div class="caption grey--text">Gambar</div>
-                      <div class="justify-end" height="200" width="200"><v-img :src="require(`@/assets/articles/${room.image}`)"></v-img></div>
+                      <div class="justify-end"><v-img aspect-ratio="1" :src="require(`@/assets/articles/${room.image}`)"></v-img></div>
                   </v-col>
                   <v-col cols="6" md="2">
+                        <div class="caption grey--text">Status</div>
                         <div justify="space-between">
                             <v-chip small :color="`${room.status}`" :class="`v-chip--active white--text caption my-2`">{{room.status}}</v-chip>
                         </div>
