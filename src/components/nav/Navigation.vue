@@ -5,8 +5,7 @@
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
         <v-toolbar-title class="text-uppercase grey--text">
-            <span class="font-weight-light">Griya </span>
-            <span>Pesona Indah</span>
+           <router-link to="/" style="cursor: pointer"><span>GRIYA Pesona Indah</span></router-link>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
@@ -75,6 +74,7 @@ export default {
                 { text: 'Pengguna', icon: 'mdi-account-box', route: '/pengguna' },
                 { text: 'Room', icon: 'mdi-archive', route: '/room' },
                 { text: 'Team', icon: 'mdi-account-group', route: '/team' },
+                { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
             ],
             drawer: false
     }),

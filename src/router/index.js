@@ -6,6 +6,8 @@ import History from '../components/menu/History'
 import Pengguna from '../components/menu/Pengguna'
 import Room from '../components/menu/Room'
 import Team from '../components/menu/Team'
+import Profile from '../components/user/Profile'
+
 
 
 Vue.use(VueRouter)
@@ -35,6 +37,10 @@ const routes = [
     path: '/team',
     name: 'Team',
     component: Team
+  },{
+    path: '/user/profile',
+    name: 'Profile',
+    component: Profile
   },
   
 ]
