@@ -3,7 +3,7 @@
     id="about"
   >
   <h2
-    class="subtitle-1 text-uppercase font-weight-medium mb-3"
+    class="subtitle-1 text-uppercase font-weight-bold mb-3"
     v-bind="$attrs"
     v-on="$listeners"
   >

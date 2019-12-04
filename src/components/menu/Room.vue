@@ -46,56 +46,61 @@
                       <div>{{room.spek}}</div>
                   </v-col>
                   <v-col cols="6" md="2">
-                        <div class="justify-end">
+                      <div class="caption grey--text">Gambar</div>
+                      <div class="justify-end" height="200" width="200"><v-img :src="require(`@/assets/articles/${room.image}`)"></v-img></div>
+                  </v-col>
+                  <v-col cols="6" md="2">
+                        <div justify="space-between">
                             <v-chip small :color="`${room.status}`" :class="`v-chip--active white--text caption my-2`">{{room.status}}</v-chip>
                         </div>
                   </v-col>
               </v-row>
             <v-divider></v-divider>
           </v-card>
+          <!-- Pagination start here -->
           <v-row align-center>
-      <v-col cols="3">
-        <v-btn
-          v-if="page !== 1"
-          class="ml-0"
-          title="Previous page"
-          small
-          color="primary"
-          v-bind="$attrs"
-          v-on="$listeners"
-          square
-          @click="page--"
-        >
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
-      </v-col>
+            <v-col cols="3">
+              <v-btn
+                v-if="page !== 1"
+                class="ml-0"
+                title="Previous page"
+                small
+                color="primary"
+                v-bind="$attrs"
+                v-on="$listeners"
+                square
+                @click="page--"
+              >
+                <v-icon>mdi-chevron-left</v-icon>
+              </v-btn>
+            </v-col>
 
-      <v-col
-        cols="6"
-        class="text-center subtitle-1"
-      >
-        PAGE {{ page }} OF {{ pages }}
-      </v-col>
+            <v-col
+              cols="6"
+              class="text-center subtitle-1"
+            >
+              PAGE {{ page }} OF {{ pages }}
+            </v-col>
 
-      <v-col
-        cols="3"
-        class="text-right"
-      >
-        <v-btn
-          v-if="pages > 1 && page < pages"
-          class="mr-0"
-          title="Next page"
-          small
-          color="primary"
-          v-bind="$attrs"
-          v-on="$listeners"
-          square
-          @click="page++"
-        >
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
+            <v-col
+              cols="3"
+              class="text-right"
+            >
+              <v-btn
+                v-if="pages > 1 && page < pages"
+                class="mr-0"
+                title="Next page"
+                small
+                color="primary"
+                v-bind="$attrs"
+                v-on="$listeners"
+                square
+                @click="page++"
+              >
+                <v-icon>mdi-chevron-right</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
       </v-container>
   </div>
 </template>
@@ -108,7 +113,13 @@ import Popup from '../menu/Add/AddRoom'
 export default {
   components: {Popup},
     data: () => ({
-      rooms:[],
+      rooms:[{title:'tes1', harga:'Rp.300.000', spek:'tes', image:'lightcave.jpg', status:'available'},
+             {title:'tes2', harga:'Rp.300.000', spek:'tes', image:'blurcamera.jpg', status:'booked'},
+             {title:'tes3', harga:'Rp.300.000', spek:'tes', image:'christmas.jpg', status:'available'},
+             {title:'tes4', harga:'Rp.300.000', spek:'tes', image:'firepots.jpg', status:'booked'},
+             {title:'tes5', harga:'Rp.300.000', spek:'tes', image:'garden.jpg', status:'maintenance'},
+             {title:'tes6', harga:'Rp.300.000', spek:'tes', image:'jellyfish.jpg', status:'maintenance'},
+             {title:'tes7', harga:'Rp.300.000', spek:'tes', image:'july4.jpg', status:'available'},],
       page: 1,
       snackbar: false,
     }),
@@ -125,11 +136,11 @@ export default {
     // Pagination settings
     computed: {
       pages () {
-        return Math.ceil(this.rooms.length / 10)
+        return Math.ceil(this.rooms.length / 5)
       },
       paginatedArticles () {
-        const start = (this.page - 1) * 10
-        const stop = this.page * 10
+        const start = (this.page - 1) * 5
+        const stop = this.page * 5
 
         return this.rooms.slice(start, stop)
       },

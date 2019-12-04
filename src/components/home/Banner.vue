@@ -15,8 +15,8 @@
     >
       <v-col class="text-right" cols="12">
         
-                <h1 class="display-3 font-weight-light">
-                  Griya Pesona Indah
+                <h1 class="display-2 font-weight-thin">
+                  GRIYA PESONA INDAH
                 </h1>
                 <div class="subtitle-1 text-uppercase pl-2 mb-4">
                   Comfortable and cozy place to stay
@@ -24,7 +24,7 @@
               <v-btn
                 color="primary"
                 depressed
-                round
+                rounded
               >
                 Berlangganan
               </v-btn>

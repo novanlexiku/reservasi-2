@@ -20,7 +20,7 @@
             xs12
             md5
           >
-            <h2 class="subtitle-1 text-uppercase font-weight-medium mb-3">
+            <h2 class="subtitle-1 text-uppercase font-weight-bold mb-3">
               Berlangganan
             </h2>
             <p>
@@ -47,7 +47,7 @@
             md6
             offset-md1
           >
-            <h2 class="subtitle-1 text-uppercase font-weight-medium mb-3">Hubungi Kami</h2>
+            <h2 class="subtitle-1 text-uppercase font-weight-bold mb-3">Hubungi Kami</h2>
             <v-list class="transparent">
               <v-list-item>
                 <v-list-item-avatar
