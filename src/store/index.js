@@ -26,10 +26,24 @@ export default new Vuex.Store({
   },
   mutations: {
     setDrawer: (state, payload) => (state.drawer = payload),
-    toggleDrawer: state => (state.drawer = !state.drawer)
+    toggleDrawer: state => (state.drawer = !state.drawer),
+    createRoom (state, payload){
+      state.loadedRooms.push(payload)
+    }
   },
   actions: {
-
+    createRoom ({commit}, payload) {
+      const room = {
+        title: payload.title,
+        harga: payload.harga,
+        image: payload.image,
+        status: payload.status,
+        deskripsi: payload.deskripsi,
+        prominent: payload.prominent
+      }
+      // menghubungkan ke firebase dan simpan di store
+      commit('createRoom', room)
+    }
   },
   modules: {
   }

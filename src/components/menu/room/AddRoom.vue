@@ -1,5 +1,5 @@
 <template>
-  <v-dialog max-width="600px" v-model="dialog">
+  <v-dialog max-width="800px" v-model="dialog">
         <template v-slot:activator="{on}">
             <v-btn small text v-on="on" color="grey">
                 <span class="subtitle-2">Tambah Ruangan</span>
@@ -11,14 +11,15 @@
                 <h2>Tambah Ruangan</h2>
             </v-card-title>
             <v-card-text>
-                <v-form class="px-3" ref="form">
+                <v-form class="px-3" ref="form" @submit.prevent="submit">
                     <v-text-field label="Nama Ruangan" v-model="title" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
                     <v-text-field label="Harga/Hari" v-model="harga" prefix="Rp." prepend-icon="mdi-wallet" :rules="inputRules"></v-text-field>
                     <v-text-field label="Image" v-model="image" prepend-icon="mdi-camera" :rules="inputRules"></v-text-field>
+                    <div class="ml-8" height="200" width="300">
+                    <img :src="image" >
+                    </div>
                     <v-textarea label="Spesifikasi" v-model="deskripsi" prepend-icon="mdi-border-color" :rules="inputRules"></v-textarea>
-                    <v-btn text class="success mx-0 mt-3" @click="submit" :loading="loading">Tambah Ruangan</v-btn>
-
-
+                    <v-btn text class="success mx-0 mt-3" type="submit" :loading="loading">Tambah Ruangan</v-btn>
                 </v-form>
             </v-card-text>
         </v-card>
@@ -44,23 +45,27 @@ export default {
     loading: false,
     dialog: false,
   }),
+  computed:{
+
+  },
   methods: {
     submit(){
-      // if(this.$refs.form.validate()){
-      //     this.loading = true;
-      //     const room = {
-      //         title: this.title,
-      //         harga: this.harga,
-      //         status: this.status,
-      //         deskripsi: this.deskripsi,
-      //         image: this.image,
-      //         prominent: this.prominent
-      //     }
-      //              this.loading = false;
-      //              this.dialog = false;
+      if(this.$refs.form.validate()){
+          this.loading = true;
+          const room = {
+              title: this.title,
+              harga: this.harga,
+              status: this.status,
+              deskripsi: this.deskripsi,
+              image: this.image,
+              prominent: this.prominent
+          }
+      this.$store.dispatch('createRoom', room)
+      this.loading = false;
+      this.dialog = false;
       //              this.$emit('roomAdded');
-      //              this.$refs.form.reset();
-      // }
+      this.$refs.form.reset();
+      }
     },
     
   },
