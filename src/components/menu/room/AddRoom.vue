@@ -15,7 +15,7 @@
                     <v-text-field label="Nama Ruangan" v-model="title" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
                     <v-text-field label="Harga/Hari" v-model="harga" prefix="Rp." prepend-icon="mdi-wallet" :rules="inputRules"></v-text-field>
                     <v-text-field label="Image" v-model="image" prepend-icon="mdi-camera" :rules="inputRules"></v-text-field>
-                    <v-textarea label="Spesifikasi" v-model="spek" prepend-icon="mdi-border-color" :rules="inputRules"></v-textarea>
+                    <v-textarea label="Spesifikasi" v-model="deskripsi" prepend-icon="mdi-border-color" :rules="inputRules"></v-textarea>
                     <v-btn text class="success mx-0 mt-3" @click="submit" :loading="loading">Tambah Ruangan</v-btn>
 
 
@@ -32,7 +32,7 @@ export default {
     title: '',
     harga: '',
     status: 'available',
-    spek: '',
+    deskripsi: '',
     image:'',
     prominent: false,
     // Rules input + rules date
@@ -52,7 +52,7 @@ export default {
       //         title: this.title,
       //         harga: this.harga,
       //         status: this.status,
-      //         spek: this.spek,
+      //         deskripsi: this.deskripsi,
       //         image: this.image,
       //         prominent: this.prominent
       //     }

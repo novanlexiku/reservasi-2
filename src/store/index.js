@@ -9,28 +9,13 @@ export default new Vuex.Store({
 
   },
   getters: {
-    categories: state => {
-      const categories = []
-
-      for (const room of state.rooms) {
-        if (
-          !room.category ||
-          categories.find(category => category.text === room.category)
-        ) continue
-
-        const text = room.category
-
-        categories.push({
-          text,
-          to: `/category/${text}`
-        })
-      }
-
-      return categories.sort().slice(0, 4)
+    // Filter data yang akan di load
+    loadedRooms (state){
+      return state.rooms.filter(room =>{
+        return room.status === 'available'
+      })
     },
-    links: (state, getters) => {
-      return state.items.concat(getters.categories)
-    },
+    // Data di load per id
     loadedRoom (state){
       return (roomID) => {
         return state.rooms.find((room) => {

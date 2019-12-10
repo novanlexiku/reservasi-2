@@ -25,6 +25,7 @@
                 color="primary"
                 depressed
                 rounded
+                router to="/login"
               >
                 Berlangganan
               </v-btn>

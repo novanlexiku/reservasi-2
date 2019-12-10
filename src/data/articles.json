@@ -13,13 +13,13 @@
     "harga": "Rachel L",
     "deskripsi": "Leisure",
     "image": "autumnclouds.jpg",
-    "status": "available"
+    "status": "maintenance"
   },
   {
     "id":"3",
     "title": "The Adventure Begins",
     "image": "snowcup.jpg",
-    "status": "available",
+    "status": "maintenance",
     "prominent": true
   },
   {
@@ -28,7 +28,7 @@
     "harga": "John L",
     "deskripsi": "Travel",
     "image": "christmas.jpg",
-    "status": "available"
+    "status": "booked"
   },
   {
     "id":"5",
@@ -36,7 +36,7 @@
     "harga": "Rachel L",
     "deskripsi": "Political",
     "image": "july4.jpg",
-    "status": "available"
+    "status": "booked"
   },
   {
     "id":"6",

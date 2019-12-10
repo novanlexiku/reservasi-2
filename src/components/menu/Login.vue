@@ -128,7 +128,7 @@
             login(){
 
             },
-            signUp(){
+            signup(){
 
             },
             resetPassword(){

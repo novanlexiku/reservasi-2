@@ -9,8 +9,8 @@
       </v-flex>
 
       <feed-card
-        v-for="(article, i) in paginatedrooms"
-        :key="article.title"
+        v-for="(article, i) in rooms"
+        :key="article.id"
         :size="layout[i]"
         :value="article"
       />
@@ -63,24 +63,22 @@
 </template>
 
 <script>
-  import {
-    mapState
-  } from 'vuex'
-
   export default {
     name: 'Feed',
 
     components: {
-      FeedCard: () => import('@/components/home/FeedCard')
+      FeedCard: () => import('@/components/menu/FeedExplore')
     },
 
     data: () => ({
-      layout: [2, 2, 1, 2, 2, 3, 3, 3, 3, 3, 3],
+      layout: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
       page: 1
     }),
 
     computed: {
-      ...mapState(['rooms']),
+      rooms(){
+        return this.$store.getters.loadedRooms
+      },
       pages () {
         return Math.ceil(this.rooms.length / 11)
       },
