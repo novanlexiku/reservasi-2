@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as firebase from 'firebase'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     rooms: require('@/data/articles.json'),
-
+    user: null
   },
   getters: {
     // Filter data yang akan di load
@@ -22,6 +23,9 @@ export default new Vuex.Store({
           return room.id === roomID
         })
       }
+    },
+    user (state) {
+      return state.user
     }
   },
   mutations: {
@@ -29,6 +33,9 @@ export default new Vuex.Store({
     toggleDrawer: state => (state.drawer = !state.drawer),
     createRoom (state, payload){
       state.loadedRooms.push(payload)
+    },
+    setUser (state, payload){
+      state.user = payload
     }
   },
   actions: {
@@ -43,6 +50,40 @@ export default new Vuex.Store({
       }
       // menghubungkan ke firebase dan simpan di store
       commit('createRoom', room)
+    },
+    //Aksi untuk daftar ke firebase auth
+    signUserUp ({commit}, payload){
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+      .then(
+        user => {
+          const newUser = {
+            id: user.user.uid,
+            registeredRooms: []
+          }
+          commit('setUser', newUser)
+        }
+      ).catch(
+        error => {
+          console.log(error)
+        }
+      )
+    },
+    //Aksi untuk login ke firebase auth
+    signUserIn ({commit}, payload){
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+      .then(
+        user => {
+          const newUser = {
+            id: user.user.uid,
+            registeredRooms: []
+          }
+          commit('setUser', newUser)
+        }
+      ).catch(
+        error => {
+          console.log(error)
+        }
+      )
     }
   },
   modules: {
