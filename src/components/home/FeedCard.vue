@@ -8,7 +8,7 @@
               :height="value.prominent ? 450 : 350"
               color="grey lighten-1"
               dark
-              router :to="`/res/${value.id}`"
+              router :to="`/rooms/${value.id}`"
               tile
               flat
               :id="`${value.id}`"
@@ -50,7 +50,7 @@
                       color="primary"
                       label
                       small
-                      @click.stop=""
+                      @click="onLoadRoom(value.id)"
                     >
                       Pesan Sekarang
                     </v-chip>
@@ -84,6 +84,11 @@
           'md6': this.size === 2,
           'md4': this.size === 3
         }
+      }
+    },
+    methods:{
+      onLoadRoom(id){
+        this.$router.push('/rooms/' + id)
       }
     }
   }

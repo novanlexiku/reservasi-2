@@ -1,5 +1,5 @@
 <template>
-  <div class="room">
+  <div class="rooms">
       <v-container class="my-5">
         <!-- Snackbar -->
         <v-snackbar v-model="snackbar" top color="success">
@@ -109,7 +109,7 @@
 <script>
 
 
-import Popup from '../menu/Add/AddRoom'
+import Popup from '../room/AddRoom'
 
 export default {
   components: {Popup},
@@ -127,7 +127,7 @@ export default {
     // sort method
     methods:{
         sortByA(prop){
-      this.rooms.sort((a,b) => a[prop] > b[prop] ? -1:1)
+      this.rooms.sort((a,b) => a[prop] < b[prop] ? -1:1)
     },
     sortByB(prop){
       this.rooms.sort((a,b) => a[prop] < b[prop] ? -1:1)
