@@ -5,20 +5,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    articles: require('@/data/articles.json'),
+    rooms: require('@/data/articles.json'),
 
   },
   getters: {
     categories: state => {
       const categories = []
 
-      for (const article of state.articles) {
+      for (const room of state.rooms) {
         if (
-          !article.category ||
-          categories.find(category => category.text === article.category)
+          !room.category ||
+          categories.find(category => category.text === room.category)
         ) continue
 
-        const text = article.category
+        const text = room.category
 
         categories.push({
           text,
@@ -30,6 +30,13 @@ export default new Vuex.Store({
     },
     links: (state, getters) => {
       return state.items.concat(getters.categories)
+    },
+    loadedRoom (state){
+      return (roomID) => {
+        return state.rooms.find((room) => {
+          return room.id === roomID
+        })
+      }
     }
   },
   mutations: {

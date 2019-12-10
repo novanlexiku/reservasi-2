@@ -38,6 +38,7 @@ const routes = [
   },{
     path: '/rooms/:id',
     name: 'Room',
+    props: true,
     component: Room
   },{
     path: '/team',

@@ -31,7 +31,7 @@
             <Popup @roomAdded="snackbar=true" />
            </v-row>
           <!-- Grid data with chip -->
-          <v-card flat class="pa-3" v-for="room in paginatedArticles" :key="room.title">
+          <v-card flat class="pa-3" v-for="room in paginatedArticles" :key="room.id">
               <v-row wrap :class="`pa-3 room ${room.status}`">
                   <v-col cols="12" md="4">
                       <div class="caption grey--text">Nama Ruangan</div>
@@ -43,7 +43,7 @@
                   </v-col>
                   <v-col cols="6" md="2">
                       <div class="caption grey--text">Fitur</div>
-                      <div>{{room.spek}}</div>
+                      <div>{{room.deskripsi}}</div>
                   </v-col>
                   <v-col cols="6" md="2">
                       <div class="caption grey--text">Gambar</div>
@@ -110,17 +110,12 @@
 
 
 import Popup from '../room/AddRoom'
-
+import {
+    mapState
+  } from 'vuex'
 export default {
   components: {Popup},
     data: () => ({
-      rooms:[{title:'tes1', harga:'Rp.300.000', spek:'tes', image:'lightcave.jpg', status:'available'},
-             {title:'tes2', harga:'Rp.300.000', spek:'tes', image:'blurcamera.jpg', status:'booked'},
-             {title:'tes3', harga:'Rp.300.000', spek:'tes', image:'christmas.jpg', status:'available'},
-             {title:'tes4', harga:'Rp.300.000', spek:'tes', image:'firepots.jpg', status:'booked'},
-             {title:'tes5', harga:'Rp.300.000', spek:'tes', image:'garden.jpg', status:'maintenance'},
-             {title:'tes6', harga:'Rp.300.000', spek:'tes', image:'jellyfish.jpg', status:'maintenance'},
-             {title:'tes7', harga:'Rp.300.000', spek:'tes', image:'july4.jpg', status:'available'},],
       page: 1,
       snackbar: false,
     }),
@@ -136,6 +131,7 @@ export default {
     
     // Pagination settings
     computed: {
+      ...mapState(['rooms']),
       pages () {
         return Math.ceil(this.rooms.length / 5)
       },

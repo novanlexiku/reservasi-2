@@ -9,19 +9,18 @@
                                     <v-list-item>
                                     <v-list-item-avatar color="grey"></v-list-item-avatar>
                                     <v-list-item-content>
-                                        <v-list-item-title class="headline">Our Changing Planet</v-list-item-title>
-                                        <v-list-item-subtitle>by Kurt Wagner</v-list-item-subtitle>
+                                        <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
+                                        <v-list-item-subtitle>{{room.harga}}</v-list-item-subtitle>
                                     </v-list-item-content>
                                     </v-list-item>
                                             <div class="d-flex flex-no-wrap justify-space-between">
                                             <div>
                                                 <v-card-text>
-                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores, velit? Expedita perferendis qui obcaecati eum voluptatum provident, velit voluptate tenetur consectetur quibusdam culpa hic mollitia corporis unde quod dolor? Facilis.
-                                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum, omnis et voluptatibus natus quam nesciunt, amet neque similique eligendi est fuga laudantium. Architecto eius nisi maiores vel, excepturi aut. Nemo.
+                                                    {{room.deskripsi}}
                                                 </v-card-text>
                                             </div>
                                                 <v-img
-                                                src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
+                                                :src="require(`@/assets/articles/${room.image}`)"
                                                 height="194"
                                                 max-width="300"
                                                 class="mr-1"
@@ -89,6 +88,13 @@ export default {
     data: () => ({
         image:true
     }),
+    props:['id'],
+computed:{
+    // panggil data ruangan
+    room (){
+        return this.$store.getters.loadedRoom(this.id)
+    }
+},
 methods:{
     showImage(){
     this.image = false

@@ -15,7 +15,7 @@
               v-bind="$attrs"
               v-on="$listeners">
                 <v-img
-                  :src="require(`@/assets/articles/${value.hero}`)"
+                  :src="require(`@/assets/articles/${value.image}`)"
                   class="white--text align-end"
                   gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                   height="100%"
@@ -34,14 +34,14 @@
                       small
                       @click.stop=""
                     >
-                    {{ value.category }}
+                    {{ value.deskripsi }}
                     </v-chip>
                     <v-chip small :color="`${value.status}`" :class="`v-chip--active white--text caption my-2`">{{value.status}}</v-chip>
                     <h3 class="title font-weight-bold ma-2">
                       {{ value.title }}
                     </h3>
                     <div class="caption ma-2">
-                    {{ value.author }}<br>Date
+                    {{ value.harga }}<br>Date
                     </div>
                   </v-flex>
                   <v-flex align-self-end>
@@ -52,7 +52,7 @@
                       small
                       @click="onLoadRoom(value.id)"
                     >
-                      Pesan Sekarang
+                      Detail
                     </v-chip>
                   </v-flex>
                 </v-row>
