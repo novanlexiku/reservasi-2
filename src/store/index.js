@@ -7,7 +7,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     rooms: require('@/data/articles.json'),
-    user: null
+    user: null,
+    loading: false,
+    error: null
   },
   getters: {
     // Filter data yang akan di load
@@ -22,10 +24,16 @@ export default new Vuex.Store({
         return state.rooms.find((room) => {
           return room.id === roomID
         })
-      }
+      } 
     },
     user (state) {
       return state.user
+    },
+    loading (state){
+      return state.loading
+    },
+    error (state) {
+      return state.error
     }
   },
   mutations: {
@@ -36,6 +44,15 @@ export default new Vuex.Store({
     },
     setUser (state, payload){
       state.user = payload
+    },
+    setLoading (state, payload){
+      state.loading = payload
+    },
+    setError (state, payload) {
+      state.error = payload
+    },
+    clearError (state) {
+      state.error = null
     }
   },
   actions: {
@@ -53,9 +70,12 @@ export default new Vuex.Store({
     },
     //Aksi untuk daftar ke firebase auth
     signUserUp ({commit}, payload){
+      commit('setLoading', true)
+      commit('clearError')
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
       .then(
         user => {
+          commit('setLoading', false)
           const newUser = {
             id: user.user.uid,
             registeredRooms: []
@@ -64,15 +84,20 @@ export default new Vuex.Store({
         }
       ).catch(
         error => {
+          commit('setLoading', false)
+          commit('setError', error)
           console.log(error)
         }
       )
     },
     //Aksi untuk login ke firebase auth
     signUserIn ({commit}, payload){
+      commit('setLoading', true)
+      commit('clearError')
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
       .then(
         user => {
+          commit('setLoading', false)
           const newUser = {
             id: user.user.uid,
             registeredRooms: []
@@ -81,9 +106,14 @@ export default new Vuex.Store({
         }
       ).catch(
         error => {
+          commit('setLoading', false)
+          commit('setError', error)
           console.log(error)
         }
       )
+    },
+    clearError ({commit}) {
+      commit('clearError')
     }
   },
   modules: {

@@ -1,10 +1,6 @@
 <template>
     <div id="login">
-        <transition nama="fade">
-            <div v-if="performingRequest" class="loading">
-                <p>Loading...</p>
-            </div>
-        </transition>
+        
         <section>
             <div class="col1">
                 <h1>GRIYA PESONA INDAH</h1>
@@ -73,9 +69,10 @@
                         <button @click="togglePasswordReset" class="button">Kembali ke login</button>
                     </div>
                 </v-form>
+                <!-- Alert -->
                 <transition nama="fade">
-                    <div v-if="errorMsg !== ''" class="error-msg">
-                        <p>{{ errorMsg }}</p>
+                    <div v-if="error" class="error-msg">
+                    <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
                     </div>
                 </transition>
             </div>
@@ -125,6 +122,9 @@
         computed: {
             user () {
                 return this.$store.getters.user
+            },
+            error (){
+                return this.$store.getters.error
             }
         },
         watch: {
@@ -166,6 +166,10 @@
             },
             resetPassword(){
 
+            },
+            onDismissed (){
+                console.log('Dismissed Alert')
+                this.$store.dispatch('clearError')
             }
         }
     }

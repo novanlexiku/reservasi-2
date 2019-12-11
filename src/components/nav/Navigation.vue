@@ -74,16 +74,17 @@ export default {
         items () {
             let items = [
                 { text: 'Home', icon: 'mdi-home', route: '/' },
+                { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'Login', icon: 'mdi-map-marker', route: '/login' }
             ]
             if (this.userIsAuthenticated) {
                 items = [
                 { text: 'Home', icon: 'mdi-home', route: '/' },
+                { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'History', icon: 'mdi-history', route: '/history' },
                 { text: 'Pengguna', icon: 'mdi-account-box', route: '/pengguna' },
                 { text: 'Rooms', icon: 'mdi-archive', route: '/rooms' },
                 { text: 'Team', icon: 'mdi-account-group', route: '/team' },
-                { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
                 ]
             }
