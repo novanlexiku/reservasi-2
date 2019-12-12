@@ -55,6 +55,19 @@
                             <v-chip small :color="`${room.status}`" :class="`v-chip--active white--text caption my-2`">{{room.status}}</v-chip>
                         </div>
                   </v-col>
+                  <v-col cols="6" md="2">
+                        <div justify="space-between">
+                        <v-chip
+                          class="text-uppercase ma-2"
+                          color="primary"
+                          label
+                          small
+                          @click="onLoadRoom(room.id)"
+                        >
+                      Detail
+                    </v-chip>                        
+                    </div>
+                  </v-col>
               </v-row>
             <v-divider></v-divider>
           </v-card>
@@ -110,9 +123,7 @@
 
 
 import Popup from '../room/AddRoom'
-import {
-    mapState
-  } from 'vuex'
+
 export default {
   components: {Popup},
     data: () => ({
@@ -127,11 +138,16 @@ export default {
     sortByB(prop){
       this.rooms.sort((a,b) => a[prop] < b[prop] ? -1:1)
     },
+    onLoadRoom(id){
+        this.$router.push('/rooms/' + id)
+      }
     },
     
     // Pagination settings
     computed: {
-      ...mapState(['rooms']),
+      rooms () {
+        return this.$store.getters.loadedRooms
+      },
       pages () {
         return Math.ceil(this.rooms.length / 5)
       },

@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    rooms: require('@/data/articles.json'),
+    loadedRooms: [],
     user: null,
     loading: false,
     error: null
@@ -14,14 +14,14 @@ export default new Vuex.Store({
   getters: {
     // Filter data yang akan di load
     loadedRooms (state){
-      return state.rooms.filter(room =>{
+      return state.loadedRooms.filter(room =>{
         return room.status === 'available'
       })
     },
     // Data di load per id
     loadedRoom (state){
       return (roomID) => {
-        return state.rooms.find((room) => {
+        return state.loadedRooms.find((room) => {
           return room.id === roomID
         })
       } 
@@ -39,6 +39,10 @@ export default new Vuex.Store({
   mutations: {
     setDrawer: (state, payload) => (state.drawer = payload),
     toggleDrawer: state => (state.drawer = !state.drawer),
+
+    setLoadedRooms (state, payload) {
+      state.loadedRooms = payload
+    },    
     createRoom (state, payload){
       state.loadedRooms.push(payload)
     },
@@ -56,6 +60,33 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    loadRooms ({commit}) {
+      commit('setLoading', true)
+      firebase.database().ref('rooms').once('value')
+        .then((data) => {
+          const rooms = []
+          const obj = data.val()
+          for (let key in obj) {
+            rooms.push({
+              id: key,
+              title: obj[key].title,
+              deskripsi: obj[key].deskripsi,
+              image: obj[key].image,
+              harga: obj[key].harga,
+              status: obj[key].status,
+              prominent: obj[key].prominent
+            })
+          }
+          commit('setLoadedRooms', rooms)
+          commit('setLoading', false)
+        })
+        .catch(
+          (error) => {
+            console.log(error)
+            commit('setLoading', false)
+          }
+        )
+    },
     createRoom ({commit}, payload) {
       const room = {
         title: payload.title,
@@ -65,8 +96,16 @@ export default new Vuex.Store({
         deskripsi: payload.deskripsi,
         prominent: payload.prominent
       }
+      firebase.database().ref('rooms').push(room)
+      .then((data) => {
+        const key = data.key
+        commit('createRoom', {
+          ...room,
+          id: key
+        })
+
+      })
       // menghubungkan ke firebase dan simpan di store
-      commit('createRoom', room)
     },
     //Aksi untuk daftar ke firebase auth
     signUserUp ({commit}, payload){

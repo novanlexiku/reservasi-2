@@ -34,14 +34,14 @@
                       small
                       @click.stop=""
                     >
-                    {{ value.deskripsi }}
+                    jenis
                     </v-chip>
                     <v-chip small :color="`${value.status}`" :class="`v-chip--active white--text caption my-2`">{{value.status}}</v-chip>
                     <h3 class="title font-weight-bold ma-2">
                       {{ value.title }}
                     </h3>
                     <div class="caption ma-2">
-                    {{ value.harga }}<br>Date
+                    {{ value.harga }}<br>{{ value.deskripsi }}
                     </div>
                   </v-flex>
                   <v-flex align-self-end>
@@ -58,9 +58,6 @@
                 </v-row>
                 </v-img>
               </v-card>
-              
-            
-   
   </v-flex>
 </template>
 

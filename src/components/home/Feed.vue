@@ -63,9 +63,7 @@
 </template>
 
 <script>
-  import {
-    mapState
-  } from 'vuex'
+  
 
   export default {
     name: 'Feed',
@@ -80,7 +78,9 @@
     }),
 
     computed: {
-      ...mapState(['rooms']),
+      rooms () {
+        return this.$store.getters.loadedRooms
+      },
       pages () {
         return Math.ceil(this.rooms.length / 11)
       },

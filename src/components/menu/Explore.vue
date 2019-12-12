@@ -9,10 +9,10 @@
       </v-flex>
 
       <feed-card
-        v-for="(article, i) in rooms"
-        :key="article.id"
+        v-for="(room, i) in paginatedrooms"
+        :key="room.id"
         :size="layout[i]"
-        :value="article"
+        :value="room"
       />
     </v-layout>
 <!-- Pagination -->
@@ -63,29 +63,30 @@
 </template>
 
 <script>
+  
+
   export default {
-    name: 'Feed',
+    name: 'Explore',
 
     components: {
       FeedCard: () => import('@/components/menu/FeedExplore')
     },
 
     data: () => ({
-      layout: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+      layout: [2, 2, 2, 2, 2, 2],
       page: 1
     }),
 
     computed: {
-      rooms(){
+      rooms () {
         return this.$store.getters.loadedRooms
       },
       pages () {
-        return Math.ceil(this.rooms.length / 11)
+        return Math.ceil(this.rooms.length / 6)
       },
       paginatedrooms () {
-        const start = (this.page - 1) * 11
-        const stop = this.page * 11
-
+        const start = (this.page - 1) * 6
+        const stop = this.page * 6
         return this.rooms.slice(start, stop)
       }
     },

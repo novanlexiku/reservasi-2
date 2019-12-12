@@ -31,5 +31,7 @@ new Vue({
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+
+  this.$store.dispatch('loadRooms')
   }
 }).$mount('#app')
