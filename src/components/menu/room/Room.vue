@@ -10,7 +10,7 @@
                                     <v-list-item-avatar color="grey"></v-list-item-avatar>
                                     <v-list-item-content>
                                         <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
-                                        <v-list-item-subtitle>{{room.harga}}</v-list-item-subtitle>
+                                        <v-list-item-subtitle>Harga : Rp.{{room.harga}}</v-list-item-subtitle>
                                     </v-list-item-content>
                                     </v-list-item>
                                             <div class="d-flex flex-no-wrap justify-space-between">
@@ -30,6 +30,7 @@
                                     <v-btn
                                         text
                                         color="primary accent-4"
+                                        @click="onLoadRoom(room.id)"
                                     >
                                         Pesan Sekarang
                                     </v-btn>
@@ -98,7 +99,10 @@ computed:{
 methods:{
     showImage(){
     this.image = false
-    }
+    },
+    onLoadRoom(id){
+        this.$router.push('/rooms/' + id + '/reservasi')
+      }
 }
 }
 </script>

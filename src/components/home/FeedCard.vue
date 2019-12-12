@@ -41,7 +41,7 @@
                       {{ value.title }}
                     </h3>
                     <div class="caption ma-2">
-                    {{ value.harga }}<br>{{ value.deskripsi }}
+                    <span>Harga : Rp.</span>{{ value.harga }}<br>{{ value.deskripsi }}
                     </div>
                   </v-flex>
                   <v-flex align-self-end>

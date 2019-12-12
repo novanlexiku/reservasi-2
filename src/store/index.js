@@ -12,6 +12,7 @@ export default new Vuex.Store({
     error: null
   },
   getters: {
+    //data yang akan ditampilkan di landing
     featuredRooms (state) {
       return state.loadedRooms
     },
