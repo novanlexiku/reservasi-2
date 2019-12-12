@@ -104,7 +104,6 @@
                 passwordResetSuccess: false,
                 performingRequest: false,
                 errorMsg: '',
-                loading: false,
                 // Rules input + rules date
                 inputRules:[
                         v => !!v || 'Input is required',
@@ -125,6 +124,9 @@
             },
             error (){
                 return this.$store.getters.error
+            },
+            loading () {
+                return this.$store.getters.loading
             }
         },
         watch: {
@@ -157,6 +159,7 @@
                     }
                 this.$store.dispatch('signUserIn', user)
             },
+            //method daftar
             signup(){
                     const user = {
                     email: this.signupForm.email,
@@ -164,13 +167,17 @@
                     }
                 this.$store.dispatch('signUserUp', user)
             },
+            //method reset pass
             resetPassword(){
-
+                const user = {
+                    email: this.passwordForm.email
+                }
+                this.$store.dispatch('resetPassword', user)
             },
             onDismissed (){
-                console.log('Dismissed Alert')
                 this.$store.dispatch('clearError')
-            }
+            },
+            
         }
     }
 </script>
