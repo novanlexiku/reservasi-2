@@ -3,7 +3,7 @@
       <v-container class="my-5">
         <!-- Snackbar -->
         <v-snackbar v-model="snackbar" top color="success">
-          <span>Selamat! Data berhasil ditambahkan</span>
+          <span>Data berhasil ditambahkan</span>
           <v-btn text color="white" @click="snackbar = false">Close</v-btn>
         </v-snackbar>
           <!-- Sort data + tooltip -->

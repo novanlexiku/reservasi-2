@@ -63,7 +63,7 @@ export default {
       this.$store.dispatch('createRoom', room)
       this.loading = false;
       this.dialog = false;
-      //              this.$emit('roomAdded');
+      this.$emit('roomAdded');
       this.$refs.form.reset();
       }
     },

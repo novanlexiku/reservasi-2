@@ -12,6 +12,9 @@ export default new Vuex.Store({
     error: null
   },
   getters: {
+    featuredRooms (state) {
+      return state.loadedRooms
+    },
     // Filter data yang akan di load
     loadedRooms (state){
       return state.loadedRooms.filter(room =>{
