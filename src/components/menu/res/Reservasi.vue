@@ -13,6 +13,7 @@
     </v-stepper-header>
 
     <v-stepper-items>
+        <!-- Stepper 1 -->
       <v-stepper-content step="1">
                             <!-- Deskripsi Ruangan -->
                             <v-col cols="12" sm="12">
@@ -28,7 +29,7 @@
                                             <div class="d-flex flex-no-wrap justify-space-between" >
                                             <v-card-text width="300">
                                                 <!-- form checkin -->
-                                               <v-form class="px-3" ref="form">
+                                            <v-form class="px-3" ref="form">
                                                     <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="checkin"
                                                     transition="scale-transition"
                                                     offset-y
@@ -37,7 +38,7 @@
                                                     <template v-slot:activator="{ on }">
                                                         <v-text-field
                                                         :rules="dateRules" :value="formattedDate"
-                                                        label="Tanggal Lahir"
+                                                        label="Tanggal Check-in"
                                                         prepend-icon="mdi-calendar-account"
                                                         readonly
                                                         clearable
@@ -60,7 +61,6 @@
                                             </div>
                                 </v-card>
                             </v-col>
-
         <v-btn
           color="primary"
           class="ml-3"
@@ -71,7 +71,7 @@
 
         <v-btn text class="ml-3" router to="/">Batal</v-btn>
       </v-stepper-content>
-
+        <!-- Stepper 2 -->
       <v-stepper-content step="2">
                             <!-- Deskripsi Ruangan -->
                             <v-col cols="12" sm="12">
@@ -87,7 +87,7 @@
                                             <div class="d-flex flex-no-wrap justify-space-between" >
                                             <v-card-text width="300">
                                                 <!-- form checkin -->
-                                               <v-form class="px-3" ref="form">
+                                            <v-form class="px-3" ref="form">
                                                     <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="checkin"
                                                     transition="scale-transition"
                                                     offset-y
@@ -96,7 +96,7 @@
                                                     <template v-slot:activator="{ on }">
                                                         <v-text-field
                                                         :rules="dateRules" :value="formattedDate"
-                                                        label="Tanggal Lahir"
+                                                        label="Tanggal Check-in"
                                                         prepend-icon="mdi-calendar-account"
                                                         readonly
                                                         clearable
@@ -119,7 +119,6 @@
                                             </div>
                                 </v-card>
                             </v-col>
-
         <v-btn
           color="primary"
           class="ml-3"
@@ -130,7 +129,7 @@
 
         <v-btn text @click="e1 = 1" class="ml-3">Kembali</v-btn>
       </v-stepper-content>
-
+        <!-- Stepper 3 -->
       <v-stepper-content step="3">
         <!-- Deskripsi Ruangan -->
                             <v-col cols="12" sm="12">
@@ -146,7 +145,7 @@
                                             <div class="d-flex flex-no-wrap justify-space-between" >
                                             <v-card-text width="300">
                                                 <!-- form checkin -->
-                                               <v-form class="px-3" ref="form">
+                                            <v-form class="px-3" ref="form">
                                                     <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="checkin"
                                                     transition="scale-transition"
                                                     offset-y
@@ -155,7 +154,7 @@
                                                     <template v-slot:activator="{ on }">
                                                         <v-text-field
                                                         :rules="dateRules" :value="formattedDate"
-                                                        label="Tanggal Lahir"
+                                                        label="Tanggal Check-in"
                                                         prepend-icon="mdi-calendar-account"
                                                         readonly
                                                         clearable
