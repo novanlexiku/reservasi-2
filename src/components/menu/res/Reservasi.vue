@@ -28,9 +28,19 @@
                                     </v-list-item>
                                             <div class="d-flex flex-no-wrap justify-space-between" >
                                             <v-card-text width="300">
-                                                <!-- form checkin -->
+                                                <!-- form Checkin -->
                                             <v-form class="px-3" ref="form">
-                                                    <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="checkin"
+                                              <v-col cols="12" sm="6"> 
+                                                <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
+                                              </v-col>
+                                              <v-col cols="12" sm="6"> 
+                                                <v-text-field label="No Ktp" v-model="no_ktp" prepend-icon="mdi-information" :rules="inputRules"></v-text-field>
+                                              </v-col>
+                                              <v-col cols="12" sm="6"> 
+                                                <v-text-field label="Telp" v-model="telp" prepend-icon="mdi-cellphone" :rules="inputRules"></v-text-field>
+                                              </v-col>
+                                              <v-col cols="12" sm="6"> 
+                                                <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="checkin"
                                                     transition="scale-transition"
                                                     offset-y
                                                     max-width="290px"
@@ -50,6 +60,10 @@
                                                         <v-btn text color="primary" @click="$refs.menu.save(checkin)">OK</v-btn>
                                                     </v-date-picker>
                                                     </v-menu>
+                                              </v-col>
+                                              <v-col cols="12" sm="6"> 
+                                                <v-text-field label="Telp" v-model="telp" prepend-icon="mdi-cellphone" :rules="inputRules"></v-text-field>
+                                              </v-col>
                                                 </v-form> 
                                             </v-card-text>
                                                 <v-img
@@ -86,29 +100,24 @@
                                     </v-list-item>
                                             <div class="d-flex flex-no-wrap justify-space-between" >
                                             <v-card-text width="300">
-                                                <!-- form checkin -->
-                                            <v-form class="px-3" ref="form">
-                                                    <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="checkin"
-                                                    transition="scale-transition"
-                                                    offset-y
-                                                    max-width="290px"
-                                                    >
-                                                    <template v-slot:activator="{ on }">
-                                                        <v-text-field
-                                                        :rules="dateRules" :value="formattedDate"
-                                                        label="Tanggal Check-in"
-                                                        prepend-icon="mdi-calendar-account"
-                                                        readonly
-                                                        clearable
-                                                        v-on="on"
-                                                        ></v-text-field>
-                                                    </template>
-                                                    <v-date-picker v-model="checkin" no-title scrollable>
-                                                        <v-spacer></v-spacer>
-                                                        <v-btn text color="primary" @click="$refs.menu.save(checkin)">OK</v-btn>
-                                                    </v-date-picker>
-                                                    </v-menu>
-                                                </v-form> 
+                                                <!-- konfirmasi -->
+                                                <v-form class="px-3" ref="form">
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field label="No Ktp" v-model="no_ktp" prepend-icon="mdi-information" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field label="Telp" v-model="telp" prepend-icon="mdi-cellphone" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field :value="formattedDate" label="Tanggal Check-in" prepend-icon="mdi-calendar-account" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field label="Harga" v-model="room.harga" prepend-icon="mdi-account" readonly></v-text-field>
+                                                    </v-col>
+                                                </v-form>
                                             </v-card-text>
                                                 <v-img
                                                 :src="require(`@/assets/articles/${room.image}`)"
@@ -144,28 +153,9 @@
                                     </v-list-item>
                                             <div class="d-flex flex-no-wrap justify-space-between" >
                                             <v-card-text width="300">
-                                                <!-- form checkin -->
+                                                <!-- form date -->
                                             <v-form class="px-3" ref="form">
-                                                    <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="checkin"
-                                                    transition="scale-transition"
-                                                    offset-y
-                                                    max-width="290px"
-                                                    >
-                                                    <template v-slot:activator="{ on }">
-                                                        <v-text-field
-                                                        :rules="dateRules" :value="formattedDate"
-                                                        label="Tanggal Check-in"
-                                                        prepend-icon="mdi-calendar-account"
-                                                        readonly
-                                                        clearable
-                                                        v-on="on"
-                                                        ></v-text-field>
-                                                    </template>
-                                                    <v-date-picker v-model="checkin" no-title scrollable>
-                                                        <v-spacer></v-spacer>
-                                                        <v-btn text color="primary" @click="$refs.menu.save(checkin)">OK</v-btn>
-                                                    </v-date-picker>
-                                                    </v-menu>
+                                                   
                                                 </v-form> 
                                             </v-card-text>
                                                 <v-img
@@ -197,10 +187,15 @@ import parseISO from 'date-fns/parseISO'
   export default {
     data () {
       return {
+        res:[
+          {nama: this.nama},
+          {no_ktp: this.no_ktp},
+          {telp: this.telp},
+        ],
         e1: 0,
-        nama: '',
-        no_ktp: '',
-        telp: '',
+        nama: this.nama,
+        no_ktp: this.no_ktp,
+        telp: this.telp,
         checkin:null,
         role: 'pelanggan',
         alamat: '',
@@ -220,6 +215,7 @@ import parseISO from 'date-fns/parseISO'
     room (){
         return this.$store.getters.loadedRoom(this.id)
     },
+
     formattedDate(){
             return this.checkin ? format(parseISO(this.checkin), 'do MMM yyyy') : ''
         }

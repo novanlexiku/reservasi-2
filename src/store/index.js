@@ -91,6 +91,7 @@ export default new Vuex.Store({
           }
         )
     },
+    // aksi untuk menyimpan data room
     createRoom ({commit}, payload) {
       const room = {
         title: payload.title,
