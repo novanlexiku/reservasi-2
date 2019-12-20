@@ -169,6 +169,7 @@ export default {
     props: {
       square: Boolean
     },
+    
 }
 </script>
 

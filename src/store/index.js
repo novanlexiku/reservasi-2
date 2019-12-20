@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as firebase from 'firebase'
+import db from '../fb'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     loadedRooms: [],
+    reservasi:[],
     user: null,
     loading: false,
     error: null
@@ -50,6 +52,9 @@ export default new Vuex.Store({
     createRoom (state, payload){
       state.loadedRooms.push(payload)
     },
+    createReservasi (state, payload){
+      state.reservasi.push(payload)
+    },
     setUser (state, payload){
       state.user = payload
     },
@@ -66,30 +71,44 @@ export default new Vuex.Store({
   actions: {
     loadRooms ({commit}) {
       commit('setLoading', true)
-      firebase.database().ref('rooms').once('value')
-        .then((data) => {
-          const rooms = []
-          const obj = data.val()
-          for (let key in obj) {
-            rooms.push({
-              id: key,
-              title: obj[key].title,
-              deskripsi: obj[key].deskripsi,
-              image: obj[key].image,
-              harga: obj[key].harga,
-              status: obj[key].status,
-              prominent: obj[key].prominent
-            })
-          }
+      // set data menggunakan cloud firestore
+      db.collection("rooms")
+      .onSnapshot(function(querySnapshot) {
+        const rooms = []
+        querySnapshot.forEach((doc) => {
+          rooms.push({
+            ...doc.data(),
+            id: doc.id
+          })
           commit('setLoadedRooms', rooms)
           commit('setLoading', false)
-        })
-        .catch(
-          (error) => {
-            console.log(error)
-            commit('setLoading', false)
-          }
-        )
+     })
+      })
+    // Set data menggunakan realtime database
+        // firebase.database().ref('rooms').once('value')
+        // .then((data) => {
+        //   const rooms = []
+        //   const obj = data.val()
+        //   for (let key in obj) {
+        //     rooms.push({
+        //       id: key,
+        //       title: obj[key].title,
+        //       deskripsi: obj[key].deskripsi,
+        //       image: obj[key].image,
+        //       harga: obj[key].harga,
+        //       status: obj[key].status,
+        //       prominent: obj[key].prominent
+        //     })
+        //   }
+        //   commit('setLoadedRooms', rooms)
+        //   commit('setLoading', false)
+        // })
+        // .catch(
+        //   (error) => {
+        //     console.log(error)
+        //     commit('setLoading', false)
+        //   }
+        // )
     },
     // aksi untuk menyimpan data room
     createRoom ({commit}, payload) {
@@ -101,11 +120,44 @@ export default new Vuex.Store({
         deskripsi: payload.deskripsi,
         prominent: payload.prominent
       }
-      firebase.database().ref('rooms').push(room)
+      // menghubungkan ke firebase dan simpan di store
+      db.collection('rooms').add(room).then(() => {
+        commit('setLoading', false)
+        // const key = data.key
+        //   commit('createRoom', {
+        //     ...room,
+        //     id: key
+        //   })
+     })
+      // simpan data ke dalam realtime database
+      // firebase.database().ref('rooms').push(room)
+      // .then((data) => {
+      //   const key = data.key
+      //   commit('createRoom', {
+      //     ...room,
+      //     id: key
+      //   })
+
+      // })
+    },
+    // aksi untuk menyimpan data reservasi
+    createReservasi ({commit}, payload) {
+      const reservasi = {
+        title: payload.title,
+        harga: payload.harga,
+        image: payload.image,
+        nama: payload.nama,
+        no_ktp: payload.no_ktp,
+        telp: payload.telp,
+        checkin: payload.checkin,
+        sewa: payload.sewa,
+        total: payload.total
+      }
+      firebase.database().ref('reservasi').push(reservasi)
       .then((data) => {
         const key = data.key
-        commit('createRoom', {
-          ...room,
+        commit('createReservasi', {
+          ...reservasi,
           id: key
         })
 

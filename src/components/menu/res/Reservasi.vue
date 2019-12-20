@@ -1,5 +1,7 @@
 <template>
-  <v-stepper v-model="e1">
+  <div class="reservasi">
+    <v-container class="my-5">
+      <v-stepper v-model="e1">
     <v-stepper-header>
       <v-stepper-step :complete="e1 > 1" step="1">Check-In</v-stepper-step>
 
@@ -62,8 +64,11 @@
                                                     </v-menu>
                                               </v-col>
                                               <v-col cols="12" sm="6"> 
-                                                <v-text-field label="Telp" v-model="telp" prepend-icon="mdi-cellphone" :rules="inputRules"></v-text-field>
+                                                <v-text-field label="Lama Sewa" v-model="sewa" suffix="hari" prepend-icon="mdi-arrow-right-bold-box-outline"></v-text-field>
                                               </v-col>
+                                              <v-col cols="12" sm="6">
+                                                    <v-text-field v-model="total"  prefix="Rp." prepend-icon="mdi-currency-usd" readonly></v-text-field>
+                                                    </v-col>
                                                 </v-form> 
                                             </v-card-text>
                                                 <v-img
@@ -101,7 +106,7 @@
                                             <div class="d-flex flex-no-wrap justify-space-between" >
                                             <v-card-text width="300">
                                                 <!-- konfirmasi -->
-                                                <v-form class="px-3" ref="form">
+                                                <v-form class="px-3" ref="form" @submit.prevent="submit">
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" readonly></v-text-field>
                                                     </v-col>
@@ -115,7 +120,10 @@
                                                     <v-text-field :value="formattedDate" label="Tanggal Check-in" prepend-icon="mdi-calendar-account" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field label="Harga" v-model="room.harga" prepend-icon="mdi-account" readonly></v-text-field>
+                                                    <v-text-field label="Lama Sewa" v-model="sewa" suffix="hari" prepend-icon="mdi-arrow-right-bold-box-outline" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field v-model="total" prefix="Rp." prepend-icon="mdi-currency-usd" readonly></v-text-field>
                                                     </v-col>
                                                 </v-form>
                                             </v-card-text>
@@ -132,6 +140,7 @@
           color="primary"
           class="ml-3"
           @click="e1 = 3"
+          type="submit" :loading="loading"
         >
           Selanjutnya
         </v-btn>
@@ -180,6 +189,9 @@
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
+    </v-container>
+  </div>
+  
 </template>
 <script>
 import format from 'date-fns/format'
@@ -187,11 +199,7 @@ import parseISO from 'date-fns/parseISO'
   export default {
     data () {
       return {
-        res:[
-          {nama: this.nama},
-          {no_ktp: this.no_ktp},
-          {telp: this.telp},
-        ],
+        
         e1: 0,
         nama: this.nama,
         no_ktp: this.no_ktp,
@@ -199,6 +207,8 @@ import parseISO from 'date-fns/parseISO'
         checkin:null,
         role: 'pelanggan',
         alamat: '',
+        sewa: '',
+        total: '',
         // Rules input + rules date
         inputRules:[
                 v => !!v || 'Input is required',
@@ -207,18 +217,48 @@ import parseISO from 'date-fns/parseISO'
         dateRules:[
                 v => !!v || 'Date is required'
                 ],
+        loading: false,
         }
     },
+    watch:{
+    
+    sewa(newVal){
+      this.total = newVal * this.room.harga
+    },
+    
+  },
     props:['id'],
     computed:{
     // panggil data ruangan
     room (){
-        return this.$store.getters.loadedRoom(this.id)
+        return this.$store.getters.loadedRoom(this.id)      
     },
 
     formattedDate(){
             return this.checkin ? format(parseISO(this.checkin), 'do MMM yyyy') : ''
-        }
+        },
+    
 },
+methods: {
+    submit(){
+      if(this.$refs.form.validate()){
+          this.loading = true;
+          const reservasi = {
+              title: this.title,
+              harga: this.harga,
+              status: this.status,
+              deskripsi: this.deskripsi,
+              image: this.image,
+              prominent: this.prominent
+          }
+      this.$store.dispatch('createReservasi', reservasi)
+      this.loading = false;
+      this.dialog = false;
+      this.$emit('roomAdded');
+      this.$refs.form.reset();
+      }
+    },
+    
+  },
   }
 </script>
