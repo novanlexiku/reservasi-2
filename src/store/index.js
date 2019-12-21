@@ -120,15 +120,11 @@ export default new Vuex.Store({
         deskripsi: payload.deskripsi,
         prominent: payload.prominent
       }
-      // menghubungkan ke firebase dan simpan di store
+      // menghubungkan ke firebase dan simpan di cloud firestore
       db.collection('rooms').add(room).then(() => {
         commit('setLoading', false)
-        // const key = data.key
-        //   commit('createRoom', {
-        //     ...room,
-        //     id: key
-        //   })
-     })
+        })
+
       // simpan data ke dalam realtime database
       // firebase.database().ref('rooms').push(room)
       // .then((data) => {
@@ -142,27 +138,29 @@ export default new Vuex.Store({
     },
     // aksi untuk menyimpan data reservasi
     createReservasi ({commit}, payload) {
-      const reservasi = {
-        title: payload.title,
-        harga: payload.harga,
-        image: payload.image,
+
+      
+      // menghubungkan ke firebase dan simpan di cloud firestore
+     db.collection("rooms").doc(payload.id).update({
         nama: payload.nama,
         no_ktp: payload.no_ktp,
         telp: payload.telp,
         checkin: payload.checkin,
+        status: payload.status,
         sewa: payload.sewa,
         total: payload.total
-      }
-      firebase.database().ref('reservasi').push(reservasi)
-      .then((data) => {
-        const key = data.key
-        commit('createReservasi', {
-          ...reservasi,
-          id: key
-        })
-
       })
-      // menghubungkan ke firebase dan simpan di store
+      .then(function() {
+        commit('setLoading', false)
+          console.log("Document successfully updated!");
+      })
+      .catch(function(error) {
+          // The document probably doesn't exist.
+          console.error("Error updating document: ", error);
+      });
+            
+      
+      
     },
     //Aksi untuk daftar ke firebase auth
     signUserUp ({commit}, payload){

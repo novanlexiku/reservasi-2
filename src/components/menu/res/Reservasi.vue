@@ -69,7 +69,16 @@
                                               <v-col cols="12" sm="6">
                                                     <v-text-field v-model="total"  prefix="Rp." prepend-icon="mdi-currency-usd" readonly></v-text-field>
                                                     </v-col>
-                                                </v-form> 
+                                                </v-form>
+                                                <v-btn
+                                                  color="primary"
+                                                  class="ml-3"
+                                                  @click="e1 = 2"
+                                                >
+                                                  Selanjutnya
+                                                </v-btn>
+
+                                                <v-btn text class="ml-3" router to="/">Batal</v-btn> 
                                             </v-card-text>
                                                 <v-img
                                                 :src="require(`@/assets/articles/${room.image}`)"
@@ -80,15 +89,7 @@
                                             </div>
                                 </v-card>
                             </v-col>
-        <v-btn
-          color="primary"
-          class="ml-3"
-          @click="e1 = 2"
-        >
-          Selanjutnya
-        </v-btn>
-
-        <v-btn text class="ml-3" router to="/">Batal</v-btn>
+        
       </v-stepper-content>
         <!-- Stepper 2 -->
       <v-stepper-content step="2">
@@ -99,14 +100,20 @@
                                     <v-list-item>
                                     <v-list-item-avatar color="grey"></v-list-item-avatar>
                                     <v-list-item-content>
-                                        <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
-                                        <v-list-item-subtitle>Harga : Rp.{{room.harga}}</v-list-item-subtitle>
+                                        <v-list-item-title class="headline">Konfirmasi Pemesanan {{room.title}}</v-list-item-title>
+                                        <v-list-item-subtitle>Harga : Rp.{{room.harga}} per Hari</v-list-item-subtitle>
                                     </v-list-item-content>
                                     </v-list-item>
                                             <div class="d-flex flex-no-wrap justify-space-between" >
                                             <v-card-text width="300">
                                                 <!-- konfirmasi -->
                                                 <v-form class="px-3" ref="form" @submit.prevent="submit">
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field label="Title" v-model="room.title" prepend-icon="mdi-account" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field label="Harga" v-model="room.harga" prepend-icon="mdi-account" readonly></v-text-field>
+                                                    </v-col>
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" readonly></v-text-field>
                                                     </v-col>
@@ -125,7 +132,16 @@
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field v-model="total" prefix="Rp." prepend-icon="mdi-currency-usd" readonly></v-text-field>
                                                     </v-col>
-                                                </v-form>
+                                                <v-btn
+                                                color="primary"
+                                                class="ml-3"
+                                                @click="e1 =3"
+                                                type="submit" :loading="loading"
+                                              >
+                                                Selanjutnya
+                                              </v-btn>
+                                              <v-btn text @click="e1 = 1" class="ml-3">Kembali</v-btn>
+                                              </v-form>
                                             </v-card-text>
                                                 <v-img
                                                 :src="require(`@/assets/articles/${room.image}`)"
@@ -136,16 +152,8 @@
                                             </div>
                                 </v-card>
                             </v-col>
-        <v-btn
-          color="primary"
-          class="ml-3"
-          @click="e1 = 3"
-          type="submit" :loading="loading"
-        >
-          Selanjutnya
-        </v-btn>
+        
 
-        <v-btn text @click="e1 = 1" class="ml-3">Kembali</v-btn>
       </v-stepper-content>
         <!-- Stepper 3 -->
       <v-stepper-content step="3">
@@ -201,12 +209,12 @@ import parseISO from 'date-fns/parseISO'
       return {
         
         e1: 0,
-        nama: this.nama,
-        no_ktp: this.no_ktp,
-        telp: this.telp,
+        
+        nama: '',
+        no_ktp: '',
+        telp: '',
         checkin:null,
-        role: 'pelanggan',
-        alamat: '',
+        status: 'booked',
         sewa: '',
         total: '',
         // Rules input + rules date
@@ -231,7 +239,7 @@ import parseISO from 'date-fns/parseISO'
     computed:{
     // panggil data ruangan
     room (){
-        return this.$store.getters.loadedRoom(this.id)      
+        return this.$store.getters.loadedRoom(this.id)
     },
 
     formattedDate(){
@@ -244,17 +252,19 @@ methods: {
       if(this.$refs.form.validate()){
           this.loading = true;
           const reservasi = {
-              title: this.title,
-              harga: this.harga,
+              id: this.id,
+              nama: this.nama,
+              no_ktp: this.no_ktp,
+              telp: this.telp,
+              checkin: this.checkin,
               status: this.status,
-              deskripsi: this.deskripsi,
-              image: this.image,
-              prominent: this.prominent
+              sewa: this.sewa,
+              total: this.total
           }
+          
       this.$store.dispatch('createReservasi', reservasi)
       this.loading = false;
       this.dialog = false;
-      this.$emit('roomAdded');
       this.$refs.form.reset();
       }
     },
