@@ -136,28 +136,54 @@ export default new Vuex.Store({
 
       // })
     },
-    // aksi untuk menyimpan data reservasi
+    // aksi untuk menyimpan data reservasi dengan batch
     createReservasi ({commit}, payload) {
 
-      
-      // menghubungkan ke firebase dan simpan di cloud firestore
-     db.collection("rooms").doc(payload.id).update({
+      // Get a new write batch
+      var batch = db.batch();
+
+      // Set the value of doc
+      var add = db.collection("reservasi").doc(payload.id);
+      batch.set(add, {
+        id: payload.id,
         nama: payload.nama,
         no_ktp: payload.no_ktp,
         telp: payload.telp,
         checkin: payload.checkin,
-        status: payload.status,
         sewa: payload.sewa,
         total: payload.total
-      })
-      .then(function() {
-        commit('setLoading', false)
-          console.log("Document successfully updated!");
-      })
-      .catch(function(error) {
-          // The document probably doesn't exist.
-          console.error("Error updating document: ", error);
       });
+
+      // Update the data
+      var update = db.collection("rooms").doc(payload.id);
+      batch.update(update, {
+        status: payload.status
+      });
+
+      // Commit the batch
+      batch.commit().then(function () {
+        commit('setLoading', false)
+        console.log("Document successfully updated!");
+      });
+    
+    // menghubungkan ke firebase dan simpan di cloud firestore
+    //  db.collection("rooms").doc(payload.id).update({
+    //     nama: payload.nama,
+    //     no_ktp: payload.no_ktp,
+    //     telp: payload.telp,
+    //     checkin: payload.checkin,
+    //     status: payload.status,
+    //     sewa: payload.sewa,
+    //     total: payload.total
+    //   })
+    //   .then(function() {
+    //     commit('setLoading', false)
+    //       console.log("Document successfully updated!");
+    //   })
+    //   .catch(function(error) {
+    //       // The document probably doesn't exist.
+    //       console.error("Error updating document: ", error);
+    //   });
             
       
       
