@@ -42,7 +42,7 @@
                                         color="primary accent-4"
                                         @click="onLoadRoom(room.id)"
                                     >
-                                        Booked
+                                        Tidak Tersedia
                                     </v-btn>
                                     <v-spacer></v-spacer>
                                     <v-btn icon>

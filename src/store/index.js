@@ -11,7 +11,7 @@ export default new Vuex.Store({
   state: {
     loadedBanks:[],
     loadedRooms: [],
-    reservasi:[],
+    loadedReservasi:[],
     user: null,
     loading: false,
     error: null
@@ -41,9 +41,20 @@ export default new Vuex.Store({
         return bank.status === 'available'
       })
     },
+    // Data di load per id
+    loadedReserv (state){
+      return (reservasiID) => {
+        return state.loadedReservasi.find((reservasi) => {
+          return reservasi.id === reservasiID
+        })
+      } 
+    },
     // load data banks
     featuredBanks (state){
       return state.loadedBanks
+    },
+    featuredReservasi (state){
+      return state.loadedReservasi
     },
     user (state) {
       return state.user
@@ -74,7 +85,9 @@ export default new Vuex.Store({
     createBanks (state, payload){
       state.loadedBanks.push(payload)
     }, 
-    
+    setLoadedReservasi (state, payload){
+      state.loadedReservasi = payload
+    },
     // push data reservasi
     createReservasi (state, payload){
       state.reservasi.push(payload)
@@ -134,6 +147,7 @@ export default new Vuex.Store({
         //   }
         // )
     },
+    // load data bank
     loadBanks ({commit}) {
       commit('setLoading', true)
       // set data menggunakan cloud firestore
@@ -144,8 +158,28 @@ export default new Vuex.Store({
           banks.push({
             ...doc.data(),
             id: doc.id
+
           })
           commit('setLoadedBanks',banks)
+          commit('setLoading', false)
+     })
+      })
+    
+    },
+
+    // load data reservasi
+    loadReservasi ({commit}) {
+      commit('setLoading', true)
+      // set data menggunakan cloud firestore
+      db.collection("reservasi")
+      .onSnapshot(function(querySnapshot) {
+        const reservasi = []
+        querySnapshot.forEach((doc) => {
+          reservasi.push({
+            ...doc.data(),
+            id: doc.id
+          })
+          commit('setLoadedReservasi',reservasi)
           commit('setLoading', false)
      })
       })
@@ -191,24 +225,23 @@ export default new Vuex.Store({
 
       // })
     },
+
     // aksi untuk menyimpan data reservasi dengan batch
     createReservasi ({commit}, payload) {
-
       // Get a new write batch
       var batch = db.batch();
-
       // Set the value of doc
-      var add = db.collection("reservasi").doc(payload.id);
+      var add = db.collection("reservasi").doc();
       batch.set(add, {
         id: payload.id,
         nama: payload.nama,
         no_ktp: payload.no_ktp,
         telp: payload.telp,
         checkin: payload.checkin,
+        bank: payload.bank,
         sewa: payload.sewa,
         total: payload.total
       });
-
       // Update the data
       var update = db.collection("rooms").doc(payload.id);
       batch.update(update, {
@@ -218,7 +251,7 @@ export default new Vuex.Store({
       // Commit the batch
       batch.commit().then(function () {
         commit('setLoading', false)
-        console.log("Document successfully updated!");
+        console.log("Reservasi berhasil di buat");
       });
     
     // menghubungkan ke firebase dan simpan di cloud firestore

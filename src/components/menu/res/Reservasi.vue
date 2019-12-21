@@ -25,7 +25,7 @@
                                     <v-list-item-avatar color="grey"></v-list-item-avatar>
                                     <v-list-item-content>
                                         <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
-                                        <v-list-item-subtitle>Harga : Rp.{{room.harga}}</v-list-item-subtitle>
+                                        <v-list-item-subtitle>Harga : Rp.{{room.harga}} / Hari</v-list-item-subtitle>
                                     </v-list-item-content>
                                     </v-list-item>
                                             <div class="d-flex flex-no-wrap justify-space-between" >
@@ -66,6 +66,18 @@
                                               <v-col cols="12" sm="6"> 
                                                 <v-text-field label="Lama Sewa" v-model="sewa" suffix="hari" prepend-icon="mdi-arrow-right-bold-box-outline"></v-text-field>
                                               </v-col>
+                                              <v-col cols="12" sm="6"> 
+                                              <v-select 
+                                                      :items="banks"
+                                                      v-model="bank"
+                                                      label="Pilih Pembayaran"
+                                                      item-text="title"
+                                                      item-value="rekening"
+                                                      prepend-icon="mdi-bank"
+                                                      bottom
+                                                      autocomplete
+                                                      ></v-select>
+                                              </v-col>
                                               <v-col cols="12" sm="6">
                                                     <v-text-field v-model="total"  prefix="Rp." prepend-icon="mdi-currency-usd" readonly></v-text-field>
                                                     </v-col>
@@ -101,7 +113,7 @@
                                     <v-list-item-avatar color="grey"></v-list-item-avatar>
                                     <v-list-item-content>
                                         <v-list-item-title class="headline">Konfirmasi Pemesanan {{room.title}}</v-list-item-title>
-                                        <v-list-item-subtitle>Harga : Rp.{{room.harga}} per Hari</v-list-item-subtitle>
+                                        <v-list-item-subtitle>Harga : Rp.{{room.harga}} / Hari</v-list-item-subtitle>
                                     </v-list-item-content>
                                     </v-list-item>
                                             <div class="d-flex flex-no-wrap justify-space-between" >
@@ -109,10 +121,10 @@
                                                 <!-- konfirmasi -->
                                                 <v-form class="px-3" ref="form" @submit.prevent="submit">
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field label="Title" v-model="room.title" prepend-icon="mdi-account" readonly></v-text-field>
+                                                    <v-text-field label="Nama Ruangan" v-model="room.title" prepend-icon="mdi-account" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field label="Harga" v-model="room.harga" prepend-icon="mdi-account" readonly></v-text-field>
+                                                    <v-text-field label="Harga" v-model="room.harga" prepend-icon="mdi-currency-usd" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" readonly></v-text-field>
@@ -129,6 +141,9 @@
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field label="Lama Sewa" v-model="sewa" suffix="hari" prepend-icon="mdi-arrow-right-bold-box-outline" readonly></v-text-field>
                                                     </v-col>
+                                                     <v-col cols="12" sm="6">
+                                                    <v-text-field label="Transfer ke Rekening" v-model="bank" prepend-icon="mdi-bank" readonly></v-text-field>
+                                                    </v-col>
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field v-model="total" prefix="Rp." prepend-icon="mdi-currency-usd" readonly></v-text-field>
                                                     </v-col>
@@ -136,7 +151,7 @@
                                                 color="primary"
                                                 class="ml-3"
                                                 @click="e1 =3"
-                                                type="submit" :loading="loading"
+                                                
                                               >
                                                 Selanjutnya
                                               </v-btn>
@@ -161,39 +176,80 @@
                             <v-col cols="12" sm="12">
                                 <v-card
                                 >
-                                    <v-list-item>
-                                    <v-list-item-avatar color="grey"></v-list-item-avatar>
-                                    <v-list-item-content>
-                                        <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
-                                        <v-list-item-subtitle>Harga : Rp.{{room.harga}}</v-list-item-subtitle>
-                                    </v-list-item-content>
-                                    </v-list-item>
+                                    
                                             <div class="d-flex flex-no-wrap justify-space-between" >
                                             <v-card-text width="300">
-                                                <!-- form date -->
-                                            <v-form class="px-3" ref="form">
-                                                   
-                                                </v-form> 
+                                                <v-form class="px-3" ref="form" @submit.prevent="submit">
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field label="Nama Ruangan" v-model="room.title" prepend-icon="mdi-account" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field label="Harga" v-model="room.harga" prepend-icon="mdi-currency-usd" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field label="No Ktp" v-model="no_ktp" prepend-icon="mdi-information" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field label="Telp" v-model="telp" prepend-icon="mdi-cellphone" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field :value="formattedDate" label="Tanggal Check-in" prepend-icon="mdi-calendar-account" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field label="Lama Sewa" v-model="sewa" suffix="hari" prepend-icon="mdi-arrow-right-bold-box-outline" readonly></v-text-field>
+                                                    </v-col>
+                                                     <v-col cols="12" sm="6">
+                                                    <v-text-field label="Transfer ke Rekening" v-model="bank" prepend-icon="mdi-bank" readonly></v-text-field>
+                                                    </v-col>
+                                                    <v-col cols="12" sm="6">
+                                                    <v-text-field v-model="total" prefix="Rp." prepend-icon="mdi-currency-usd" readonly></v-text-field>
+                                                    </v-col>
+                                                <v-btn
+                                                  color="primary"
+                                                  class="ml-3"
+                                                  type="submit" :loading="loading"
+                                                >
+                                                  Complete
+                                                </v-btn>
+
+                                                <v-btn text @click="e1 = 2" class="ml-3">Kembali</v-btn>
+                                              </v-form>
                                             </v-card-text>
-                                                <v-img
-                                                :src="require(`@/assets/articles/${room.image}`)"
-                                                height="200"
-                                                max-width="400"
-                                                class="mr-1 mb-1"
-                                                ></v-img>
+                                            <v-card
+                                              class="mr-1 mb-1"
+                                              width="500"
+                                              height="400"
+                                              >
+                                              <v-card-text>
+                                                <div>Pemesanan</div>
+                                                <p class="display-1 text--primary">
+                                                  {{room.title}}
+                                                </p>
+                                                <p> Atas Nama : {{this.nama}}</p>
+                                                <div class="text--primary">
+                                                  Lakukan pembayaran ke <br>
+                                                  No. Rekening {{this.bank}}
+                                                </div>
+                                              </v-card-text>
+                                              <v-card-actions>
+                                                <v-btn
+                                                  text
+                                                  color="deep-purple accent-4"
+                                                >
+                                                  Learn More
+                                                </v-btn>
+                                              </v-card-actions>
+                                            </v-card>
                                             </div>
+                                            
+                                            
                                 </v-card>
+
                             </v-col>
-
-        <v-btn
-          color="primary"
-          class="ml-3"
-          
-        >
-          Complete
-        </v-btn>
-
-        <v-btn text @click="e1 = 2" class="ml-3">Kembali</v-btn>
+                            
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -215,6 +271,7 @@ import parseISO from 'date-fns/parseISO'
         telp: '',
         checkin:null,
         status: 'booked',
+        bank:null,
         sewa: '',
         total: '',
         // Rules input + rules date
@@ -241,12 +298,20 @@ import parseISO from 'date-fns/parseISO'
     room (){
         return this.$store.getters.loadedRoom(this.id)
     },
-
+    // panggil data bank
+    banks (){
+        return this.$store.getters.loadedBanks
+    },
+    reserv (){
+      return this.$store.getters.loadedReserv
+      
+    },
     formattedDate(){
             return this.checkin ? format(parseISO(this.checkin), 'do MMM yyyy') : ''
         },
     
 },
+
 methods: {
     submit(){
       if(this.$refs.form.validate()){
@@ -258,6 +323,7 @@ methods: {
               telp: this.telp,
               checkin: this.checkin,
               status: this.status,
+              bank: this.bank,
               sewa: this.sewa,
               total: this.total
           }
@@ -265,10 +331,12 @@ methods: {
       this.$store.dispatch('createReservasi', reservasi)
       this.loading = false;
       this.dialog = false;
+      this.$router.push('/');
       this.$refs.form.reset();
       }
     },
     
   },
+  
   }
 </script>
