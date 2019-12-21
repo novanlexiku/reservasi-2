@@ -28,11 +28,21 @@
                                             </div>
                                     <v-card-actions>
                                     <v-btn
+                                    v-if="room.status === 'available'"
                                         text
                                         color="primary accent-4"
                                         @click="onLoadRoom(room.id)"
                                     >
                                         Pesan Sekarang
+                                    </v-btn>
+                                    <v-btn
+                                    v-else
+                                    disabled
+                                        text
+                                        color="primary accent-4"
+                                        @click="onLoadRoom(room.id)"
+                                    >
+                                        Booked
                                     </v-btn>
                                     <v-spacer></v-spacer>
                                     <v-btn icon>

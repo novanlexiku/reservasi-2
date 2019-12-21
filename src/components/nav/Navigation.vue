@@ -63,7 +63,7 @@
 </template>
 
 <script>
-
+import firebase from 'firebase/app'
 export default {
     data: () => ({
                 loggedIn: false,
@@ -77,7 +77,7 @@ export default {
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'Login', icon: 'mdi-map-marker', route: '/login' }
             ]
-            if (this.userIsAuthenticated) {
+            if (this.loggedIn) {
                 items = [
                 { text: 'Home', icon: 'mdi-home', route: '/' },
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
@@ -90,35 +90,33 @@ export default {
             }
             return items
         },
-        userIsAuthenticated () {
-            return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+        
+    },
+    methods:{
+        //method logout
+    async signOut(){
+        try {
+        const data = await  firebase.auth().signOut()
+        console.log(data)
+        this.$router.push('/login')
+        } catch (err) {
+            console.log(err)
         }
+
+
+        }
+    },
+    //membuat atau mengubah session user
+    created(){
+        firebase.auth().onAuthStateChanged(user => {
+            this.loggedIn = !!user
+            if (user) {
+                this.loggedIn = true
+            } else {
+                this.loggedIn = false
+            }
+        })
     }
-    // methods:{
-    //     //method logout
-    // async signOut(){
-    //     try {
-    //     const data = await  firebase.auth().signOut()
-    //     console.log(data)
-    //     this.$router.replace({name: 'Login'})
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-
-
-    //     }
-    // },
-    // //membuat atau mengubah session user
-    // created(){
-    //     firebase.auth().onAuthStateChanged(user => {
-    //         this.loggedIn = !!user
-    //         if (user) {
-    //             this.loggedIn = true
-    //         } else {
-    //             this.loggedIn = false
-    //         }
-    //     })
-    // }
 }
 </script>
 

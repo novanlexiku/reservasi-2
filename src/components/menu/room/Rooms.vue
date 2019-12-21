@@ -146,7 +146,7 @@ export default {
     // Pagination settings
     computed: {
       rooms () {
-        return this.$store.getters.loadedRooms
+        return this.$store.getters.featuredRooms
       },
       pages () {
         return Math.ceil(this.rooms.length / 5)
