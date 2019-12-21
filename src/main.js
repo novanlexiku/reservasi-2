@@ -28,7 +28,8 @@ firebase.auth().onAuthStateChanged(user => {
       render: h => h(App),
       created () {
         
-      this.$store.dispatch('loadRooms')
+      this.$store.dispatch('loadRooms'),
+      this.$store.dispatch('loadBanks')
       }
     }).$mount('#app')
   }

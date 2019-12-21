@@ -75,7 +75,9 @@ export default {
             let items = [
                 { text: 'Home', icon: 'mdi-home', route: '/' },
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
-                { text: 'Login', icon: 'mdi-map-marker', route: '/login' }
+                { text: 'Login', icon: 'mdi-map-marker', route: '/login' },
+                { text: 'Team', icon: 'mdi-account-group', route: '/team' },
+                { text: 'Bank', icon: 'mdi-bank', route: '/bank' }
             ]
             if (this.loggedIn) {
                 items = [

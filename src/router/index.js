@@ -9,6 +9,7 @@ import Room from '../components/menu/room/Room'
 import Reservasi from '../components/menu/res/Reservasi'
 import Team from '../components/menu/Team'
 import Explore from '../components/menu/Explore'
+import Bank from '../components/menu/bank/Banks'
 import Profile from '../components/user/Profile'
 
 
@@ -54,6 +55,10 @@ const routes = [
     path: '/explore',
     name: 'Explore',
     component: Explore
+  },{
+    path: '/bank',
+    name: 'Bank',
+    component: Bank
   },{
     path: '/user/profile',
     name: 'Profile',

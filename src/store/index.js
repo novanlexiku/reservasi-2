@@ -9,6 +9,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    loadedBanks:[],
     loadedRooms: [],
     reservasi:[],
     user: null,
@@ -34,6 +35,16 @@ export default new Vuex.Store({
         })
       } 
     },
+    // Filter data yang akan di load
+    loadedBanks (state){
+      return state.loadedBanks.filter(bank =>{
+        return bank.status === 'available'
+      })
+    },
+    // load data banks
+    featuredBanks (state){
+      return state.loadedBanks
+    },
     user (state) {
       return state.user
     },
@@ -47,13 +58,24 @@ export default new Vuex.Store({
   mutations: {
     setDrawer: (state, payload) => (state.drawer = payload),
     toggleDrawer: state => (state.drawer = !state.drawer),
-
+    // set perubahan data room
     setLoadedRooms (state, payload) {
       state.loadedRooms = payload
-    },    
+    },
+    // push data room   
     createRoom (state, payload){
       state.loadedRooms.push(payload)
     },
+    // set perubahan data bank
+    setLoadedBanks (state, payload){
+      state.loadedBanks = payload
+    },
+    // push data bank
+    createBanks (state, payload){
+      state.loadedBanks.push(payload)
+    }, 
+    
+    // push data reservasi
     createReservasi (state, payload){
       state.reservasi.push(payload)
     },
@@ -111,6 +133,37 @@ export default new Vuex.Store({
         //     commit('setLoading', false)
         //   }
         // )
+    },
+    loadBanks ({commit}) {
+      commit('setLoading', true)
+      // set data menggunakan cloud firestore
+      db.collection("banks")
+      .onSnapshot(function(querySnapshot) {
+        const banks = []
+        querySnapshot.forEach((doc) => {
+          banks.push({
+            ...doc.data(),
+            id: doc.id
+          })
+          commit('setLoadedBanks',banks)
+          commit('setLoading', false)
+     })
+      })
+    
+    },
+    // simpan data bank ke cloud firestore
+    createBank ({commit}, payload) {
+      const bank = {
+        title: payload.title,
+        rekening: payload.rekening,
+        nama: payload.nama,
+        status: payload.status,
+      }
+      // menghubungkan ke firebase dan simpan di cloud firestore
+      db.collection('banks').add(bank).then(() => {
+        console.log(bank)
+        commit('setLoading', false)
+        })
     },
     // aksi untuk menyimpan data room
     createRoom ({commit}, payload) {
