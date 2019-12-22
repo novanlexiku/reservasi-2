@@ -20,7 +20,7 @@
                                                 </v-card-text>
                                             </div>
                                                 <v-img
-                                                :src="require(`@/assets/articles/${room.image}`)"
+                                                :src="room.image"
                                                 height="194"
                                                 max-width="300"
                                                 class="mr-1"

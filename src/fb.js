@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
+import 'firebase/storage'
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -8,7 +9,7 @@ var firebaseConfig = {
   authDomain: "homestay-9f549.firebaseapp.com",
   databaseURL: "https://homestay-9f549.firebaseio.com",
   projectId: "homestay-9f549",
-  storageBucket: "homestay-9f549.appspot.com",
+  storageBucket: "gs://homestay-9f549.appspot.com/",
   messagingSenderId: "600613015666",
   appId: "1:600613015666:web:2c039deea214f787df32eb",
   measurementId: "G-YP00J8KH82"

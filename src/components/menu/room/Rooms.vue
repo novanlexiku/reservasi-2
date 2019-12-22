@@ -47,7 +47,7 @@
                   </v-col>
                   <v-col cols="6" md="2">
                       <div class="caption grey--text">Gambar</div>
-                      <div class="justify-end"><v-img aspect-ratio="1" :src="require(`@/assets/articles/${room.image}`)"></v-img></div>
+                      <div class="justify-end"><v-img aspect-ratio="1" :src="room.image"></v-img></div>
                   </v-col>
                   <v-col cols="6" md="2">
                         <div class="caption grey--text">Status</div>

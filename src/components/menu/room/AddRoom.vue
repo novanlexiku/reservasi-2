@@ -17,8 +17,8 @@
                     <v-btn raised class="primary ml-8" @click="onPickFile">Upload Image</v-btn>
                     <input
                       type="file"
-                      style="display: none"
                       ref="fileInput"
+                      style="display:none"
                       accept="image/*"
                       @change="onFilePicked">
                     <div class="ml-8">
@@ -33,7 +33,6 @@
 </template>
 
 <script>
-
 export default {
   data: () => ({
     title: '',
@@ -60,7 +59,10 @@ export default {
   methods: {
     submit(){
       if(this.$refs.form.validate()){
-          this.loading = true;
+          this.loading = true
+          if (!this.image){
+            return
+          }
           const room = {
               title: this.title,
               harga: this.harga,
@@ -90,7 +92,8 @@ export default {
           this.imageUrl = fileReader.result
         })
         fileReader.readAsDataURL(files[0])
-        this.image = files[0]
+        this.image = files[0]        
+
       }
   },
 

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/storage'
 import db from '../fb'
 
 Vue.use(Vuex)
@@ -204,15 +205,39 @@ export default new Vuex.Store({
       const room = {
         title: payload.title,
         harga: payload.harga,
-        image: payload.image,
         status: payload.status,
         deskripsi: payload.deskripsi,
         prominent: payload.prominent
       }
+      let imageUrl
+      let key
       // menghubungkan ke firebase dan simpan di cloud firestore
-      db.collection('rooms').add(room).then(() => {
+      db.collection('rooms').add(room)
+      .then((data) => {
+        key = data.id
+        return key
+      })
+      .then(key => {
+        const filename = payload.image.name
+        const ext = filename.slice(filename.lastIndexOf('.'))
+        return firebase.storage().ref('rooms/' + key + ext).put(payload.image)
+      })
+      .then(filedata => {
+        let imagePath = filedata.metadata.fullPath;
+        // creating ref to our image file and get the url
+        return firebase.storage().ref().child(imagePath).getDownloadURL();
+      })
+      .then(url => {
+        imageUrl = url;
+        return db.collection('rooms').doc(key).update({image: imageUrl});
+      })
+      .then(() => {
         commit('setLoading', false)
-        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    // Reach out to firebase and store it
 
       // simpan data ke dalam realtime database
       // firebase.database().ref('rooms').push(room)
