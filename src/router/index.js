@@ -11,6 +11,7 @@ import Team from '../components/menu/Team'
 import Explore from '../components/menu/Explore'
 import Bank from '../components/menu/bank/Banks'
 import Profile from '../components/user/Profile'
+import AuthGuard from './auth-guard'
 
 
 
@@ -32,11 +33,13 @@ const routes = [
   },{
     path: '/pengguna',
     name: 'Pengguna',
-    component: Pengguna
+    component: Pengguna,
+    beforeEnter: AuthGuard
   },{
     path: '/rooms',
     name: 'Rooms',
-    component: Rooms
+    component: Rooms,
+    beforeEnter: AuthGuard
   },{
     path: '/rooms/:id',
     name: 'Room',
@@ -46,7 +49,8 @@ const routes = [
     path: '/rooms/:id/reservasi',
     name: 'Reservasi',
     props: true,
-    component: Reservasi
+    component: Reservasi,
+    beforeEnter: AuthGuard
   },{
     path: '/team',
     name: 'Team',
@@ -58,11 +62,13 @@ const routes = [
   },{
     path: '/bank',
     name: 'Bank',
-    component: Bank
+    component: Bank,
+    beforeEnter: AuthGuard
   },{
     path: '/user/profile',
     name: 'Profile',
-    component: Profile
+    component: Profile,
+    beforeEnter: AuthGuard
   },
   
 ]

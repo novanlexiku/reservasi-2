@@ -227,13 +227,13 @@ export default new Vuex.Store({
     },
 
     // aksi untuk menyimpan data reservasi dengan batch
-    createReservasi ({commit}, payload) {
+    createReservasi ({commit, getters}, payload) {
       // Get a new write batch
       var batch = db.batch();
       // Set the value of doc
       var add = db.collection("reservasi").doc();
       batch.set(add, {
-        id: payload.id,
+        reserv_id: getters.user.id,
         nama: payload.nama,
         no_ktp: payload.no_ktp,
         telp: payload.telp,

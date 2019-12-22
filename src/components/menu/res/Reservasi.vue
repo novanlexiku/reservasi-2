@@ -181,31 +181,31 @@
                                             <v-card-text width="300">
                                                 <v-form class="px-3" ref="form" @submit.prevent="submit">
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field label="Nama Ruangan" v-model="room.title" prepend-icon="mdi-account" readonly></v-text-field>
+                                                    <v-text-field outlined label="Nama Ruangan" v-model="room.title" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field label="Harga" v-model="room.harga" prepend-icon="mdi-currency-usd" readonly></v-text-field>
+                                                    <v-text-field outlined label="Harga" v-model="room.harga" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" readonly></v-text-field>
+                                                    <v-text-field outlined label="Nama" v-model="nama" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field label="No Ktp" v-model="no_ktp" prepend-icon="mdi-information" readonly></v-text-field>
+                                                    <v-text-field outlined label="No Ktp" v-model="no_ktp" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field label="Telp" v-model="telp" prepend-icon="mdi-cellphone" readonly></v-text-field>
+                                                    <v-text-field outlined label="Telp" v-model="telp" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field :value="formattedDate" label="Tanggal Check-in" prepend-icon="mdi-calendar-account" readonly></v-text-field>
+                                                    <v-text-field outlined :value="formattedDate" label="Tanggal Check-in" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field label="Lama Sewa" v-model="sewa" suffix="hari" prepend-icon="mdi-arrow-right-bold-box-outline" readonly></v-text-field>
+                                                    <v-text-field outlined label="Lama Sewa" v-model="sewa" suffix="hari" readonly></v-text-field>
                                                     </v-col>
                                                      <v-col cols="12" sm="6">
-                                                    <v-text-field label="Transfer ke Rekening" v-model="bank" prepend-icon="mdi-bank" readonly></v-text-field>
+                                                    <v-text-field outlined label="Transfer ke Rekening" v-model="bank" donly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field v-model="total" prefix="Rp." prepend-icon="mdi-currency-usd" readonly></v-text-field>
+                                                    <v-text-field outlined v-model="total" prefix="Rp." readonly></v-text-field>
                                                     </v-col>
                                                 <v-btn
                                                   color="primary"
