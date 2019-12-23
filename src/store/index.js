@@ -63,6 +63,9 @@ export default new Vuex.Store({
     featuredReservasi (state){
       return state.loadedReservasi
     },
+    loadedUser (state) {
+      return state.user
+    },
     user (state) {
       return state.user
     },
@@ -102,6 +105,9 @@ export default new Vuex.Store({
     setLoadedUsers (state, payload){
       state.loadedUsers = payload
     },
+    setLoadedUser (state, payload){
+      state.user = payload
+    },
     setUser (state, payload){
       state.user = payload
     },
@@ -116,6 +122,8 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    
+    // load data semua user
     loadUsers ({commit}) {
       commit('setLoading', true)
       // set data menggunakan cloud firestore
@@ -366,16 +374,18 @@ export default new Vuex.Store({
       commit('setLoading', true)
       commit('clearError')
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-      .then(
-        user => {
+      .then(user => {
           commit('setLoading', false)
           const newUser = {
             id: user.user.uid,
+            nama: user.user.displayName,
+            image: user.user.photoURL,
+            email: user.user.email,
             registeredRooms: []
           }
           commit('setUser', newUser)
-        }
-      ).catch(
+        })
+        .catch(
         error => {
           commit('setLoading', false)
           commit('setError', error)

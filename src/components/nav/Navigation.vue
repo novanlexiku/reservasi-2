@@ -31,14 +31,17 @@
         <v-navigation-drawer v-model="drawer" app>
             <!-- avatar -->
             <v-row dense>
-                <v-col class="mt-5 text-center">
+                <v-col v-if="loggedIn" class="mt-5 text-center">
                     <v-avatar size="100">
-                    <img src="https://dummyimage.com/medrect">
+                    <img :src="user.image">
                     </v-avatar>
-                    <p v-if="loggedIn" class="subtitle-1 mt-1">Logged In</p>
-                    <p v-else class="subtitle-1 mt-1">Logged Out</p>
+                    <p class="subtitle-1 mt-1">{{user.nama}}</p>
                 </v-col>
-                
+                <v-col v-else class="mt-5 text-center">
+                    <v-avatar size="100">
+                    </v-avatar>
+                    <p  class="subtitle-1 mt-1">Logged Out</p>
+                </v-col>
             </v-row>
       <!-- List Menu -->
            <v-list dense>
@@ -71,6 +74,9 @@ export default {
             drawer: false
     }),
     computed: {
+        user(){
+            return this.$store.getters.loadedUser
+        },
         items () {
             let items = [
                 { text: 'Home', icon: 'mdi-home', route: '/' },
