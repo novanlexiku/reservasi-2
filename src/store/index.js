@@ -13,6 +13,7 @@ export default new Vuex.Store({
     loadedBanks:[],
     loadedRooms: [],
     loadedReservasi:[],
+    loadedUsers:[],
     user: null,
     loading: false,
     error: null
@@ -49,6 +50,11 @@ export default new Vuex.Store({
           return reservasi.id === reservasiID
         })
       } 
+    },
+    loadedUsers (state) {
+      return state.loadedUsers.filter(user =>{
+        return user.role === 'pelanggan' || user.role === 'karyawan'
+      })
     },
     // load data banks
     featuredBanks (state){
@@ -93,6 +99,9 @@ export default new Vuex.Store({
     createReservasi (state, payload){
       state.reservasi.push(payload)
     },
+    setLoadedUsers (state, payload){
+      state.loadedUsers = payload
+    },
     setUser (state, payload){
       state.user = payload
     },
@@ -107,6 +116,23 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    loadUsers ({commit}) {
+      commit('setLoading', true)
+      // set data menggunakan cloud firestore
+      db.collection("users")
+      .onSnapshot(function(querySnapshot) {
+        const users = []
+        querySnapshot.forEach((doc) => {
+          users.push({
+            ...doc.data(),
+            id: doc.id
+          })
+          commit('setLoadedUsers', users)
+          commit('setLoading', false)
+     })
+      })    
+    },
+    // load data room
     loadRooms ({commit}) {
       commit('setLoading', true)
       // set data menggunakan cloud firestore
@@ -121,32 +147,7 @@ export default new Vuex.Store({
           commit('setLoadedRooms', rooms)
           commit('setLoading', false)
      })
-      })
-    // Set data menggunakan realtime database
-        // firebase.database().ref('rooms').once('value')
-        // .then((data) => {
-        //   const rooms = []
-        //   const obj = data.val()
-        //   for (let key in obj) {
-        //     rooms.push({
-        //       id: key,
-        //       title: obj[key].title,
-        //       deskripsi: obj[key].deskripsi,
-        //       image: obj[key].image,
-        //       harga: obj[key].harga,
-        //       status: obj[key].status,
-        //       prominent: obj[key].prominent
-        //     })
-        //   }
-        //   commit('setLoadedRooms', rooms)
-        //   commit('setLoading', false)
-        // })
-        // .catch(
-        //   (error) => {
-        //     console.log(error)
-        //     commit('setLoading', false)
-        //   }
-        // )
+      })    
     },
     // load data bank
     loadBanks ({commit}) {
@@ -165,7 +166,6 @@ export default new Vuex.Store({
           commit('setLoading', false)
      })
       })
-    
     },
 
     // load data reservasi

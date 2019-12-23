@@ -30,7 +30,8 @@ firebase.auth().onAuthStateChanged(user => {
         
       this.$store.dispatch('loadRooms'),
       this.$store.dispatch('loadBanks'),
-      this.$store.dispatch('loadReservasi')
+      this.$store.dispatch('loadReservasi'),
+      this.$store.dispatch('loadUsers')
       }
     }).$mount('#app')
   }

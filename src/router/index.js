@@ -34,7 +34,6 @@ const routes = [
     path: '/pengguna',
     name: 'Pengguna',
     component: Pengguna,
-    beforeEnter: AuthGuard
   },{
     path: '/rooms',
     name: 'Rooms',

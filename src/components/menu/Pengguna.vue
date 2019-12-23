@@ -28,7 +28,6 @@
                 <span>Sort users by role</span>
             </v-tooltip>
             <v-spacer></v-spacer>
-            <Popup @userAdded="snackbar=true" />
            </v-row>
           <!-- Grid data with chip -->
           <v-card flat class="pa-3" v-for="user in users" :key="user.nama">
@@ -41,10 +40,10 @@
                       <div class="caption grey--text">Email</div>
                       <div>{{user.email}}</div>
                   </v-col>
-                  <v-col cols="6" md="2">
+                  <!-- <v-col cols="6" md="2">
                       <div class="caption grey--text">Tanggal-lahir</div>
                       <div>{{user.tgllhr}}</div>
-                  </v-col>
+                  </v-col> -->
                   <v-col cols="6" md="2">
                         <div class="justify-end">
                             <v-chip small :color="`${user.role}`" :class="`v-chip--active white--text caption my-2`">{{user.role}}</v-chip>
@@ -59,16 +58,16 @@
 
 <script>
 
-import Popup from '../menu/Add/AddPengguna'
 
 export default {
-  components:{Popup},
     data: () => ({
-        users: [
-          {nama:'Van' , email:'vanlexiku@gmail.com' , tgllhr:'01-11-1991' , role:'karyawan' }],
       snackbar: false,
     }),
-    
+    computed: {
+      users () {
+        return this.$store.getters.loadedUsers
+      },
+    },
     // sort method
     methods:{
         sortByA(prop){
