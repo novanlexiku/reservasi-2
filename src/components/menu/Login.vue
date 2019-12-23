@@ -45,7 +45,18 @@
                     v-model.trim="signupForm.confirmPassword"
                     id="password3" prepend-icon="mdi-textbox-password" 
                     ></v-text-field>
-
+                    <v-text-field label="Nama" v-model.trim="signupForm.nama" id="nama" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
+                    <v-btn raised class="primary ml-8" @click="onPickFile">Upload Image</v-btn>
+                    <input
+                      type="file"
+                      ref="fileInput"
+                      style="display:none"
+                      accept="image/*"
+                      :rules="imageRules"
+                      @change="onFilePicked">
+                    <div class="ml-8">
+                    <img height="200" width="300" :src="imageUrl" >
+                    </div>
                     <button @click="signup" class="button mt-3" :loading="loading">Daftar</button>
                     <div class="extras">
                         <a @click="toggleForm">Kembali ke Login</a>
@@ -85,6 +96,9 @@
     export default {
         data() {
             return {
+                image:null,
+                imageUrl:'',
+                role:'pelanggan',
                 loginForm: {
                     email: '',
                     password: ''
@@ -92,7 +106,9 @@
                 signupForm: {
                     email: '',
                     password: '',
-                    confirmPassword: ''
+                    confirmPassword: '',
+                    nama: '',
+                    
                 },
                 passwordForm: {
                     email: ''
@@ -107,7 +123,7 @@
                 // Rules input + rules date
                 inputRules:[
                         v => !!v || 'Input is required',
-                        v => (v && v.length >= 6) || 'Input must be more than 6 characters',
+                        v => (v && v.length >= 5) || 'Input must be more than 5 characters',
                         ],
                 // email rules menggunakan regex ( regular expresion)
                 emailRules:[
@@ -115,7 +131,9 @@
                         const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                         return pattern.test(v) || 'Invalid e-mail.'}
                 ],
-                
+                imageRules: [
+                    value => !value || value.size < 10000000 || 'Image size should be less than 10 MB!',
+                ],
             }
         },
         computed: {
@@ -163,7 +181,10 @@
             signup(){
                     const user = {
                     email: this.signupForm.email,
-                    password: this.signupForm.password
+                    password: this.signupForm.password,
+                    nama: this.signupForm.nama,
+                    image: this.image,
+                    role:this.role
                     }
                 this.$store.dispatch('signUserUp', user)
             },
@@ -177,7 +198,23 @@
             onDismissed (){
                 this.$store.dispatch('clearError')
             },
-            
+            onPickFile () {
+                this.$refs.fileInput.click()
+            },
+            onFilePicked (event) {
+                const files = event.target.files
+                let filename = files[0].name
+                if (filename.lastIndexOf('.') <= 0) {
+                return alert('Please add a valid file!')
+                }
+                const fileReader = new FileReader()
+                fileReader.addEventListener('load', () => {
+                this.imageUrl = fileReader.result
+                })
+                fileReader.readAsDataURL(files[0])
+                this.image = files[0]        
+
+            }
         }
     }
 </script>

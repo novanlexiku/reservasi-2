@@ -226,13 +226,13 @@ export default new Vuex.Store({
       })
       .then(filedata => {
         // ambil url gambar dari storage
-        let imagePath = filedata.metadata.fullPath;
-        return firebase.storage().ref().child(imagePath).getDownloadURL();
+        let imagePath = filedata.metadata.fullPath
+        return firebase.storage().ref().child(imagePath).getDownloadURL()
       })
       .then(url => {
         // update database field image dengan di isi url gambar
-        imageUrl = url;
-        return db.collection('rooms').doc(key).update({image: imageUrl});
+        imageUrl = url
+        return db.collection('rooms').doc(key).update({image: imageUrl})
       })
       .then(() => {
         commit('setLoading', false)
@@ -242,16 +242,6 @@ export default new Vuex.Store({
       })
     // Reach out to firebase and store it
 
-      // simpan data ke dalam realtime database
-      // firebase.database().ref('rooms').push(room)
-      // .then((data) => {
-      //   const key = data.key
-      //   commit('createRoom', {
-      //     ...room,
-      //     id: key
-      //   })
-
-      // })
     },
 
     // aksi untuk menyimpan data reservasi dengan batch
@@ -280,51 +270,96 @@ export default new Vuex.Store({
       batch.commit().then(function () {
         commit('setLoading', false)
         console.log("Reservasi berhasil di buat");
-      });
-    
-    // menghubungkan ke firebase dan simpan di cloud firestore
-    //  db.collection("rooms").doc(payload.id).update({
-    //     nama: payload.nama,
-    //     no_ktp: payload.no_ktp,
-    //     telp: payload.telp,
-    //     checkin: payload.checkin,
-    //     status: payload.status,
-    //     sewa: payload.sewa,
-    //     total: payload.total
-    //   })
-    //   .then(function() {
-    //     commit('setLoading', false)
-    //       console.log("Document successfully updated!");
-    //   })
-    //   .catch(function(error) {
-    //       // The document probably doesn't exist.
-    //       console.error("Error updating document: ", error);
-    //   });
-            
-      
+      })
       
     },
-    //Aksi untuk daftar ke firebase auth
-    signUserUp ({commit}, payload){
+
+    // AKSI UNTUK DAFTAR KE FIREBASE AUTH
+    signUserUp ({commit, getters}, payload){
       commit('setLoading', true)
       commit('clearError')
+      // DAFTAR FIREBASE AUTH
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-      .then(
-        user => {
+      .then(user => {
           commit('setLoading', false)
           const newUser = {
             id: user.user.uid,
             registeredRooms: []
           }
           commit('setUser', newUser)
-        }
-      ).catch(
+        })
+        .then(() =>{
+          // AMBIL DATA DARI FORM INPUT
+          const users = {
+            id: getters.user.id,
+            nama: payload.nama,
+            email: payload.email,
+            role: payload.role
+          }
+          let imageUrl
+          let key
+          // menghubungkan ke firebase dan simpan di cloud firestore
+          db.collection('users').doc(users.id).set(users)
+          .then(() => {
+            // ambil id database sebagai key
+            key = getters.user.id
+            return key
+          })
+          .then(key => {
+            // edit nama gambar kemudian simpan ke storage
+            const filename = payload.image.name
+            const ext = filename.slice(filename.lastIndexOf('.'))
+            return firebase.storage().ref('users/' + key + ext).put(payload.image)
+          })
+          .then(filedata => {
+            // ambil url gambar dari storage
+            let imagePath = filedata.metadata.fullPath
+            return firebase.storage().ref().child(imagePath).getDownloadURL()
+          })
+          .then(url => {
+            // update database field image dengan di isi url gambar
+            imageUrl = url
+            return db.collection('users').doc(key).update({image: imageUrl})
+          })
+          .then(() => {
+            // Ambil data yang sudah di input sesuai ID user
+            db.collection('users').doc(getters.user.id).get()
+            .then((doc)=> {
+              // console untuk keperluan white box test
+                if (doc.exists) {
+                    console.log("Document data:", doc.data())
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!")
+                }
+            })
+            .catch(function(error) {
+                console.log("Error getting document:", error)
+            })
+          })
+          .then(()=>{
+            // Update data user yang ada di firebase auth
+            firebase.auth().currentUser.updateProfile({
+              displayName: payload.nama,
+              photoURL: imageUrl
+            }).then(function() {
+              // Update successful.
+            }).catch(function(error) {
+              // An error happened.
+              console.log(error)
+            })
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+        // Simpan data
+        })
+        .catch(
         error => {
           commit('setLoading', false)
           commit('setError', error)
           console.log(error)
-        }
-      )
+        })
     },
     //Aksi untuk login ke firebase auth
     signUserIn ({commit}, payload){

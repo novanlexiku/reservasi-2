@@ -93,7 +93,7 @@
                                                 <v-btn text class="ml-3" router to="/">Batal</v-btn> 
                                             </v-card-text>
                                                 <v-img
-                                                :src="require(`@/assets/articles/${room.image}`)"
+                                                :src="room.image"
                                                 height="200"
                                                 max-width="400"
                                                 class="mr-1 mb-1"
@@ -159,7 +159,7 @@
                                               </v-form>
                                             </v-card-text>
                                                 <v-img
-                                                :src="require(`@/assets/articles/${room.image}`)"
+                                                :src="room.image"
                                                 height="200"
                                                 max-width="400"
                                                 class="mr-1 mb-1"
