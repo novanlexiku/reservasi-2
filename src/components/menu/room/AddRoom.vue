@@ -14,6 +14,16 @@
                 <v-form class="px-3" ref="form" @submit.prevent="submit">
                     <v-text-field label="Nama Ruangan" v-model="title" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
                     <v-text-field label="Harga/Hari" v-model="harga" prefix="Rp." prepend-icon="mdi-wallet" :rules="inputRules"></v-text-field>
+                    <v-select
+                      :items="items"
+                      item-text="text"
+                      item-value="value"
+                      label="Standard"
+                      v-model="jenis"
+                      bottom
+                      autocomplete
+                      prepend-icon="mdi-home"
+                    ></v-select>
                     <v-btn raised class="primary ml-8" @click="onPickFile">Upload Image</v-btn>
                     <input
                       type="file"
@@ -35,10 +45,15 @@
 <script>
 export default {
   data: () => ({
+    items: [{text: 'Standar',value: 'Standar'},
+            {text: 'Family',value: 'Family'},
+            {text: 'Deluxe',value: 'Deluxe'}
+            ],
     title: '',
     harga: '',
     status: 'available',
     deskripsi: '',
+    jenis: '',
     image:null,
     imageUrl:'',
     prominent: false,
@@ -68,6 +83,7 @@ export default {
               harga: this.harga,
               status: this.status,
               deskripsi: this.deskripsi,
+              jenis: this.jenis,
               image: this.image,
               prominent: this.prominent
           }

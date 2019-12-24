@@ -184,7 +184,7 @@
                                                     <v-text-field outlined label="Nama Ruangan" v-model="room.title" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field outlined label="Harga" v-model="room.harga" readonly></v-text-field>
+                                                    <v-text-field outlined label="Harga / hari" v-model="room.harga" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field outlined label="Nama" v-model="nama" readonly></v-text-field>
@@ -220,8 +220,8 @@
                                             </v-card-text>
                                             <v-card
                                               class="mr-1 mb-1"
-                                              width="500"
-                                              height="400"
+                                              width="400"
+                                              height="250"
                                               >
                                               <v-card-text>
                                                 <div>Pemesanan</div>

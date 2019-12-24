@@ -84,7 +84,16 @@ export default {
                 { text: 'Login', icon: 'mdi-map-marker', route: '/login' },
                 { text: 'Team', icon: 'mdi-account-group', route: '/team' },
             ]
-            if (this.loggedIn) {
+            if (this.userIsAuthenticated && this.loggedIn) {
+                items = [
+                { text: 'Home', icon: 'mdi-home', route: '/' },
+                { text: 'Explore', icon: 'mdi-map', route: '/explore' },
+                { text: 'History', icon: 'mdi-history', route: '/history' },
+                { text: 'Team', icon: 'mdi-account-group', route: '/team' },
+                { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
+                ]
+            }
+            if (this.userIsAdmin && this.loggedIn){
                 items = [
                 { text: 'Home', icon: 'mdi-home', route: '/' },
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
@@ -98,7 +107,15 @@ export default {
             }
             return items
         },
-        
+        userIsAuthenticated () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      },
+      userIsAdmin () {
+        if (!this.userIsAuthenticated) {
+          return false
+        }
+        return this.$store.getters.user.id === 'OvQ3a3On3iYoioYhmp1tf311SDg2'
+      },
     },
     methods:{
         //method logout

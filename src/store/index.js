@@ -230,6 +230,7 @@ export default new Vuex.Store({
         harga: payload.harga,
         status: payload.status,
         deskripsi: payload.deskripsi,
+        jenis: payload.jenis,
         prominent: payload.prominent
       }
       let imageUrl

@@ -38,6 +38,7 @@ const routes = [
     path: '/rooms',
     name: 'Rooms',
     component: Rooms,
+    beforeEnter: AuthGuard
   },{
     path: '/rooms/:id',
     name: 'Room',
