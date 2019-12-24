@@ -15,24 +15,21 @@ Vue.component('app-alert', AlertCmp)
 
 
 
-let app;
-
-firebase.auth().onAuthStateChanged(user => {
-  console.log(user)
-  if(!app){
-    app = new Vue({
-      router,
-      store,
-      vuetify,
-      db,
-      render: h => h(App),
-      created () {
-        
-      this.$store.dispatch('loadRooms'),
-      this.$store.dispatch('loadBanks'),
-      this.$store.dispatch('loadReservasi'),
-      this.$store.dispatch('loadUsers')
+new Vue({
+  router,
+  store,
+  vuetify,
+  db,
+  render: h => h(App),
+  created () {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$store.dispatch('autoSignIn', user)
       }
-    }).$mount('#app')
+    })
+  this.$store.dispatch('loadRooms'),
+  this.$store.dispatch('loadBanks'),
+  this.$store.dispatch('loadReservasi'),
+  this.$store.dispatch('loadUsers')
   }
-})
+}).$mount('#app')

@@ -87,6 +87,21 @@ export default new Vuex.Store({
     createRoom (state, payload){
       state.loadedRooms.push(payload)
     },
+    // update data room
+    updateRoom (state, payload) {
+      const room = state.loadedRooms.find(room => {
+        return room.id === payload.id
+      })
+      if (payload.title) {
+        room.title = payload.title
+      }
+      if (payload.deskripsi) {
+        room.deskripsi = payload.deskripsi
+      }
+      if (payload.harga) {
+        room.harga = payload.harga
+      }
+    },
     // set perubahan data bank
     setLoadedBanks (state, payload){
       state.loadedBanks = payload
@@ -248,10 +263,30 @@ export default new Vuex.Store({
       .catch((error) => {
         console.log(error)
       })
-    // Reach out to firebase and store it
-
     },
-
+    //Aksi edit room
+    EditRoom ({commit}, payload){
+      const updateObj = {}
+      if (payload.title) {
+        updateObj.title = payload.title
+      }
+      if (payload.deskripsi) {
+        updateObj.deskripsi = payload.deskripsi
+      }
+      if (payload.harga) {
+        updateObj.harga = payload.harga
+      }
+      var update = db.collection("rooms").doc(payload.id);
+      update.update(updateObj)
+      .then(() => {
+        commit('setLoading', false)
+        commit('updateRoom', payload)
+      })
+      .catch(error => {
+        console.log(error)
+        commit('setLoading', false)
+      })
+    },
     // aksi untuk menyimpan data reservasi dengan batch
     createReservasi ({commit, getters}, payload) {
       // Get a new write batch
@@ -393,9 +428,12 @@ export default new Vuex.Store({
         }
       )
     },
+    autoSignIn ({commit}, payload) {
+      commit('setUser', {id: payload.uid, nama: payload.displayName, image: payload.photoURL, email: payload.email, registeredRooms: []})
+    },
     clearError ({commit}) {
       commit('clearError')
-    }
+    },
   },
   modules: {
   }

@@ -1,5 +1,10 @@
 <template>
     <v-container grid-list-xs>
+        <!-- Snackbar -->
+        <v-snackbar v-model="snackbar" top color="success">
+          <span>Data berhasil ditambahkan</span>
+          <v-btn text color="white" @click="snackbar = false">Close</v-btn>
+        </v-snackbar>
                         <v-row>
                             <!-- Deskripsi Ruangan -->
                             <v-col cols="12" sm="8">
@@ -12,6 +17,11 @@
                                         <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
                                         <v-list-item-subtitle>Harga : Rp.{{room.harga}}</v-list-item-subtitle>
                                     </v-list-item-content>
+                                    <template v-if="userIsCreator">
+                                            <div justify="space-between">
+                                                <Edit :room="room" @roomEdit="snackbar=true"/>
+                                            </div>
+                                        </template>
                                     </v-list-item>
                                             <div class="d-flex flex-no-wrap justify-space-between">
                                             <div>
@@ -95,16 +105,28 @@
 </template>
 
 <script>
+import Edit from '../room/edit/EditRoomDetails'
 export default {
+    components:{Edit},
     data: () => ({
-        image:true
+        image:true,
+        snackbar: false,
     }),
     props:['id'],
 computed:{
     // panggil data ruangan
     room (){
         return this.$store.getters.loadedRoom(this.id)
-    }
+    },
+    userIsAuthenticated () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      },
+      userIsCreator () {
+        if (!this.userIsAuthenticated) {
+          return false
+        }
+        return this.$store.getters.user.id === this.room.creatorId
+      },
 },
 methods:{
     showImage(){

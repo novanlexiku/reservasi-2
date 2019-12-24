@@ -33,7 +33,7 @@
           <!-- Grid data with chip -->
           <v-card flat class="pa-3" v-for="room in paginatedArticles" :key="room.id">
               <v-row wrap :class="`pa-3 room ${room.status}`">
-                  <v-col cols="12" md="4">
+                  <v-col cols="12" md="2">
                       <div class="caption grey--text">Nama Ruangan</div>
                       <div>{{room.title}}</div>
                   </v-col>
@@ -56,6 +56,7 @@
                         </div>
                   </v-col>
                   <v-col cols="6" md="2">
+                        <div class="caption grey--text">Aksi</div>
                         <div justify="space-between">
                         <v-chip
                           class="text-uppercase ma-2"
