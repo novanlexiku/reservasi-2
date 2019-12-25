@@ -18,7 +18,7 @@
                       :items="items"
                       item-text="text"
                       item-value="value"
-                      label="Standard"
+                      label="Jenis Ruangan"
                       v-model="jenis"
                       bottom
                       autocomplete

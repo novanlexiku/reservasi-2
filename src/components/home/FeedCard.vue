@@ -34,7 +34,7 @@
                       small
                       @click.stop=""
                     >
-                    jenis
+                    {{value.jenis}}
                     </v-chip>
                     <v-chip small :color="`${value.status}`" :class="`v-chip--active white--text caption my-2`">{{value.status}}</v-chip>
                     <h3 class="title font-weight-bold ma-2">

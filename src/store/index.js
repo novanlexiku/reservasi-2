@@ -9,6 +9,7 @@ import db from '../fb'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  // STATE = KONDISI AWAL DARI DATA
   state: {
     loadedBanks:[],
     loadedRooms: [],
@@ -18,64 +19,7 @@ export default new Vuex.Store({
     loading: false,
     error: null
   },
-  getters: {
-    //data yang akan ditampilkan di landing
-    featuredRooms (state) {
-      return state.loadedRooms
-    },
-    // Filter data yang akan di load
-    loadedRooms (state){
-      return state.loadedRooms.filter(room =>{
-        return room.status === 'available'
-      })
-    },
-    // Data di load per id
-    loadedRoom (state){
-      return (roomID) => {
-        return state.loadedRooms.find((room) => {
-          return room.id === roomID
-        })
-      } 
-    },
-    // Filter data yang akan di load
-    loadedBanks (state){
-      return state.loadedBanks.filter(bank =>{
-        return bank.status === 'available'
-      })
-    },
-    // Data di load per id
-    loadedReserv (state){
-      return (reservasiID) => {
-        return state.loadedReservasi.find((reservasi) => {
-          return reservasi.id === reservasiID
-        })
-      } 
-    },
-    loadedUsers (state) {
-      return state.loadedUsers.filter(user =>{
-        return user.role === 'pelanggan' || user.role === 'karyawan'
-      })
-    },
-    // load data banks
-    featuredBanks (state){
-      return state.loadedBanks
-    },
-    featuredReservasi (state){
-      return state.loadedReservasi
-    },
-    loadedUser (state) {
-      return state.user
-    },
-    user (state) {
-      return state.user
-    },
-    loading (state){
-      return state.loading
-    },
-    error (state) {
-      return state.error
-    }
-  },
+  // MUTATION = MENGATUR / MENYIMPAN PERUBAHAN DATA
   mutations: {
     setDrawer: (state, payload) => (state.drawer = payload),
     toggleDrawer: state => (state.drawer = !state.drawer),
@@ -100,6 +44,21 @@ export default new Vuex.Store({
       }
       if (payload.harga) {
         room.harga = payload.harga
+      }
+    },
+    // update data bank
+    updateBank (state, payload) {
+      const bank = state.loadedBanks.find(bank => {
+        return bank.id === payload.id
+      })
+      if (payload.title) {
+        bank.title = payload.title
+      }
+      if (payload.rekening) {
+        bank.rekening = payload.rekening
+      }
+      if (payload.nama) {
+        bank.nama = payload.nama
       }
     },
     // set perubahan data bank
@@ -136,8 +95,8 @@ export default new Vuex.Store({
       state.error = null
     }
   },
+  // ACTION = AKSI / FUNGSI YANG MENGUBAH DATA
   actions: {
-    
     // load data semua user
     loadUsers ({commit}) {
       commit('setLoading', true)
@@ -223,15 +182,39 @@ export default new Vuex.Store({
         commit('setLoading', false)
         })
     },
+    // aksi edit bank
+    editBank ({commit}, payload){
+      const updateObj = {}
+      if (payload.title) {
+        updateObj.title = payload.title
+      }
+      if (payload.rekening) {
+        updateObj.rekening = payload.rekening
+      }
+      if (payload.nama) {
+        updateObj.nama = payload.nama
+      }
+      var update = db.collection("banks").doc(payload.id);
+      update.update(updateObj)
+      .then(() => {
+        commit('setLoading', false)
+        commit('updateBank', payload)
+      })
+      .catch(error => {
+        console.log(error)
+        commit('setLoading', false)
+      })
+    },
     // aksi untuk menyimpan data room
-    createRoom ({commit}, payload) {
+    createRoom ({commit, getters}, payload) {
       const room = {
         title: payload.title,
         harga: payload.harga,
         status: payload.status,
         deskripsi: payload.deskripsi,
         jenis: payload.jenis,
-        prominent: payload.prominent
+        prominent: payload.prominent,
+        creatorId: getters.user.id
       }
       let imageUrl
       let key
@@ -435,6 +418,65 @@ export default new Vuex.Store({
     clearError ({commit}) {
       commit('clearError')
     },
+  },
+  // GETTERS = MENGAMBIL DATA DARI STATE
+  getters: {
+    //data yang akan ditampilkan di landing
+    featuredRooms (state) {
+      return state.loadedRooms
+    },
+    // Filter data yang akan di load
+    loadedRooms (state){
+      return state.loadedRooms.filter(room =>{
+        return room.status === 'available'
+      })
+    },
+    // Data di load per id
+    loadedRoom (state){
+      return (roomID) => {
+        return state.loadedRooms.find((room) => {
+          return room.id === roomID
+        })
+      } 
+    },
+    // Filter data yang akan di load
+    loadedBanks (state){
+      return state.loadedBanks.filter(bank =>{
+        return bank.status === 'available'
+      })
+    },
+    // Data di load per id
+    loadedReserv (state){
+      return (reservasiID) => {
+        return state.loadedReservasi.find((reservasi) => {
+          return reservasi.id === reservasiID
+        })
+      } 
+    },
+    loadedUsers (state) {
+      return state.loadedUsers.filter(user =>{
+        return user.role === 'pelanggan' || user.role === 'karyawan'
+      })
+    },
+    // load data banks
+    featuredBanks (state){
+      return state.loadedBanks
+    },
+    featuredReservasi (state){
+      return state.loadedReservasi
+    },
+    loadedUser (state) {
+      return state.user
+    },
+    user (state) {
+      return state.user
+    },
+    loading (state){
+      return state.loading
+    },
+    error (state) {
+      return state.error
+    }
   },
   modules: {
   }

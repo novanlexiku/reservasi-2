@@ -41,6 +41,12 @@
                             <v-chip small :color="`${bank.status}`" :class="`v-chip--active white--text caption my-2`">{{bank.status}}</v-chip>
                         </div>
                   </v-col>
+                  <v-col cols="6" md="2">
+                        <div class="caption grey--text">Aksi</div>
+                        <div justify="space-between">
+                        <Edit :bank="bank" @bankEdit="snackbar=true"/>                        
+                    </div>
+                  </v-col>
               </v-row>
             <v-divider></v-divider>
           </v-card>
@@ -96,9 +102,10 @@
 
 
 import Popup from '../bank/Addbank'
+import Edit from '../bank/edit/EditBank'
 
 export default {
-  components: {Popup},
+  components: {Popup, Edit},
     data: () => ({
       page: 1,
       snackbar: false,
