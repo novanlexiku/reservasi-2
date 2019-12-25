@@ -99,7 +99,7 @@ export default new Vuex.Store({
   actions: {
     // load data semua user
     loadUsers ({commit}) {
-      commit('setLoading', true)
+      
       // set data menggunakan cloud firestore
       db.collection("users")
       .onSnapshot(function(querySnapshot) {
@@ -110,13 +110,13 @@ export default new Vuex.Store({
             id: doc.id
           })
           commit('setLoadedUsers', users)
-          commit('setLoading', false)
+          
      })
       })    
     },
     // load data room
     loadRooms ({commit}) {
-      commit('setLoading', true)
+      
       // set data menggunakan cloud firestore
       db.collection("rooms")
       .onSnapshot(function(querySnapshot) {
@@ -127,13 +127,13 @@ export default new Vuex.Store({
             id: doc.id
           })
           commit('setLoadedRooms', rooms)
-          commit('setLoading', false)
+          
      })
       })    
     },
     // load data bank
     loadBanks ({commit}) {
-      commit('setLoading', true)
+      
       // set data menggunakan cloud firestore
       db.collection("banks")
       .onSnapshot(function(querySnapshot) {
@@ -145,14 +145,13 @@ export default new Vuex.Store({
 
           })
           commit('setLoadedBanks',banks)
-          commit('setLoading', false)
+          
      })
       })
     },
 
     // load data reservasi
     loadReservasi ({commit}) {
-      commit('setLoading', true)
       // set data menggunakan cloud firestore
       db.collection("reservasi")
       .onSnapshot(function(querySnapshot) {
@@ -163,7 +162,7 @@ export default new Vuex.Store({
             id: doc.id
           })
           commit('setLoadedReservasi',reservasi)
-          commit('setLoading', false)
+          
      })
       })
     
@@ -197,12 +196,12 @@ export default new Vuex.Store({
       var update = db.collection("banks").doc(payload.id);
       update.update(updateObj)
       .then(() => {
-        commit('setLoading', false)
+        
         commit('updateBank', payload)
       })
       .catch(error => {
         console.log(error)
-        commit('setLoading', false)
+        
       })
     },
     // aksi untuk menyimpan data room
@@ -263,12 +262,12 @@ export default new Vuex.Store({
       var update = db.collection("rooms").doc(payload.id);
       update.update(updateObj)
       .then(() => {
-        commit('setLoading', false)
+        
         commit('updateRoom', payload)
       })
       .catch(error => {
         console.log(error)
-        commit('setLoading', false)
+        
       })
     },
     // aksi untuk menyimpan data reservasi dengan batch
@@ -303,12 +302,12 @@ export default new Vuex.Store({
 
     // AKSI UNTUK DAFTAR KE FIREBASE AUTH
     signUserUp ({commit, getters}, payload){
-      commit('setLoading', true)
+      
       commit('clearError')
       // DAFTAR FIREBASE AUTH
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
       .then(user => {
-          commit('setLoading', false)
+          
           const newUser = {
             id: user.user.uid,
             registeredRooms: []
@@ -383,37 +382,78 @@ export default new Vuex.Store({
         })
         .catch(
         error => {
-          commit('setLoading', false)
+          
           commit('setError', error)
           console.log(error)
         })
     },
     //Aksi untuk login ke firebase auth
-    signUserIn ({commit}, payload){
-      commit('setLoading', true)
+    signUserIn ({commit, getters}, payload){
+      
       commit('clearError')
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
       .then(user => {
-          commit('setLoading', false)
           const newUser = {
             id: user.user.uid,
-            nama: user.user.displayName,
-            image: user.user.photoURL,
-            email: user.user.email,
-            registeredRooms: []
           }
           commit('setUser', newUser)
         })
+        .then(() => {
+          // Ambil data yang sudah di input sesuai ID user
+          db.collection('users').doc(getters.user.id).get()
+          .then((doc)=> {
+            // console untuk keperluan white box test
+              if (doc.exists) {
+                  console.log("Document data:", doc.data())
+                  const newUser = {
+                    id: doc.data().id,
+                    nama: doc.data().nama,
+                    image: doc.data().image,
+                    email: doc.data().email,
+                    role: doc.data().role
+                  }
+                  commit('setUser', newUser)
+              } else {
+                  // doc.data() will be undefined in this case
+                  console.log("No such document!")
+              }
+          })
+          .catch(function(error) {
+              console.log("Error getting document:", error)
+          })
+        })
         .catch(
         error => {
-          commit('setLoading', false)
+          
           commit('setError', error)
           console.log(error)
         }
       )
     },
     autoSignIn ({commit}, payload) {
-      commit('setUser', {id: payload.uid, nama: payload.displayName, image: payload.photoURL, email: payload.email, registeredRooms: []})
+      commit('setUser', {id: payload.uid})
+      // Ambil data yang sudah di input sesuai ID user
+      db.collection('users').doc(payload.uid).get()
+      .then((doc)=> {
+        // console untuk keperluan white box test
+          if (doc.exists) {
+              console.log("Document data:", doc.data())
+              const newUser = {
+                id: doc.data().id,
+                nama: doc.data().nama,
+                image: doc.data().image,
+                email: doc.data().email,
+                role: doc.data().role
+              }
+              commit('setUser', newUser)
+          } else {
+              // doc.data() will be undefined in this case
+              console.log("No such document!")
+          }
+      })
+      .catch(function(error) {
+          console.log("Error getting document:", error)
+      })
     },
     clearError ({commit}) {
       commit('clearError')

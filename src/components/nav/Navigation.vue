@@ -105,6 +105,13 @@ export default {
                 { text: 'Bank', icon: 'mdi-bank', route: '/bank' }
                 ]
             }
+            if (this.userIsKaryawan && this.loggedIn){
+                items = [
+                { text: 'Home', icon: 'mdi-home', route: '/' },
+                { text: 'Explore', icon: 'mdi-map', route: '/explore' },
+                { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
+                ]
+            }
             return items
         },
         userIsAuthenticated () {
@@ -114,7 +121,13 @@ export default {
         if (!this.userIsAuthenticated) {
           return false
         }
-        return this.$store.getters.user.id === 'OvQ3a3On3iYoioYhmp1tf311SDg2'
+        return this.$store.getters.user.role === 'admin'
+      },
+      userIsKaryawan () {
+        if (!this.userIsAuthenticated) {
+          return false
+        }
+        return this.$store.getters.user.role === 'karyawan'
       },
     },
     methods:{
