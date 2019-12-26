@@ -389,7 +389,6 @@ export default new Vuex.Store({
     },
     //Aksi untuk login ke firebase auth
     signUserIn ({commit, getters}, payload){
-      
       commit('clearError')
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
       .then(user => {
@@ -414,7 +413,7 @@ export default new Vuex.Store({
                   }
                   commit('setUser', newUser)
               } else {
-                  // doc.data() will be undefined in this case
+                  // doc.data() yang tampil adalah undefined
                   console.log("No such document!")
               }
           })
