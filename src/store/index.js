@@ -299,7 +299,33 @@ export default new Vuex.Store({
       })
       
     },
+    // AKSI DAFTAR PENGGUNA UNTUK KEPERLUAN OFFICE
+    tambahPelanggan ({commit}, payload){
+      const pengguna = {
+        nama: payload.nama,
+        no_ktp: payload.no_ktp,
+        email: payload.email,
+        tgllhr:payload.tgllhr,
+        role: payload.role,
+        alamat: payload.alamat,
+        image: payload.image
+      }
+      // menghubungkan ke firebase dan simpan di cloud firestore
+      db.collection('users').add(pengguna).then(() => {
+        console.log(pengguna)
+        commit('setLoading', false)
+        })
+    },
+    // AKSI HAPUS PELANGGAN
+    hapusPelanggan ({commit}, payload){
 
+      db.collection("users").doc(payload.id).delete().then(function() {
+        console.log("Document successfully deleted!");
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        })
+        commit('setLoading', false)
+    },
     // AKSI UNTUK DAFTAR KE FIREBASE AUTH
     signUserUp ({commit, getters}, payload){
       
