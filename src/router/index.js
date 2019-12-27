@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import Login from '../components/menu/Login'
 import History from '../components/menu/History'
-import Pengguna from '../components/menu/Pengguna'
+import Pelanggan from '../components/menu/pengguna/Pelanggan'
+import Karyawan from '../components/menu/pengguna/Karyawan'
 import Rooms from '../components/menu/room/Rooms'
 import Room from '../components/menu/room/Room'
 import Reservasi from '../components/menu/res/Reservasi'
@@ -31,9 +32,13 @@ const routes = [
     name: 'History',
     component: History
   },{
-    path: '/pengguna',
-    name: 'Pengguna',
-    component: Pengguna,
+    path: '/pelanggan',
+    name: 'Pelanggan',
+    component: Pelanggan,
+  },{
+    path: '/karyawan',
+    name: 'Karyawan',
+    component: Karyawan,
   },{
     path: '/rooms',
     name: 'Rooms',

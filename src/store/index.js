@@ -347,38 +347,31 @@ export default new Vuex.Store({
             imageUrl = url
             return db.collection('users').doc(key).update({image: imageUrl})
           })
-          .then(() => {
-            // Ambil data yang sudah di input sesuai ID user
-            db.collection('users').doc(getters.user.id).get()
-            .then((doc)=> {
-              // console untuk keperluan white box test
-                if (doc.exists) {
-                    console.log("Document data:", doc.data())
-                } else {
-                    // doc.data() will be undefined in this case
-                    console.log("No such document!")
-                }
-            })
-            .catch(function(error) {
-                console.log("Error getting document:", error)
-            })
-          })
-          .then(()=>{
-            // Update data user yang ada di firebase auth
-            firebase.auth().currentUser.updateProfile({
-              displayName: payload.nama,
-              photoURL: imageUrl
-            }).then(function() {
-              // Update successful.
-            }).catch(function(error) {
-              // An error happened.
-              console.log(error)
-            })
-          })
-          .catch((error) => {
-            console.log(error)
-          })
         // Simpan data
+        })
+        .then(() => {
+          // Ambil data yang sudah di input sesuai ID user
+          db.collection('users').doc(getters.user.id).get()
+          .then((doc)=> {
+            // console untuk keperluan white box test
+              if (doc.exists) {
+                  console.log("Document data:", doc.data())
+                  const newUser = {
+                    id: doc.data().id,
+                    nama: doc.data().nama,
+                    image: doc.data().image,
+                    email: doc.data().email,
+                    role: doc.data().role
+                  }
+                  commit('setUser', newUser)
+              } else {
+                  // doc.data() yang tampil adalah undefined
+                  console.log("No such document!")
+              }
+          })
+          .catch(function(error) {
+              console.log("Error getting document:", error)
+          })
         })
         .catch(
         error => {
@@ -423,7 +416,6 @@ export default new Vuex.Store({
         })
         .catch(
         error => {
-          
           commit('setError', error)
           console.log(error)
         }
@@ -492,9 +484,14 @@ export default new Vuex.Store({
         })
       } 
     },
-    loadedUsers (state) {
+    loadedPelanggan (state) {
       return state.loadedUsers.filter(user =>{
-        return user.role === 'pelanggan' || user.role === 'karyawan'
+        return user.role === 'pelanggan'
+      })
+    },
+    loadedKaryawan (state) {
+      return state.loadedUsers.filter(user =>{
+        return user.role === 'karyawan'
       })
     },
     // load data banks

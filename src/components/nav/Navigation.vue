@@ -44,7 +44,45 @@
                 </v-col>
             </v-row>
       <!-- List Menu -->
-           <v-list dense>
+           <v-list  v-if="userIsKaryawan || userIsAdmin" dense>
+            <v-list-item-group color="primary" class="mt-2">
+                <v-list-item
+                v-for="item in items"
+                :key="item.text"
+                router :to="item.route"
+                >
+                <v-list-item-icon>
+                    <v-icon v-text="item.icon"></v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
+                </v-list-item>
+            </v-list-item-group>
+            <v-list-group
+                    prepend-icon="mdi-account-box"
+                >
+                    <template v-slot:activator>
+                    <v-list-item-title>Pengguna</v-list-item-title>
+                    </template>
+                    <v-list-item-group sub-group color="primary" class="mt-2">
+                        <v-list-item
+                        v-for="item in admins"
+                        :key="item.text"
+                        router :to="item.route"
+                        >
+                        <v-list-item-icon>
+                            <v-icon v-text="item.icon"></v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title v-text="item.text"></v-list-item-title>
+                        </v-list-item-content>
+                        </v-list-item>
+                    </v-list-item-group>
+                </v-list-group>
+            </v-list>
+            <!-- List Menu -->
+           <v-list  v-else dense>
             <v-list-item-group color="primary" class="mt-2">
                 <v-list-item
                 v-for="item in items"
@@ -60,6 +98,7 @@
                 </v-list-item>
             </v-list-item-group>
             </v-list>
+            
         </v-navigation-drawer>
 
     </nav>
@@ -70,12 +109,19 @@ import firebase from 'firebase/app'
 export default {
     data: () => ({
                 loggedIn: false,
-    
-            drawer: false
+            drawer: false,
+            
     }),
     computed: {
         user(){
             return this.$store.getters.loadedUser
+        },
+        admins(){
+            let admins = [
+               { text: 'Pelanggan', icon: 'mdi-face-profile', route: '/pelanggan' },
+               { text: 'Karyawan', icon: 'mdi-face-profile', route: '/karyawan' },
+            ]
+            return admins
         },
         items () {
             let items = [
@@ -98,11 +144,10 @@ export default {
                 { text: 'Home', icon: 'mdi-home', route: '/' },
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'History', icon: 'mdi-history', route: '/history' },
-                { text: 'Pengguna', icon: 'mdi-account-box', route: '/pengguna' },
                 { text: 'Rooms', icon: 'mdi-archive', route: '/rooms' },
                 { text: 'Team', icon: 'mdi-account-group', route: '/team' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
-                { text: 'Bank', icon: 'mdi-bank', route: '/bank' }
+                { text: 'Bank', icon: 'mdi-bank', route: '/bank' },
                 ]
             }
             if (this.userIsKaryawan && this.loggedIn){
