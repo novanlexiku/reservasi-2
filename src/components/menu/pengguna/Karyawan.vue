@@ -9,6 +9,7 @@
           <!-- Sort data + tooltip -->
            <v-row class="mb-3">
             <v-spacer></v-spacer>
+            <Karyawan @tambahKaryawan="snackbar=true"/>
            </v-row>
           <!-- Grid data with chip -->
           <v-card flat class="pa-3" v-for="user in users" :key="user.nama">
@@ -31,6 +32,12 @@
                             <v-chip small :color="`${user.role}`" :class="`v-chip--active white--text caption my-2`">{{user.role}}</v-chip>
                         </div>
                   </v-col>
+                  <v-col cols="6" md="2">
+                        <div class="caption grey--text">Aksi</div>
+                        <div class="justify-end">
+                    <Edit :user="user" @editKaryawan="snackbar=true"/>
+                    </div>
+                  </v-col>
               </v-row>
             <v-divider></v-divider>
           </v-card>
@@ -39,9 +46,11 @@
 </template>
 
 <script>
-
+import Karyawan from '../pengguna/AddKaryawan'
+import Edit from '../pengguna/edit/EditKaryawan'
 
 export default {
+  components: {Karyawan, Edit},
     data: () => ({
       snackbar: false,
     }),

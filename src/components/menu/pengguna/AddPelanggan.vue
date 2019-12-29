@@ -8,7 +8,7 @@
         </template>
       <v-card>
             <v-card-title>
-                <h2>Tambah Pengguna</h2>
+                <h2>Tambah Pelanggan</h2>
             </v-card-title>
             <v-card-text>
                 <v-form class="px-3" ref="form">

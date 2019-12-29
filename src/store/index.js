@@ -46,8 +46,29 @@ export default new Vuex.Store({
         room.harga = payload.harga
       }
     },
-    // update data room
+    // update data pelanggan
     updatePelanggan (state, payload) {
+      const user = state.loadedUsers.find(user => {
+        return user.id === payload.id
+      })
+      if (payload.nama) {
+        user.nama = payload.nama
+      }
+      if (payload.no_ktp) {
+        user.no_ktp = payload.no_ktp
+      }
+      if (payload.email) {
+        user.email = payload.email
+      }
+      if (payload.tgllhr) {
+        user.tgllhr = payload.tgllhr
+      }
+      if (payload.alamat) {
+        user.alamat = payload.alamat
+      }
+    },
+    // update data karyawan
+    updateKaryawan (state, payload) {
       const user = state.loadedUsers.find(user => {
         return user.id === payload.id
       })
@@ -320,7 +341,7 @@ export default new Vuex.Store({
       })
       
     },
-    // AKSI DAFTAR PENGGUNA UNTUK KEPERLUAN OFFICE
+    // AKSI DAFTAR PELANGGAN UNTUK KEPERLUAN OFFICE
     tambahPelanggan ({commit}, payload){
       const pengguna = {
         nama: payload.nama,
@@ -371,6 +392,63 @@ export default new Vuex.Store({
       .then(() => {
         console.log(updateObj)
         commit('updatePelanggan', payload)
+      })
+      .catch(error => {
+        console.log(error)
+        
+      })
+    },
+    // AKSI DAFTAR KARYAWAN UNTUK KEPERLUAN OFFICE
+    tambahKaryawan ({commit}, payload){
+      const pengguna = {
+        nama: payload.nama,
+        no_ktp: payload.no_ktp,
+        email: payload.email,
+        tgllhr:payload.tgllhr,
+        role: payload.role,
+        alamat: payload.alamat,
+        image: payload.image
+      }
+      // menghubungkan ke firebase dan simpan di cloud firestore
+      db.collection('users').add(pengguna).then(() => {
+        console.log(pengguna)
+        commit('setLoading', false)
+        })
+    },
+    // AKSI HAPUS KARYAWAN
+    hapusKaryawan ({commit}, payload){
+
+      db.collection("users").doc(payload.id).delete().then(function() {
+        console.log("Document successfully deleted!");
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        })
+        commit('setLoading', false)
+    },
+    // AKSI EDIT KARYAWAN
+    editKaryawan ({commit}, payload){
+      const updateObj = {}
+      if (payload.nama) {
+        updateObj.nama = payload.nama
+      }
+      if (payload.no_ktp) {
+        updateObj.no_ktp = payload.no_ktp
+      }
+      if (payload.email) {
+        updateObj.email = payload.email
+      }
+      if (payload.tgllhr) {
+        updateObj.tgllhr = payload.tgllhr
+      }
+      if (payload.alamat) {
+        updateObj.alamat = payload.alamat
+      }
+      
+      var update = db.collection("users").doc(payload.id);
+      update.update(updateObj)
+      .then(() => {
+        console.log(updateObj)
+        commit('updateKaryawan', payload)
       })
       .catch(error => {
         console.log(error)

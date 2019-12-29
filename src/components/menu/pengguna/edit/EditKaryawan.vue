@@ -13,7 +13,7 @@
         </template>
       <v-card>
             <v-card-title>
-                <h2>Edit Pelanggan</h2>
+                <h2>Edit Karyawan</h2>
             </v-card-title>
             <v-card-text>
                 <v-form class="px-3" ref="form">
@@ -93,10 +93,10 @@ export default {
               tgllhr: this.tgllhr,
               alamat: this.alamat,
           }
-    this.$store.dispatch('editPelanggan', daftar)
+    this.$store.dispatch('editKaryawan', daftar)
                    this.loading = false;
                    this.dialog = false;
-                   this.$emit('editPelanggan');
+                   this.$emit('editKaryawan');
                    this.$refs.form.reset();
       }
     }

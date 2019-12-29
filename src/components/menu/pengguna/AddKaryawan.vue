@@ -1,19 +1,14 @@
 <template>
   <v-dialog max-width="600px" v-model="dialog">
         <template v-slot:activator="{on}">
-                      <v-chip
-                      v-on="on"
-                          class="text-uppercase mt-2"
-                          color="primary"
-                          label
-                          small
-                        >
-                      Edit
-                    </v-chip>       
+                <v-btn small text v-on="on" color="grey">
+                    <span class="subtitle-2">Tambah Karyawan</span>
+                    <v-icon right small>mdi-plus-box</v-icon>
+                </v-btn>        
         </template>
       <v-card>
             <v-card-title>
-                <h2>Edit Pelanggan</h2>
+                <h2>Tambah Karyawan</h2>
             </v-card-title>
             <v-card-text>
                 <v-form class="px-3" ref="form">
@@ -41,7 +36,7 @@
                       </v-date-picker>
                     </v-menu>
                     <v-textarea label="Alamat" v-model="alamat" prepend-icon="mdi-border-color" :rules="inputRules"></v-textarea>
-                    <v-btn text class="success mx-0 mt-3" @click="submit" :loading="loading">Edit</v-btn>
+                    <v-btn text class="success mx-0 mt-3" @click="submit" :loading="loading">Tambah</v-btn>
                 </v-form>
             </v-card-text>
         </v-card>
@@ -52,15 +47,14 @@
 import format from 'date-fns/format'
 import parseISO from 'date-fns/parseISO'
 export default {
-  props: ['user'],
-  data () {
-    return{
-    nama: this.user.nama,
-    no_ktp: this.user.no_ktp,
-    email: this.user.email,
-    tgllhr: this.user.tgllhr,
-    alamat: this.user.alamat,
-    // image: 'https://i.pravatar.cc/400?img=47',
+  data: () => ({
+    nama: '',
+    no_ktp: '',
+    email: '',
+    tgllhr:null,
+    role: 'karyawan',
+    alamat: '',
+    image: 'https://i.pravatar.cc/400?img=29',
     // Rules input + rules date
     inputRules:[
             v => !!v || 'Input is required',
@@ -79,24 +73,24 @@ export default {
     loading: false,
     dialog: false,
     show: false
-    }    
-  },
+  }),
   methods: {
     submit(){
       if(this.$refs.form.validate()){
           this.loading = true;
           const daftar = {
-              id: this.user.id,
               nama: this.nama,
               no_ktp: this.no_ktp,
               email: this.email,
               tgllhr: this.tgllhr,
+              role: this.role,
               alamat: this.alamat,
+              image: this.image
           }
-    this.$store.dispatch('editPelanggan', daftar)
+    this.$store.dispatch('tambahKaryawan', daftar)
                    this.loading = false;
                    this.dialog = false;
-                   this.$emit('editPelanggan');
+                   this.$emit('tambahKaryawan');
                    this.$refs.form.reset();
       }
     }
