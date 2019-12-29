@@ -17,11 +17,6 @@
                                         <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
                                         <v-list-item-subtitle>Harga : Rp.{{room.harga}}</v-list-item-subtitle>
                                     </v-list-item-content>
-                                    <template v-if="userIsCreator">
-                                            <div justify="space-between">
-                                                <Edit :room="room" @roomEdit="snackbar=true"/>
-                                            </div>
-                                        </template>
                                     </v-list-item>
                                             <div class="d-flex flex-no-wrap justify-space-between">
                                             <div>
@@ -105,9 +100,7 @@
 </template>
 
 <script>
-import Edit from '../room/edit/EditRoomDetails'
 export default {
-    components:{Edit},
     data: () => ({
         image:true,
         snackbar: false,

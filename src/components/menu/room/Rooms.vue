@@ -59,7 +59,7 @@
                         <div class="caption grey--text">Aksi</div>
                         <div justify="space-between">
                         <v-chip
-                          class="text-uppercase ma-2"
+                          class="text-uppercase mt-2 mr-2"
                           color="primary"
                           label
                           small
@@ -67,6 +67,7 @@
                         >
                       Detail
                     </v-chip>                        
+                    <Edit :room="room" @roomEdit="snackbar=true"/>
                     </div>
                   </v-col>
               </v-row>
@@ -122,11 +123,11 @@
  
 <script>
 
-
+import Edit from '../room/edit/EditRoomDetails'
 import Popup from '../room/AddRoom'
 
 export default {
-  components: {Popup},
+  components: {Popup, Edit},
     data: () => ({
       page: 1,
       snackbar: false,

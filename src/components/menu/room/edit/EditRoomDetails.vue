@@ -1,10 +1,15 @@
 <template>
   <v-dialog max-width="800px" v-model="dialog">
         <template v-slot:activator="{on}">
-            <v-btn small text v-on="on" color="grey">
-                <span class="subtitle-2">Edit Ruangan</span>
-                <v-icon right small>mdi-pencil</v-icon>
-            </v-btn>
+                     <v-chip
+                          v-on="on"
+                          class="text-uppercase mt-2"
+                          color="secondary"
+                          label
+                          small
+                        >
+                      Edit
+                    </v-chip>
         </template>
       <v-card>
             <v-card-title>
