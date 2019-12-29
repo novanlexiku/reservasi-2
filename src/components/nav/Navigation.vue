@@ -80,6 +80,27 @@
                         </v-list-item>
                     </v-list-item-group>
                 </v-list-group>
+                <v-list-group
+                    prepend-icon="mdi-clover"
+                >
+                    <template v-slot:activator>
+                    <v-list-item-title>Reservasi</v-list-item-title>
+                    </template>
+                    <v-list-item-group sub-group color="primary" class="mt-2">
+                        <v-list-item
+                        v-for="item in reservasi"
+                        :key="item.text"
+                        router :to="item.route"
+                        >
+                        <v-list-item-icon>
+                            <v-icon v-text="item.icon"></v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title v-text="item.text"></v-list-item-title>
+                        </v-list-item-content>
+                        </v-list-item>
+                    </v-list-item-group>
+                </v-list-group>
             </v-list>
             <!-- List Menu -->
            <v-list  v-else dense>
@@ -118,10 +139,17 @@ export default {
         },
         admins(){
             let admins = [
-               { text: 'Pelanggan', icon: 'mdi-face-profile', route: '/pelanggan' },
-               { text: 'Karyawan', icon: 'mdi-face-profile', route: '/karyawan' },
+               { text: 'Pelanggan', icon: 'mdi-account-circle-outline', route: '/pelanggan' },
+               { text: 'Karyawan', icon: 'mdi-account-group-outline', route: '/karyawan' },
             ]
             return admins
+        },
+        reservasi(){
+            let reservasi = [
+            { text: 'Konfirmasi', icon: 'mdi-marker-check', route: '/konfirmasi' },
+            { text: 'History', icon: 'mdi-history', route: '/history' },
+            ]
+            return reservasi
         },
         items () {
             let items = [
@@ -143,7 +171,6 @@ export default {
                 items = [
                 { text: 'Home', icon: 'mdi-home', route: '/' },
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
-                { text: 'History', icon: 'mdi-history', route: '/history' },
                 { text: 'Rooms', icon: 'mdi-archive', route: '/rooms' },
                 { text: 'Team', icon: 'mdi-account-group', route: '/team' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
