@@ -8,25 +8,6 @@
         </v-snackbar>
           <!-- Sort data + tooltip -->
            <v-row class="mb-3">
-            <v-tooltip top>
-            <template v-slot:activator="{on}">
-                <v-btn small text color="grey" @click="sortByB('nama')" v-on="on">
-                <v-icon left small>mdi-folder</v-icon>
-                <span class="caption text-lowercase">By user name</span>
-            </v-btn>
-            </template>
-            <span>Sort users by user name</span>
-            </v-tooltip>
-            
-            <v-tooltip top>
-                <template v-slot:activator="{on}">
-                <v-btn small text color="grey" @click="sortByA('role')" v-on="on">
-                <v-icon left small>mdi-calendar-clock</v-icon>
-                <span class="caption text-lowercase">By role</span>
-            </v-btn>
-                </template>
-                <span>Sort users by role</span>
-            </v-tooltip>
             <v-spacer></v-spacer>
            </v-row>
           <!-- Grid data with chip -->
@@ -40,11 +21,12 @@
                       <div class="caption grey--text">Email</div>
                       <div>{{user.email}}</div>
                   </v-col>
-                  <!-- <v-col cols="6" md="2">
-                      <div class="caption grey--text">Tanggal-lahir</div>
-                      <div>{{user.tgllhr}}</div>
-                  </v-col> -->
                   <v-col cols="6" md="2">
+                      <div class="caption grey--text">Avatar</div>
+                      <div class="justify-end"><v-img aspect-ratio="1" :src="user.image"></v-img></div>
+                  </v-col>
+                  <v-col cols="6" md="2">
+                        <div class="caption grey--text">Status</div>
                         <div class="justify-end">
                             <v-chip small :color="`${user.role}`" :class="`v-chip--active white--text caption my-2`">{{user.role}}</v-chip>
                         </div>

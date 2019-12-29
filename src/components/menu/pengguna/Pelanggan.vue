@@ -9,25 +9,6 @@
         </v-snackbar>
           <!-- Sort data + tooltip -->
            <v-row class="mb-3">
-            <v-tooltip top>
-            <template v-slot:activator="{on}">
-                <v-btn small text color="grey" @click="sortByB('nama')" v-on="on">
-                <v-icon left small>mdi-folder</v-icon>
-                <span class="caption text-lowercase">By user name</span>
-            </v-btn>
-            </template>
-            <span>Sort users by user name</span>
-            </v-tooltip>
-            
-            <v-tooltip top>
-                <template v-slot:activator="{on}">
-                <v-btn small text color="grey" @click="sortByA('role')" v-on="on">
-                <v-icon left small>mdi-calendar-clock</v-icon>
-                <span class="caption text-lowercase">By role</span>
-            </v-btn>
-                </template>
-                <span>Sort users by role</span>
-            </v-tooltip>
             <v-spacer></v-spacer>
             <Pelanggan @tambahPelanggan="snackbar=true"/>
            </v-row>
@@ -55,15 +36,7 @@
                   <v-col cols="6" md="2">
                         <div class="caption grey--text">Aksi</div>
                         <div class="justify-end">
-                        <v-chip
-                          class="text-uppercase ma-2"
-                          color="primary"
-                          label
-                          small
-                        >
-                      Detail
-                    </v-chip>
-                    
+                    <Edit :user="user" @editPelanggan="snackbar=true"/>
                     </div>
                   </v-col>
               </v-row>
@@ -74,10 +47,11 @@
 </template>
 
 <script>
+import Edit from '../pengguna/edit/EditPelanggan'
 import Pelanggan from '../pengguna/AddPelanggan'
 
 export default {
-  components: {Pelanggan},
+  components: {Pelanggan, Edit},
     data: () => ({
       snackbar: false,
     }),

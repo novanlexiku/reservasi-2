@@ -46,6 +46,27 @@ export default new Vuex.Store({
         room.harga = payload.harga
       }
     },
+    // update data room
+    updatePelanggan (state, payload) {
+      const user = state.loadedUsers.find(user => {
+        return user.id === payload.id
+      })
+      if (payload.nama) {
+        user.nama = payload.nama
+      }
+      if (payload.no_ktp) {
+        user.no_ktp = payload.no_ktp
+      }
+      if (payload.email) {
+        user.email = payload.email
+      }
+      if (payload.tgllhr) {
+        user.tgllhr = payload.tgllhr
+      }
+      if (payload.alamat) {
+        user.alamat = payload.alamat
+      }
+    },
     // update data bank
     updateBank (state, payload) {
       const bank = state.loadedBanks.find(bank => {
@@ -325,6 +346,36 @@ export default new Vuex.Store({
             console.error("Error removing document: ", error);
         })
         commit('setLoading', false)
+    },
+    // AKSI EDIT PELANGGAN
+    editPelanggan ({commit}, payload){
+      const updateObj = {}
+      if (payload.nama) {
+        updateObj.nama = payload.nama
+      }
+      if (payload.no_ktp) {
+        updateObj.no_ktp = payload.no_ktp
+      }
+      if (payload.email) {
+        updateObj.email = payload.email
+      }
+      if (payload.tgllhr) {
+        updateObj.tgllhr = payload.tgllhr
+      }
+      if (payload.alamat) {
+        updateObj.alamat = payload.alamat
+      }
+      
+      var update = db.collection("users").doc(payload.id);
+      update.update(updateObj)
+      .then(() => {
+        console.log(updateObj)
+        commit('updatePelanggan', payload)
+      })
+      .catch(error => {
+        console.log(error)
+        
+      })
     },
     // AKSI UNTUK DAFTAR KE FIREBASE AUTH
     signUserUp ({commit, getters}, payload){
