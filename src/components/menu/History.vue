@@ -3,25 +3,19 @@
       <h1 class="ml-5 subtitle-1 grey--text">Riwayat pemesanan</h1>
 <!-- Expansion Panel -->
   <v-container class="my-5">
-    <h2 class="subtitle-1 ma-4">Ongoing</h2>
-      <v-expansion-panels>
-      <v-expansion-panel v-for="history in myhistorys2" :key="history.title">
-        <v-expansion-panel-header>Pemesanan tanggal {{history.tanggal}}</v-expansion-panel-header>
-        <v-expansion-panel-content class="px-4 grey--text">
-          <div class="font-weight-bold">{{history.title}} oleh {{history.person}}</div>
-          <div>{{history.content}}</div>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
 
-
-    <h2 class="subtitle-1 ma-4">Complete</h2>
+    <h2 class="subtitle-1 ma-4">Pemesanan belum diproses</h2>
       <v-expansion-panels>
-      <v-expansion-panel v-for="history in myhistorys" :key="history.title">
-        <v-expansion-panel-header>Pemesanan tanggal {{history.tanggal}}</v-expansion-panel-header>
+      <v-expansion-panel  v-for="history in historys" :key="history.title">
+        <v-expansion-panel-header>Pemesanan tanggal {{history.checkin}}</v-expansion-panel-header>
         <v-expansion-panel-content class="px-4 grey--text">
-          <div class="font-weight-bold">{{history.title}} oleh {{history.person}}</div>
-          <div>{{history.content}}</div>
+          <div class="font-weight-bold">Oleh {{history.nama}} untuk {{history.sewa}} hari</div>
+          <div>ID Pemesan : {{history.reserv_id}}</div>
+          <div>Nama Pemesan : {{history.nama}}</div>
+          <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
+          <div>Lama Sewa : {{history.sewa}} hari</div>
+          <div>Tanggal Chek-in : {{history.checkin}}</div>
+          <div>Status Pemesanan : {{history.status_reservasi}}</div>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -32,24 +26,14 @@
 <script>
 export default {
     data: () => ({
-    historys: [
-        { title: 'Nama barang 1', person: 'Van Lexiku', tanggal: '1st Jan 2019', status: 'complete', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!'},
-        { title: 'Nama barang 2', person: 'Van Lexiku', tanggal: '10th Jan 2019', status: 'complete', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!'},
-        { title: 'Nama barang 3', person: 'Van Lexiku', tanggal: '20th Dec 2018', status: 'ongoing', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!'},
-        { title: 'Nama barang 4', person: 'Van Lexiku', tanggal: '20th Oct 2018', status: 'ongoing', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt consequuntur eos eligendi illum minima adipisci deleniti, dicta mollitia enim explicabo fugiat quidem ducimus praesentium voluptates porro molestias non sequi animi!'},
-      ]
+    
     }),
-    // sorting data
+    // filter data
     computed:{
-    myhistorys(){
-      return this.historys.filter(history =>{
-        return history.person === 'Van Lexiku' && history.status === 'complete'
-      })
-    },
-    myhistorys2(){
-      return this.historys.filter(history =>{
-        return history.person === 'Van Lexiku' && history.status === 'ongoing'
-      })
+    historys(){
+        return this.$store.getters.featuredReservasi.filter(historys => {
+          return historys.reserv_id === this.$store.getters.user.id
+        })
     },
   },
 }

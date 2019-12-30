@@ -114,6 +114,7 @@ export default new Vuex.Store({
     setLoadedReservasi (state, payload){
       state.loadedReservasi = payload
     },
+    
     // push data reservasi
     createReservasi (state, payload){
       state.reservasi.push(payload)
@@ -207,8 +208,8 @@ export default new Vuex.Store({
           
      })
       })
-    
     },
+    
     // simpan data bank ke cloud firestore
     createBank ({commit}, payload) {
       const bank = {
@@ -359,16 +360,7 @@ export default new Vuex.Store({
         commit('setLoading', false)
         })
     },
-    // AKSI HAPUS PELANGGAN
-    hapusPelanggan ({commit}, payload){
-
-      db.collection("users").doc(payload.id).delete().then(function() {
-        console.log("Document successfully deleted!");
-        }).catch(function(error) {
-            console.error("Error removing document: ", error);
-        })
-        commit('setLoading', false)
-    },
+    
     // AKSI EDIT PELANGGAN
     editPelanggan ({commit}, payload){
       const updateObj = {}
@@ -416,16 +408,7 @@ export default new Vuex.Store({
         commit('setLoading', false)
         })
     },
-    // AKSI HAPUS KARYAWAN
-    hapusKaryawan ({commit}, payload){
-
-      db.collection("users").doc(payload.id).delete().then(function() {
-        console.log("Document successfully deleted!");
-        }).catch(function(error) {
-            console.error("Error removing document: ", error);
-        })
-        commit('setLoading', false)
-    },
+    
     // AKSI EDIT KARYAWAN
     editKaryawan ({commit}, payload){
       const updateObj = {}
@@ -632,14 +615,7 @@ export default new Vuex.Store({
         return bank.status === 'available'
       })
     },
-    // Data di load per id
-    loadedReserv (state){
-      return (reservasiID) => {
-        return state.loadedReservasi.find((reservasi) => {
-          return reservasi.id === reservasiID
-        })
-      } 
-    },
+    
     loadedPelanggan (state) {
       return state.loadedUsers.filter(user =>{
         return user.role === 'pelanggan'
@@ -670,6 +646,7 @@ export default new Vuex.Store({
         return reservasi.status_reservasi === 'complete'
       })
     },
+    
     loadedUser (state) {
       return state.user
     },

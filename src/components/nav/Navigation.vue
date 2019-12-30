@@ -178,6 +178,7 @@ export default {
                 { text: 'Home', icon: 'mdi-home', route: '/' },
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'Rooms', icon: 'mdi-archive', route: '/rooms' },
+                { text: 'History', icon: 'mdi-history', route: '/history' },
                 { text: 'Team', icon: 'mdi-account-group', route: '/team' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
                 { text: 'Bank', icon: 'mdi-bank', route: '/bank' },
