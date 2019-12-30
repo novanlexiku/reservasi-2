@@ -9,7 +9,7 @@
       <v-expansion-panel  v-for="history in historys" :key="history.title">
         <v-expansion-panel-header>Pemesanan tanggal {{history.checkin}}</v-expansion-panel-header>
         <v-expansion-panel-content class="px-4 grey--text">
-          <div class="font-weight-bold">Oleh {{history.nama}} untuk {{history.sewa}} hari</div>
+          <div class="font-weight-bold">Lakukan Konfirmasi Pembayaran</div>
           <div>ID Pemesan : {{history.reserv_id}}</div>
           <div>Nama Pemesan : {{history.nama}}</div>
           <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>

@@ -7,11 +7,19 @@
     <h2 class="subtitle-1 ma-4">Pemesanan belum diproses</h2>
       <v-expansion-panels>
       <v-expansion-panel v-for="history in historys" :key="history.title">
-        <v-expansion-panel-header>Pemesanan tanggal {{history.checkin}}</v-expansion-panel-header>
+        <v-expansion-panel-header disable-icon-rotate>Pemesanan tanggal {{history.checkin}}
+          <template v-slot:actions>
+            <v-icon color="error">mdi-alert-circle</v-icon>
+          </template>
+        </v-expansion-panel-header>
         <v-expansion-panel-content class="px-4 grey--text">
-          <div class="font-weight-bold">Oleh {{history.nama}} untuk {{history.sewa}} hari</div>
-          <div>Status Pemesanan : {{history.status_reservasi}}</div>
-        </v-expansion-panel-content>
+          <div class="font-weight-bold">Belum melakukan konfirmasi pembayaran</div>
+          <div>ID Pemesan : {{history.reserv_id}}</div>
+          <div>Nama Pemesan : {{history.nama}}</div>
+          <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
+          <div>Lama Sewa : {{history.sewa}} hari</div>
+          <div>Tanggal Chek-in : {{history.checkin}}</div>
+          <div>Status Pemesanan : {{history.status_reservasi}}</div>        </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
   </v-container>
