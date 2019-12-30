@@ -80,7 +80,7 @@
                         </v-list-item>
                     </v-list-item-group>
                 </v-list-group>
-                <v-list-group
+                <v-list-group v-if="userIsAdmin || userIsKaryawan"
                     prepend-icon="mdi-clover"
                 >
                     <template v-slot:activator>
@@ -147,8 +147,14 @@ export default {
         reservasi(){
             let reservasi = [
             { text: 'Konfirmasi', icon: 'mdi-marker-check', route: '/konfirmasi' },
-            { text: 'History', icon: 'mdi-history', route: '/history' },
             ]
+            if(this.userIsAdmin && this.loggedIn || this.userIsKaryawan && this.loggedIn){
+            reservasi = [
+            { text: 'Konfirmasi', icon: 'mdi-marker-check', route: '/konfirmasi' },
+            { text: 'List Reservasi', icon: 'mdi-history', route: '/listprosesreservasi' },
+            { text: 'History Reservasi', icon: 'mdi-history', route: '/listreservasi' },
+            ]
+            }
             return reservasi
         },
         items () {

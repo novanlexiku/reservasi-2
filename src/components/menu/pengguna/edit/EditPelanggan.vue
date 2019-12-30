@@ -4,7 +4,7 @@
                       <v-chip
                       v-on="on"
                           class="text-uppercase mt-2"
-                          color="primary"
+                          color="secondary"
                           label
                           small
                         >

@@ -1,10 +1,15 @@
 <template>
   <v-dialog max-width="800px" v-model="dialog">
         <template v-slot:activator="{on}">
-            <v-btn small v-on="on" color="grey" class="mt-2">
-                <span class="subtitle-2">Edit Bank</span>
-                <v-icon right small>mdi-plus-box</v-icon>
-            </v-btn>
+             <v-chip
+                      v-on="on"
+                          class="text-uppercase mt-2"
+                          color="secondary"
+                          label
+                          small
+                        >
+                      Edit
+                    </v-chip>
         </template>
       <v-card>
             <v-card-title>

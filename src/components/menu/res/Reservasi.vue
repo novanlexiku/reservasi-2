@@ -274,6 +274,7 @@ import parseISO from 'date-fns/parseISO'
         bank:null,
         sewa: '',
         total: '',
+        status_reservasi: 'diproses',
         // Rules input + rules date
         inputRules:[
                 v => !!v || 'Input is required',
@@ -325,7 +326,8 @@ methods: {
               status: this.status,
               bank: this.bank,
               sewa: this.sewa,
-              total: this.total
+              total: this.total,
+              status_reservasi: this.status_reservasi
           }
           
       this.$store.dispatch('createReservasi', reservasi)

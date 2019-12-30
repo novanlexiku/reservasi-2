@@ -326,7 +326,8 @@ export default new Vuex.Store({
         checkin: payload.checkin,
         bank: payload.bank,
         sewa: payload.sewa,
-        total: payload.total
+        total: payload.total,
+        status_reservasi: payload.status_reservasi
       });
       // Update the data
       var update = db.collection("rooms").doc(payload.id);
@@ -653,8 +654,21 @@ export default new Vuex.Store({
     featuredBanks (state){
       return state.loadedBanks
     },
+    // load data reservasi
     featuredReservasi (state){
       return state.loadedReservasi
+    },
+    //load data reservasi status = diproses
+    loadedReservasiProses (state){
+      return state.loadedReservasi.filter(reservasi => {
+        return reservasi.status_reservasi === 'diproses'
+      })
+    },
+    // load data reservasi status = complete
+    loadedReservasiComplete (state){
+      return state.loadedReservasi.filter(reservasi => {
+        return reservasi.status_reservasi === 'complete'
+      })
     },
     loadedUser (state) {
       return state.user

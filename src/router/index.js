@@ -8,6 +8,9 @@ import Karyawan from '../components/menu/pengguna/Karyawan'
 import Rooms from '../components/menu/room/Rooms'
 import Room from '../components/menu/room/Room'
 import Reservasi from '../components/menu/res/Reservasi'
+import Konfirmasi from '../components/menu/res/Konfirmasi'
+import ListRes from '../components/menu/res/HistoryReservasi'
+import ListProRes from '../components/menu/res/ListReservasi'
 import Team from '../components/menu/Team'
 import Explore from '../components/menu/Explore'
 import Bank from '../components/menu/bank/Banks'
@@ -39,6 +42,18 @@ const routes = [
     path: '/karyawan',
     name: 'Karyawan',
     component: Karyawan,
+  },{
+    path: '/konfirmasi',
+    name: 'Konfirmasi',
+    component: Konfirmasi,
+  },{
+    path: '/listreservasi',
+    name: 'List',
+    component: ListRes
+  },{
+    path: '/listprosesreservasi',
+    name: 'Proses',
+    component: ListProRes
   },{
     path: '/rooms',
     name: 'Rooms',
