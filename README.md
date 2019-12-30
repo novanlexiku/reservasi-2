@@ -1,5 +1,5 @@
 # reservasi-2
-
+Project untuk skripsi menggunakan Vue.JS dan Firebase
 ## Project setup
 ```
 npm install
