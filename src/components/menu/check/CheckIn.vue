@@ -1,5 +1,5 @@
 <template>
-  <div class="listreservasi">
+  <div class="checkin">
 <!-- Expansion Panel -->
   <v-container class="my-5">
      <!-- Snackbar -->

@@ -785,6 +785,12 @@ export default new Vuex.Store({
       })
     },
     // load data reservasi status = complete
+    loadedReservasiCheckin (state){
+      return state.loadedReservasi.filter(reservasi => {
+        return reservasi.status_reservasi === 'checkin'
+      })
+    },
+    // load data reservasi status = complete
     loadedKonfirmasi (state){
       return state.loadedKonfirmasi.filter(konfirmasi => {
         return konfirmasi.status_konfirmasi === 'menunggu'
