@@ -35,7 +35,7 @@
                         <div>Nama Pemesan : {{history.nama}}</div>
                         <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
                         <div>Lama Sewa : {{history.sewa}} hari</div>
-                        <div>Tanggal Chek-in : {{history.checkin}}</div>
+                        <div>Tanggal Check-in : {{history.checkin}}</div>
                         <div>Status Pemesanan : {{history.status_reservasi}}</div>
               </v-card-text>
             </v-card>
@@ -46,7 +46,7 @@
                         <div>Nama Pemesan : {{history.nama}}</div>
                         <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
                         <div>Lama Sewa : {{history.sewa}} hari</div>
-                        <div>Tanggal Chek-in : {{history.checkin}}</div>
+                        <div>Tanggal Check-in : {{history.checkin}}</div>
                         <div>Status Pemesanan : {{history.status_reservasi}}</div>
               </v-card-text>
             </v-card>
@@ -57,7 +57,7 @@
                         <div>Nama Pemesan : {{history.nama}}</div>
                         <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
                         <div>Lama Sewa : {{history.sewa}} hari</div>
-                        <div>Tanggal Chek-in : {{history.checkin}}</div>
+                        <div>Tanggal Check-in : {{history.checkin}}</div>
                         <div>Status Pemesanan : {{history.status_reservasi}}</div>
               </v-card-text>
             </v-card>
