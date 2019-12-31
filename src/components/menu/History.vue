@@ -1,24 +1,70 @@
 <template>
   <div class="history">
-      <h1 class="ml-5 subtitle-1 grey--text">Riwayat pemesanan</h1>
 <!-- Expansion Panel -->
   <v-container class="my-5">
-
-    <h2 class="subtitle-1 ma-4">Pemesanan belum diproses</h2>
-      <v-expansion-panels>
-      <v-expansion-panel  v-for="history in historys" :key="history.title">
-        <v-expansion-panel-header>Pemesanan tanggal {{history.checkin}}</v-expansion-panel-header>
-        <v-expansion-panel-content class="px-4 grey--text">
-          <div class="font-weight-bold">Lakukan Konfirmasi Pembayaran</div>
-          <div>ID Pemesan : {{history.reserv_id}}</div>
-          <div>Nama Pemesan : {{history.nama}}</div>
-          <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
-          <div>Lama Sewa : {{history.sewa}} hari</div>
-          <div>Tanggal Chek-in : {{history.checkin}}</div>
-          <div>Status Pemesanan : {{history.status_reservasi}}</div>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
+    <v-card
+    class="mx-auto"
+    max-width="800"
+    >
+      <v-card-title
+        class="blue-grey white--text"
+      >
+        <span class="title">Riwayat Pemesanan</span>
+        <v-spacer></v-spacer>
+      </v-card-title>
+      <v-card-text class="py-0">
+        <v-timeline>
+          <v-timeline-item
+            v-for="history in historys" :key="history.nama"
+            color="red lighten-2"
+            large
+          >
+            <template v-if="history.status_reservasi === 'complete'" v-slot:opposite>
+              <span>Pembayaran Selesai</span>
+            </template>
+            <template v-else-if="history.status_reservasi === 'diproses'" v-slot:opposite>
+              <span>Lakukan Konfirmasi</span>
+            </template>
+             <template v-else v-slot:opposite>
+              <span>Menunggu Konfirmasi</span>
+            </template>
+            <v-card v-if="history.status_reservasi === 'complete'" class="elevation-2">
+              <v-card-title class="headline">Pembayaran Selesai</v-card-title>
+              <v-card-text>
+                        <div>ID Pemesan : {{history.reserv_id}}</div>
+                        <div>Nama Pemesan : {{history.nama}}</div>
+                        <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
+                        <div>Lama Sewa : {{history.sewa}} hari</div>
+                        <div>Tanggal Chek-in : {{history.checkin}}</div>
+                        <div>Status Pemesanan : {{history.status_reservasi}}</div>
+              </v-card-text>
+            </v-card>
+            <v-card v-else-if="history.status_reservasi === 'diproses'" class="elevation-2">
+              <v-card-title class="headline">Lakukan Konfirmasi</v-card-title>
+              <v-card-text>
+                        <div>ID Pemesan : {{history.reserv_id}}</div>
+                        <div>Nama Pemesan : {{history.nama}}</div>
+                        <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
+                        <div>Lama Sewa : {{history.sewa}} hari</div>
+                        <div>Tanggal Chek-in : {{history.checkin}}</div>
+                        <div>Status Pemesanan : {{history.status_reservasi}}</div>
+              </v-card-text>
+            </v-card>
+            <v-card v-else class="elevation-2">
+              <v-card-title class="headline">Menunggu Konfirmasi</v-card-title>
+              <v-card-text>
+                        <div>ID Pemesan : {{history.reserv_id}}</div>
+                        <div>Nama Pemesan : {{history.nama}}</div>
+                        <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
+                        <div>Lama Sewa : {{history.sewa}} hari</div>
+                        <div>Tanggal Chek-in : {{history.checkin}}</div>
+                        <div>Status Pemesanan : {{history.status_reservasi}}</div>
+              </v-card-text>
+            </v-card>
+          </v-timeline-item>
+        </v-timeline>
+      </v-card-text>
+    </v-card>
   </v-container>
   </div>
 </template>
@@ -40,5 +86,22 @@ export default {
 </script>
 
 <style>
-
+.history.complete {
+  color :  green;
+}
+.history.diproses {
+  border-left : 4px solid orange;
+}
+.history.expired {
+  border-left : 4px solid red;
+}
+.v-btn.complete {
+  color :  green;
+}
+.v-timeline-item.diproses {
+  background:  orange;
+}
+.v-timeline-item.expired {
+  background :  red;
+}
 </style>

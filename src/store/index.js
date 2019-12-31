@@ -15,6 +15,7 @@ export default new Vuex.Store({
     loadedRooms: [],
     loadedReservasi:[],
     loadedUsers:[],
+    loadedKonfirmasi:[],
     user: null,
     loading: false,
     error: null
@@ -114,7 +115,9 @@ export default new Vuex.Store({
     setLoadedReservasi (state, payload){
       state.loadedReservasi = payload
     },
-    
+    setLoadedKonfirmasi (state, payload){
+      state.loadedKonfirmasi = payload
+    },
     // push data reservasi
     createReservasi (state, payload){
       state.reservasi.push(payload)
@@ -209,7 +212,22 @@ export default new Vuex.Store({
      })
       })
     },
-    
+    // load data konfirmasi
+    loadKonfirmasi ({commit}) {
+      // set data menggunakan cloud firestore
+      db.collection("konfirmasi")
+      .onSnapshot(function(querySnapshot) {
+        const konfirmasi = []
+        querySnapshot.forEach((doc) => {
+          konfirmasi.push({
+            ...doc.data(),
+            id: doc.id
+          })
+          commit('setLoadedKonfirmasi',konfirmasi)
+          
+     })
+      })
+    },
     // simpan data bank ke cloud firestore
     createBank ({commit}, payload) {
       const bank = {
@@ -342,6 +360,103 @@ export default new Vuex.Store({
         console.log("Reservasi berhasil di buat");
       })
       
+    },
+    // KONFIRMASI OLEH ADMIN
+    konfirmasi({commit},payload){
+      const updateObj = {
+        status_konfirmasi: payload.status_konfirmasi,
+      }
+      
+      if (payload.reservasi_id){
+        updateObj.reservasi_id = payload.reservasi_id
+      }
+      
+      
+      // menghubungkan ke firebase dan simpan di cloud firestore
+      db.collection('konfirmasi').doc(payload.konfirmasi_id).update({
+        status_konfirmasi: payload.status_konfirmasi
+      })
+      .then(() => {
+        commit('setLoading', false)
+        var update = db.collection("reservasi").doc(payload.reservasi_id);
+        // Set the "capital" field of the city 'DC'
+        return update.update({
+          status_reservasi: payload.status_reservasi
+        })
+        .then(function() {
+            console.log("Status Berhasil di update");
+        })
+        .catch(function(error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+        });
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    },
+    // KONFIRMASI PEMBAYARAN OLEH PELANGGAN
+    konfirmasiReservasi ({commit, getters}, payload){
+      const updateObj = {
+        reserv_id:getters.user.id,
+        status_konfirmasi: payload.status_konfirmasi,
+      }
+      if (payload.nama) {
+        updateObj.nama = payload.nama
+      }
+      if (payload.total) {
+        updateObj.total = payload.total
+      }
+      if (payload.reservasi_id){
+        updateObj.reservasi_id = payload.reservasi_id
+      }
+      if (payload.checkin){
+        updateObj.checkin = payload.checkin
+      }
+      let imageUrl
+      let key
+      // menghubungkan ke firebase dan simpan di cloud firestore
+      db.collection('konfirmasi').add(updateObj)
+      .then((data) => {
+        // ambil id database sebagai key
+        key = data.id
+        return key
+      })
+      .then(key => {
+        // edit nama gambar kemudian simpan ke storage
+        const filename = payload.image.name
+        const ext = filename.slice(filename.lastIndexOf('.'))
+        return firebase.storage().ref('konfirmasi/' + key + ext).put(payload.image)
+      })
+      .then(filedata => {
+        // ambil url gambar dari storage
+        let imagePath = filedata.metadata.fullPath
+        console.log('gambar sudah di upload')
+        return firebase.storage().ref().child(imagePath).getDownloadURL()
+      })
+      .then(url => {
+        // update database field image dengan di isi url gambar
+        imageUrl = url
+        return db.collection('konfirmasi').doc(key).update({image: imageUrl})
+      })
+      .then(() => {
+        commit('setLoading', false)
+        var update = db.collection("reservasi").doc(payload.reservasi_id);
+        // Set the "capital" field of the city 'DC'
+        return update.update({
+          status_reservasi: payload.status_reservasi
+        })
+        .then(function() {
+            console.log("Status Berhasil di update");
+        })
+        .catch(function(error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+        });
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     },
     // AKSI DAFTAR PELANGGAN UNTUK KEPERLUAN OFFICE
     tambahPelanggan ({commit}, payload){
@@ -637,7 +752,7 @@ export default new Vuex.Store({
     //load data reservasi status = diproses
     loadedReservasiProses (state){
       return state.loadedReservasi.filter(reservasi => {
-        return reservasi.status_reservasi === 'diproses'
+        return reservasi.status_reservasi === 'diproses' || reservasi.status_reservasi === 'menunggu'
       })
     },
     // load data reservasi status = complete
@@ -646,7 +761,12 @@ export default new Vuex.Store({
         return reservasi.status_reservasi === 'complete'
       })
     },
-    
+    // load data reservasi status = complete
+    loadedKonfirmasi (state){
+      return state.loadedKonfirmasi.filter(konfirmasi => {
+        return konfirmasi.status_konfirmasi === 'menunggu'
+      })
+    },
     loadedUser (state) {
       return state.user
     },

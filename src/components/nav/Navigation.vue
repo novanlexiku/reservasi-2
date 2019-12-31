@@ -163,14 +163,17 @@ export default {
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'Login', icon: 'mdi-map-marker', route: '/login' },
                 { text: 'Team', icon: 'mdi-account-group', route: '/team' },
+                { text: 'Tutorial', icon: 'mdi-timeline-help-outline', route: '/tutorial' },
             ]
             if (this.userIsAuthenticated && this.loggedIn) {
                 items = [
                 { text: 'Home', icon: 'mdi-home', route: '/' },
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'History', icon: 'mdi-history', route: '/history' },
+                { text: 'Konfirmasi', icon: 'mdi-marker-check', route: '/konfirmasipelanggan' },
                 { text: 'Team', icon: 'mdi-account-group', route: '/team' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
+                { text: 'Tutorial', icon: 'mdi-timeline-help-outline', route: '/tutorial' },
                 ]
             }
             if (this.userIsAdmin && this.loggedIn){
@@ -182,6 +185,7 @@ export default {
                 { text: 'Team', icon: 'mdi-account-group', route: '/team' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
                 { text: 'Bank', icon: 'mdi-bank', route: '/bank' },
+                { text: 'Tutorial', icon: 'mdi-timeline-help-outline', route: '/tutorial' },
                 ]
             }
             if (this.userIsKaryawan && this.loggedIn){
@@ -189,6 +193,8 @@ export default {
                 { text: 'Home', icon: 'mdi-home', route: '/' },
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
+                { text: 'Tutorial', icon: 'mdi-timeline-help-outline', route: '/tutorial' },
+
                 ]
             }
             return items

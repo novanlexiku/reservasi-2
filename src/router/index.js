@@ -9,10 +9,12 @@ import Rooms from '../components/menu/room/Rooms'
 import Room from '../components/menu/room/Room'
 import Reservasi from '../components/menu/res/Reservasi'
 import Konfirmasi from '../components/menu/res/Konfirmasi'
+import KonfirmasiPelanggan from '../components/menu/res/KonfirmasiPelanggan'
 import ListRes from '../components/menu/res/HistoryReservasi'
 import ListProRes from '../components/menu/res/ListReservasi'
 import Team from '../components/menu/Team'
 import Explore from '../components/menu/Explore'
+import Tutorial from '../components/menu/Tutorial'
 import Bank from '../components/menu/bank/Banks'
 import Profile from '../components/user/Profile'
 import AuthGuard from './auth-guard'
@@ -46,6 +48,10 @@ const routes = [
     path: '/konfirmasi',
     name: 'Konfirmasi',
     component: Konfirmasi,
+  },{
+    path: '/konfirmasipelanggan',
+    name: 'KonfirmasiPelanggan',
+    component: KonfirmasiPelanggan,
   },{
     path: '/listreservasi',
     name: 'List',
@@ -88,6 +94,10 @@ const routes = [
     name: 'Profile',
     component: Profile,
     beforeEnter: AuthGuard
+  },{
+    path: '/tutorial',
+    name: 'Tutorial',
+    component: Tutorial,
   },
   
 ]

@@ -1,6 +1,12 @@
 <template>
   <div class="reservasi">
     <v-container class="my-5">
+      <!-- Snackbar -->
+        <v-snackbar v-model="snackbar" top color="success">
+          <span>Reservasi berhasil ditambahkan</span>
+          <v-btn text color="white" @click="snackbar = false">Close</v-btn>
+        </v-snackbar>
+        <!-- Stepper -->
       <v-stepper v-model="e1">
     <v-stepper-header>
       <v-stepper-step :complete="e1 > 1" step="1">Check-In</v-stepper-step>
@@ -284,6 +290,7 @@ import parseISO from 'date-fns/parseISO'
                 v => !!v || 'Date is required'
                 ],
         loading: false,
+        snackbar: false
         }
     },
     watch:{
@@ -333,7 +340,7 @@ methods: {
       this.$store.dispatch('createReservasi', reservasi)
       this.loading = false;
       this.dialog = false;
-      this.$router.push('/');
+      this.snackbar = true;
       this.$refs.form.reset();
       }
     },

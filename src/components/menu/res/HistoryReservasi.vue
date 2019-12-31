@@ -1,13 +1,12 @@
 <template>
   <div class="listreservasi">
-      <h1 class="ml-5 subtitle-1 grey--text">Riwayat pemesanan</h1>
 <!-- Expansion Panel -->
   <v-container class="my-5">
     
-    <h2 class="subtitle-1 ma-4">Complete</h2>
+    <h2 class="subtitle-1 ma-4">Pemesanan Selesai dan Sudah di konfirmasi</h2>
       <v-expansion-panels>
       <v-expansion-panel v-for="history in historys" :key="history.title">
-        <v-expansion-panel-header disable-icon-rotate>Pemesanan tanggal {{history.checkin}}
+        <v-expansion-panel-header disable-icon-rotate>Pemesanan oleh {{history.nama}} untuk reservasi tanggal {{history.checkin}}
           <template v-slot:actions>
             <v-icon color="teal">mdi-check</v-icon>
           </template>
