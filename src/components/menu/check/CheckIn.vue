@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Checkin from '../check/checkin/FormCheckIn'
+import Checkin from '../check/checkform/FormCheckIn'
 export default {
     components:{Checkin},
     data: () => ({

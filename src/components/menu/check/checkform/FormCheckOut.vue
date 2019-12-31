@@ -7,7 +7,7 @@
                         class="mt-2"
                         outlined
                     >
-                        Check-In
+                        Check-Out
                     </v-btn>
         </template>
       <v-card>
@@ -18,8 +18,13 @@
                 <v-form class="px-3" ref="form" @submit.prevent="submit">
                     <v-text-field label="Nama Ruangan" v-model="nama" prepend-icon="mdi-account" outlined readonly></v-text-field>
                     <v-text-field label="Total Harga" v-model="total" prefix="Rp." prepend-icon="mdi-wallet" outlined readonly></v-text-field>
-                    <span>Pelanggan sudah melakukan pembayaran</span>
-                    <v-btn text class="success ml-8 mt-3" type="submit" :loading="loading">check-in</v-btn>
+                    <div class="ml-8">
+                        <v-alert type="success">
+                        Pelanggan sudah mengembalikan kunci ruangan    
+                        </v-alert>
+                    </div>
+                    <br>
+                    <v-btn text class="success ml-8 mt-3" type="submit" :loading="loading">check-out</v-btn>
                 </v-form>
             </v-card-text>
         </v-card>
@@ -28,12 +33,12 @@
 
 <script>
 export default {
-  props:['checkin'],
+  props:['checkout'],
   data () {
       return {
-        nama: this.checkin.nama,
-        total: this.checkin.total,
-        status_reservasi: 'checkin',
+        nama: this.checkout.nama,
+        total: this.checkout.total,
+        status_reservasi: 'checkout',
         // Rules input + rules date
         inputRules:[
                 v => !!v || 'Input is required',
@@ -54,14 +59,14 @@ export default {
       if(this.$refs.form.validate()){
           this.loading = true
           
-          const checkin = {
-              reservasi_id: this.checkin.id,
+          const checkout = {
+              reservasi_id: this.checkout.id,
               status_reservasi: this.status_reservasi,
           }
-      this.$store.dispatch('checkin', checkin)
+      this.$store.dispatch('checkout', checkout)
       this.loading = false;
       this.dialog = false;
-      this.$emit('checkin');
+      this.$emit('checkout');
       }
     },
     onPickFile () {

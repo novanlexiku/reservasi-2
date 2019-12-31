@@ -44,7 +44,8 @@ export default {
     historys(){
           return this.$store.getters.featuredReservasi.filter(historys => {
           return historys.reserv_id === this.$store.getters.user.id && historys.status_reservasi === 'diproses' || historys.status_reservasi === 'menunggu'
-        })    },
+        })    
+        },
     
   },
 }

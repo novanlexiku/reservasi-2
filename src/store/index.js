@@ -414,6 +414,27 @@ export default new Vuex.Store({
         console.error("Error updating document: ", error);
     })
     },
+    // CHECK-OUT OLEH ADMIN
+    checkout({commit},payload){
+      const updateObj = {
+        status_reservasi: payload.status_reservasi,
+      }
+      if (payload.reservasi_id){
+        updateObj.reservasi_id = payload.reservasi_id
+      }
+      commit('setLoading', false)
+      // menghubungkan ke firebase dan simpan di cloud firestore
+      db.collection('reservasi').doc(payload.reservasi_id).update({
+        status_reservasi: payload.status_reservasi
+      })
+      .then(function() {
+        console.log("Pelanggan berhasil Check-Out");
+    })
+    .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating document: ", error);
+    })
+    },
     // KONFIRMASI PEMBAYARAN OLEH PELANGGAN
     konfirmasiReservasi ({commit, getters}, payload){
       const updateObj = {
