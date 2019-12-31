@@ -16,6 +16,8 @@ import Team from '../components/menu/Team'
 import Explore from '../components/menu/Explore'
 import Tutorial from '../components/menu/Tutorial'
 import Bank from '../components/menu/bank/Banks'
+import CheckIn from '../components/menu/check/CheckIn'
+import CheckOut from '../components/menu/check/CheckOut'
 import Profile from '../components/user/Profile'
 import AuthGuard from './auth-guard'
 
@@ -45,9 +47,18 @@ const routes = [
     name: 'Karyawan',
     component: Karyawan,
   },{
+    path: '/checkin',
+    name: 'CheckIn',
+    component: CheckIn,
+  },{
+    path: '/checkout',
+    name: 'CheckOut',
+    component: CheckOut,
+  },{
     path: '/konfirmasi',
     name: 'Konfirmasi',
     component: Konfirmasi,
+    beforeEnter: AuthGuard
   },{
     path: '/konfirmasipelanggan',
     name: 'KonfirmasiPelanggan',
@@ -55,11 +66,13 @@ const routes = [
   },{
     path: '/listreservasi',
     name: 'List',
-    component: ListRes
+    component: ListRes,
+    beforeEnter: AuthGuard
   },{
     path: '/listprosesreservasi',
     name: 'Proses',
-    component: ListProRes
+    component: ListProRes,
+    beforeEnter: AuthGuard
   },{
     path: '/rooms',
     name: 'Rooms',

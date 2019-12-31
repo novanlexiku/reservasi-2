@@ -5,7 +5,7 @@
     
     <h2 class="subtitle-1 ma-4">Pemesanan Selesai dan Sudah di konfirmasi</h2>
       <v-expansion-panels>
-      <v-expansion-panel v-for="history in historys" :key="history.title">
+      <v-expansion-panel v-for="history in historys" :key="history.nama">
         <v-expansion-panel-header disable-icon-rotate>Pemesanan oleh {{history.nama}} untuk reservasi tanggal {{history.checkin}}
           <template v-slot:actions>
             <v-icon color="teal">mdi-check</v-icon>
@@ -34,7 +34,7 @@ export default {
     // sorting data
     computed:{
     historys(){
-              return this.$store.getters.loadedReservasiComplete
+              return this.$store.getters.featuredReservasi
     },
     
   },

@@ -80,7 +80,7 @@
                         </v-list-item>
                     </v-list-item-group>
                 </v-list-group>
-                <v-list-group v-if="userIsAdmin || userIsKaryawan"
+                <v-list-group 
                     prepend-icon="mdi-clover"
                 >
                     <template v-slot:activator>
@@ -89,6 +89,27 @@
                     <v-list-item-group sub-group color="primary" class="mt-2">
                         <v-list-item
                         v-for="item in reservasi"
+                        :key="item.text"
+                        router :to="item.route"
+                        >
+                        <v-list-item-icon>
+                            <v-icon v-text="item.icon"></v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title v-text="item.text"></v-list-item-title>
+                        </v-list-item-content>
+                        </v-list-item>
+                    </v-list-item-group>
+                </v-list-group>
+                <v-list-group 
+                    prepend-icon="mdi-door-open"
+                >
+                    <template v-slot:activator>
+                    <v-list-item-title>Check</v-list-item-title>
+                    </template>
+                    <v-list-item-group sub-group color="primary" class="mt-2">
+                        <v-list-item
+                        v-for="item in check"
                         :key="item.text"
                         router :to="item.route"
                         >
@@ -144,6 +165,13 @@ export default {
             ]
             return admins
         },
+        check(){
+            let check = [
+               { text: 'Check-In', icon: 'mdi-chevron-right-box-outline', route: '/checkin' },
+               { text: 'Check-Out', icon: 'mdi-chevron-left-box-outline', route: '/checkout' },
+            ]
+            return check
+        },
         reservasi(){
             let reservasi = [
             { text: 'Konfirmasi', icon: 'mdi-marker-check', route: '/konfirmasi' },
@@ -194,7 +222,7 @@ export default {
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
                 { text: 'Tutorial', icon: 'mdi-timeline-help-outline', route: '/tutorial' },
-
+                { text: 'Team', icon: 'mdi-account-group', route: '/team' },
                 ]
             }
             return items

@@ -370,8 +370,6 @@ export default new Vuex.Store({
       if (payload.reservasi_id){
         updateObj.reservasi_id = payload.reservasi_id
       }
-      
-      
       // menghubungkan ke firebase dan simpan di cloud firestore
       db.collection('konfirmasi').doc(payload.konfirmasi_id).update({
         status_konfirmasi: payload.status_konfirmasi
@@ -394,6 +392,27 @@ export default new Vuex.Store({
       .catch((error) => {
         console.log(error)
       })
+    },
+    // CHECK-IN OLEH ADMIN
+    checkin({commit},payload){
+      const updateObj = {
+        status_reservasi: payload.status_reservasi,
+      }
+      if (payload.reservasi_id){
+        updateObj.reservasi_id = payload.reservasi_id
+      }
+      commit('setLoading', false)
+      // menghubungkan ke firebase dan simpan di cloud firestore
+      db.collection('reservasi').doc(payload.reservasi_id).update({
+        status_reservasi: payload.status_reservasi
+      })
+      .then(function() {
+        console.log("Pelanggan berhasil Check-In");
+    })
+    .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating document: ", error);
+    })
     },
     // KONFIRMASI PEMBAYARAN OLEH PELANGGAN
     konfirmasiReservasi ({commit, getters}, payload){
@@ -747,7 +766,11 @@ export default new Vuex.Store({
     },
     // load data reservasi
     featuredReservasi (state){
-      return state.loadedReservasi
+      return state.loadedReservasi.filter(reservasi => {
+        return reservasi.status_reservasi === 'diproses' || reservasi.status_reservasi === 'menunggu' 
+        ||  reservasi.status_reservasi === 'complete' ||  reservasi.status_reservasi === 'checkin' ||  reservasi.status_reservasi === 'checkout' 
+        ||  reservasi.status_reservasi === 'expired'
+      })
     },
     //load data reservasi status = diproses
     loadedReservasiProses (state){
