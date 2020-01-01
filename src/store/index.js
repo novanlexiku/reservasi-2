@@ -346,6 +346,7 @@ export default new Vuex.Store({
         bank: payload.bank,
         sewa: payload.sewa,
         total: payload.total,
+        room_id: payload.id,
         status_reservasi: payload.status_reservasi
       });
       // Update the data
@@ -418,22 +419,38 @@ export default new Vuex.Store({
     checkout({commit},payload){
       const updateObj = {
         status_reservasi: payload.status_reservasi,
+        status: payload.status
       }
       if (payload.reservasi_id){
         updateObj.reservasi_id = payload.reservasi_id
+      }
+      if (payload.room_id){
+        updateObj.room_id = payload.room_id
       }
       commit('setLoading', false)
       // menghubungkan ke firebase dan simpan di cloud firestore
       db.collection('reservasi').doc(payload.reservasi_id).update({
         status_reservasi: payload.status_reservasi
       })
-      .then(function() {
+      .then(() => {
         console.log("Pelanggan berhasil Check-Out");
-    })
-    .catch(function(error) {
-        // The document probably doesn't exist.
-        console.error("Error updating document: ", error);
-    })
+      })
+      .then(()=>{
+        db.collection('rooms').doc(payload.room_id).update({
+          status: payload.status
+        })
+        .then(() => {
+          console.log("Status Ruangan Sudah di update");
+        })
+        .catch(function(error) {
+          // The document probably doesn't exist.
+          console.error("Error updating document: ", error);
+      })
+      })
+      .catch(function(error) {
+          // The document probably doesn't exist.
+          console.error("Error updating document: ", error);
+      })
     },
     // KONFIRMASI PEMBAYARAN OLEH PELANGGAN
     konfirmasiReservasi ({commit, getters}, payload){

@@ -158,33 +158,7 @@ export default {
         user(){
             return this.$store.getters.loadedUser
         },
-        admins(){
-            let admins = [
-               { text: 'Pelanggan', icon: 'mdi-account-circle-outline', route: '/pelanggan' },
-               { text: 'Karyawan', icon: 'mdi-account-group-outline', route: '/karyawan' },
-            ]
-            return admins
-        },
-        check(){
-            let check = [
-               { text: 'Check-In', icon: 'mdi-chevron-right-box-outline', route: '/checkin' },
-               { text: 'Check-Out', icon: 'mdi-chevron-left-box-outline', route: '/checkout' },
-            ]
-            return check
-        },
-        reservasi(){
-            let reservasi = [
-            { text: 'Konfirmasi', icon: 'mdi-marker-check', route: '/konfirmasi' },
-            ]
-            if(this.userIsAdmin && this.loggedIn || this.userIsKaryawan && this.loggedIn){
-            reservasi = [
-            { text: 'Konfirmasi', icon: 'mdi-marker-check', route: '/konfirmasi' },
-            { text: 'List Reservasi', icon: 'mdi-history', route: '/listprosesreservasi' },
-            { text: 'History Reservasi', icon: 'mdi-history', route: '/listreservasi' },
-            ]
-            }
-            return reservasi
-        },
+        
         items () {
             let items = [
                 { text: 'Home', icon: 'mdi-home', route: '/' },
@@ -229,21 +203,52 @@ export default {
             }
             return items
         },
+        admins(){
+            let admins = []
+            if(this.userIsAdmin && this.loggedIn || this.userIsKaryawan && this.loggedIn){
+            admins = [
+            { text: 'Pelanggan', icon: 'mdi-account-circle-outline', route: '/pelanggan' },
+            { text: 'Karyawan', icon: 'mdi-account-group-outline', route: '/karyawan' },
+            ]
+            }
+            return admins
+        },
+        check(){
+            let check = []
+            if(this.userIsAdmin && this.loggedIn || this.userIsKaryawan && this.loggedIn){
+            check = [
+            { text: 'Check-In', icon: 'mdi-chevron-right-box-outline', route: '/checkin' },
+            { text: 'Check-Out', icon: 'mdi-chevron-left-box-outline', route: '/checkout' },
+            ]
+            }
+            return check
+        },
+        reservasi(){
+            let reservasi = []
+            if(this.userIsAdmin && this.loggedIn || this.userIsKaryawan && this.loggedIn){
+            reservasi = [
+            { text: 'Konfirmasi', icon: 'mdi-marker-check', route: '/konfirmasi' },
+            { text: 'List Reservasi', icon: 'mdi-history', route: '/listprosesreservasi' },
+            { text: 'History Reservasi', icon: 'mdi-history', route: '/listreservasi' },
+            ]
+            }
+            return reservasi
+        },
         userIsAuthenticated () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
-      },
-      userIsAdmin () {
-        if (!this.userIsAuthenticated) {
-          return false
-        }
-        return this.$store.getters.user.role === 'admin'
-      },
-      userIsKaryawan () {
-        if (!this.userIsAuthenticated) {
-          return false
-        }
-        return this.$store.getters.user.role === 'karyawan'
-      },
+        },
+        userIsAdmin () {
+            if (!this.userIsAuthenticated) {
+            return false
+            }
+            return this.$store.getters.user.role === 'admin'
+        },
+        userIsKaryawan () {
+            if (!this.userIsAuthenticated) {
+            return false
+            }
+            return this.$store.getters.user.role === 'karyawan'
+        },
     },
     methods:{
         //method logout

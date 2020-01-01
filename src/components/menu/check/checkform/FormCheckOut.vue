@@ -39,6 +39,8 @@ export default {
         nama: this.checkout.nama,
         total: this.checkout.total,
         status_reservasi: 'checkout',
+        status:'available',
+        room_id: this.checkout.room_id,
         // Rules input + rules date
         inputRules:[
                 v => !!v || 'Input is required',
@@ -61,6 +63,8 @@ export default {
           
           const checkout = {
               reservasi_id: this.checkout.id,
+              room_id: this.checkout.room_id,
+              status: this.status,
               status_reservasi: this.status_reservasi,
           }
       this.$store.dispatch('checkout', checkout)

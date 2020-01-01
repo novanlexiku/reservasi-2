@@ -208,7 +208,7 @@
                                                     <v-text-field outlined label="Lama Sewa" v-model="sewa" suffix="hari" readonly></v-text-field>
                                                     </v-col>
                                                      <v-col cols="12" sm="6">
-                                                    <v-text-field outlined label="Transfer ke Rekening" v-model="bank" donly></v-text-field>
+                                                    <v-text-field outlined label="Transfer ke Rekening" v-model="bank" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field outlined v-model="total" prefix="Rp." readonly></v-text-field>
@@ -341,7 +341,6 @@ methods: {
       this.loading = false;
       this.dialog = false;
       this.snackbar = true;
-      this.$refs.form.reset();
       }
     },
     
