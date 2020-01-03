@@ -20,6 +20,7 @@ import CheckIn from '../components/menu/check/CheckIn'
 import CheckOut from '../components/menu/check/CheckOut'
 import Profile from '../components/user/Profile'
 import AuthGuard from './auth-guard'
+import Secret from '../components/menu/Secret'
 
 
 
@@ -27,6 +28,10 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/secret',
+    name: 'Secret',
+    component: Secret
+  },{
     path: '/',
     name: 'Home',
     component: Home

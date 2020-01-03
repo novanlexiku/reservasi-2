@@ -341,6 +341,7 @@ methods: {
       this.loading = false;
       this.dialog = false;
       this.snackbar = true;
+      this.$router.push('/konfirmasipelanggan');
       }
     },
     

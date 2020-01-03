@@ -2,9 +2,10 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 import 'firebase/storage'
+import 'firebase/firebase-analytics'
 
 // Your web app's Firebase configuration
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyAELl91CJrzUzI5Vr7cgB687v_htVeKiEc",
   authDomain: "homestay-9f549.firebaseapp.com",
   databaseURL: "https://homestay-9f549.firebaseio.com",
@@ -16,6 +17,7 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
   // buat auth dan firestore
 const db = firebase.firestore()
