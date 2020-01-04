@@ -76,7 +76,7 @@
                     </div>
                     <div v-else>
                         <h1>Email telah dikirim</h1>
-                        <p>periksa email Anda untuk tautan untuk mengatur ulang kata sandi Anda</p>
+                        <p>periksa email Anda untuk melihat tautan guna mengatur ulang kata sandi Anda</p>
                         <button @click="togglePasswordReset" class="button">Kembali ke login</button>
                     </div>
                 </v-form>
@@ -118,7 +118,6 @@
                 showLoginForm: true,
                 showForgotPassword: false,
                 passwordResetSuccess: false,
-                performingRequest: false,
                 errorMsg: '',
                 // Rules input + rules date
                 inputRules:[
@@ -194,6 +193,8 @@
                     email: this.passwordForm.email
                 }
                 this.$store.dispatch('resetPassword', user)
+                this.passwordResetSuccess = true
+
             },
             onDismissed (){
                 this.$store.dispatch('clearError')

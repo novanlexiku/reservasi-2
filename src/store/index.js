@@ -760,8 +760,7 @@ export default new Vuex.Store({
     },
     // aksi reset password
     resetPassword ({commit}, payload){
-      const reset = firebase.auth().sendPasswordResetEmail(payload.email)
-      console.log(reset)
+      firebase.auth().sendPasswordResetEmail(payload.email)
       commit('clearError')
     },
     clearError ({commit}) {

@@ -9,15 +9,15 @@
         <!-- Stepper -->
       <v-stepper v-model="e1">
     <v-stepper-header>
-      <v-stepper-step :complete="e1 > 1" step="1">Check-In</v-stepper-step>
+      <v-stepper-step :complete="e1 > 1" step="1">Mengisi Form</v-stepper-step>
 
       <v-divider></v-divider>
 
-      <v-stepper-step :complete="e1 > 2" step="2">Konfirmasi</v-stepper-step>
+      <v-stepper-step :complete="e1 > 2" step="2">Konfirmasi Data</v-stepper-step>
 
       <v-divider></v-divider>
 
-      <v-stepper-step step="3">Transfer</v-stepper-step>
+      <v-stepper-step step="3">Reservasi</v-stepper-step>
     </v-stepper-header>
 
     <v-stepper-items>
