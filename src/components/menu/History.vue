@@ -25,6 +25,9 @@
             <template v-else-if="history.status_reservasi === 'diproses'" v-slot:opposite>
               <span>Lakukan Konfirmasi</span>
             </template>
+            <template v-else-if="history.status_reservasi === 'menunggu'" v-slot:opposite>
+              <span>Lakukan Konfirmasi</span>
+            </template>
             <template v-else-if="history.status_reservasi === 'checkin'" v-slot:opposite>
               <span>Berhasil Check-In</span>
             </template>
@@ -43,6 +46,17 @@
               </v-card-text>
             </v-card>
             <v-card v-else-if="history.status_reservasi === 'diproses'" class="elevation-2">
+              <v-card-title class="headline">Lakukan Konfirmasi</v-card-title>
+              <v-card-text>
+                        <div>ID Pemesan : {{history.reserv_id}}</div>
+                        <div>Nama Pemesan : {{history.nama}}</div>
+                        <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
+                        <div>Lama Sewa : {{history.sewa}} hari</div>
+                        <div>Tanggal Check-in : {{history.checkin}}</div>
+                        <div>Status Pemesanan : {{history.status_reservasi}}</div>
+              </v-card-text>
+            </v-card>
+            <v-card v-else-if="history.status_reservasi === 'menunggu'" class="elevation-2">
               <v-card-title class="headline">Lakukan Konfirmasi</v-card-title>
               <v-card-text>
                         <div>ID Pemesan : {{history.reserv_id}}</div>
