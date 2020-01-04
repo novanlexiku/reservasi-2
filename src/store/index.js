@@ -732,6 +732,7 @@ export default new Vuex.Store({
         }
       )
     },
+    // aksi auto login jika user belum logout
     autoSignIn ({commit}, payload) {
       commit('setUser', {id: payload.uid})
       // Ambil data yang sudah di input sesuai ID user
@@ -756,6 +757,12 @@ export default new Vuex.Store({
       .catch(function(error) {
           console.log("Error getting document:", error)
       })
+    },
+    // aksi reset password
+    resetPassword ({commit}, payload){
+      const reset = firebase.auth().sendPasswordResetEmail(payload.email)
+      console.log(reset)
+      commit('clearError')
     },
     clearError ({commit}) {
       commit('clearError')
