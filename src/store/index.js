@@ -156,7 +156,6 @@ export default new Vuex.Store({
             id: doc.id
           })
           commit('setLoadedUsers', users)
-          
      })
       })    
     },
@@ -188,7 +187,6 @@ export default new Vuex.Store({
           banks.push({
             ...doc.data(),
             id: doc.id
-
           })
           commit('setLoadedBanks',banks)
           
