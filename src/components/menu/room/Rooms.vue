@@ -6,6 +6,10 @@
           <span>Data berhasil ditambahkan</span>
           <v-btn text color="white" @click="snackbar = false">Close</v-btn>
         </v-snackbar>
+        <v-snackbar v-model="snackbar2" top color="alert">
+          <span>Data ruang berhasil dihapus</span>
+          <v-btn text color="white" @click="snackbar2 = false">Close</v-btn>
+        </v-snackbar>
           <!-- Sort data + tooltip -->
            <v-row class="mb-3">
             <v-tooltip top>
@@ -58,16 +62,9 @@
                   <v-col cols="6" md="2">
                         <div class="caption grey--text">Aksi</div>
                         <div justify="space-between">
-                        <v-chip
-                          class="text-uppercase mt-2 mr-2"
-                          color="primary"
-                          label
-                          small
-                          @click="onLoadRoom(room.id)"
-                        >
-                      Detail
-                    </v-chip>                        
+                                              
                     <Edit :room="room" @roomEdit="snackbar=true"/>
+                    <Delete :room="room" @deleteRoom="snackbar2=true"/>
                     </div>
                   </v-col>
               </v-row>
@@ -125,12 +122,14 @@
 
 import Edit from '../room/edit/EditRoomDetails'
 import Popup from '../room/AddRoom'
+import Delete from '../room/delete/DeleteRooms'
 
 export default {
-  components: {Popup, Edit},
+  components: {Popup, Edit, Delete},
     data: () => ({
       page: 1,
       snackbar: false,
+      snackbar2: false
     }),
     // sort method
     methods:{

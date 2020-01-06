@@ -263,6 +263,16 @@ export default new Vuex.Store({
         
       })
     },
+    // AKSI UNTUK DELETE ROOM
+    deleteBank({commit}, payload){
+      db.collection("banks").doc(payload.id).delete().then(function() {
+        console.log("Document successfully deleted!");
+    }).catch(function(error) {
+      commit('clearError')
+        console.error("Error removing document: ", error);
+    });
+    
+    },
     // aksi untuk menyimpan data room
     createRoom ({commit, getters}, payload) {
       const room = {
@@ -328,6 +338,16 @@ export default new Vuex.Store({
         console.log(error)
         
       })
+    },
+    // AKSI UNTUK DELETE ROOM
+    deleteRoom({commit}, payload){
+      db.collection("rooms").doc(payload.id).delete().then(function() {
+        console.log("Document successfully deleted!");
+    }).catch(function(error) {
+      commit('clearError')
+        console.error("Error removing document: ", error);
+    });
+    
     },
     // aksi untuk menyimpan data reservasi dengan batch
     createReservasi ({commit, getters}, payload) {
@@ -608,6 +628,26 @@ export default new Vuex.Store({
         console.log(error)
         
       })
+    },
+    // AKSI UNTUK DELETE KARYAWAN
+    deleteKaryawan({commit}, payload){
+      db.collection("users").doc(payload.id).delete().then(function() {
+        console.log("Document successfully deleted!");
+    }).catch(function(error) {
+      commit('clearError')
+        console.error("Error removing document: ", error);
+    });
+    
+    },
+    // AKSI UNTUK DELETE PELANGGAN
+    deletePelanggan({commit}, payload){
+      db.collection("users").doc(payload.id).delete().then(function() {
+        console.log("Document successfully deleted!");
+    }).catch(function(error) {
+      commit('clearError')
+        console.error("Error removing document: ", error);
+    });
+    
     },
     // AKSI UNTUK DAFTAR KE FIREBASE AUTH
     signUserUp ({commit, getters}, payload){

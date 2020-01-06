@@ -24,6 +24,10 @@
                                                     {{room.deskripsi}}
                                                 </v-card-text>
                                             </div>
+                                                <!-- <img class="materialboxed mr-1" 
+                                                height="194"
+                                                max-width="300"
+                                                :src="room.image"> -->
                                                 <v-img
                                                 :src="room.image"
                                                 height="194"
@@ -128,10 +132,9 @@ methods:{
     onLoadRoom(id){
         this.$router.push('/rooms/' + id + '/reservasi')
       }
+      
 }
+
 }
+
 </script>
-
-<style>
-
-</style>

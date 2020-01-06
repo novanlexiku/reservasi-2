@@ -54,7 +54,7 @@ export default {
     tgllhr:null,
     role: 'karyawan',
     alamat: '',
-    image: 'https://i.pravatar.cc/400?img=29',
+    image: 'https://firebasestorage.googleapis.com/v0/b/homestay-9f549.appspot.com/o/users%2FAvatar%2FKaryawan1.png?alt=media&token=e3e7a1a3-63b5-4570-a4ad-d0c3295257ce',
     // Rules input + rules date
     inputRules:[
             v => !!v || 'Input is required',

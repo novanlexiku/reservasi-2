@@ -6,6 +6,10 @@
           <span>Selamat! Pengguna berhasil ditambahkan</span>
           <v-btn text color="white" @click="snackbar = false">Close</v-btn>
         </v-snackbar>
+        <v-snackbar v-model="snackbar2" top color="warning">
+          <span>Data Karyawan Berhasil di Hapus</span>
+          <v-btn text color="white" @click="snackbar2 = false">Close</v-btn>
+        </v-snackbar>
           <!-- Sort data + tooltip -->
            <v-row class="mb-3">
             <v-spacer></v-spacer>
@@ -14,7 +18,11 @@
           <!-- Grid data with chip -->
           <v-card flat class="pa-3" v-for="user in users" :key="user.nama">
               <v-row wrap :class="`pa-3 user ${user.role}`">
-                  <v-col cols="12" md="4">
+                <v-col cols="6" md="2">
+                      <div class="caption grey--text">Avatar</div>
+                      <div class="justify-end"><v-img aspect-ratio="1" :src="user.image"></v-img></div>
+                  </v-col>
+                  <v-col cols="12" md="2">
                       <div class="caption grey--text">Nama</div>
                       <div>{{user.nama}}</div>
                   </v-col>
@@ -22,9 +30,10 @@
                       <div class="caption grey--text">Email</div>
                       <div>{{user.email}}</div>
                   </v-col>
+                  
                   <v-col cols="6" md="2">
-                      <div class="caption grey--text">Avatar</div>
-                      <div class="justify-end"><v-img aspect-ratio="1" :src="user.image"></v-img></div>
+                      <div class="caption grey--text">No KTP</div>
+                      <div>{{user.no_ktp}}</div>
                   </v-col>
                   <v-col cols="6" md="2">
                         <div class="caption grey--text">Status</div>
@@ -36,6 +45,8 @@
                         <div class="caption grey--text">Aksi</div>
                         <div class="justify-end">
                     <Edit :user="user" @editKaryawan="snackbar=true"/>
+                    <Delete :user="user" @deleteKaryawan="snackbar2=true"/>
+
                     </div>
                   </v-col>
               </v-row>
@@ -48,11 +59,13 @@
 <script>
 import Karyawan from '../pengguna/AddKaryawan'
 import Edit from '../pengguna/edit/EditKaryawan'
+import Delete from '../pengguna/delete/DeleteKaryawan'
 
 export default {
-  components: {Karyawan, Edit},
+  components: {Karyawan, Edit, Delete},
     data: () => ({
       snackbar: false,
+      snackbar2: false
     }),
     computed: {
       users () {

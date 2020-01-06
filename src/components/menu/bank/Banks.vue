@@ -6,6 +6,10 @@
           <span>Data berhasil ditambahkan</span>
           <v-btn text color="white" @click="snackbar = false">Close</v-btn>
         </v-snackbar>
+        <v-snackbar v-model="snackbar2" top color="alert">
+          <span>Data Bank telah di Hapus</span>
+          <v-btn text color="white" @click="snackbar2 = false">Close</v-btn>
+        </v-snackbar>
           <!-- Sort data + tooltip -->
            <v-row class="mb-3">
             <v-tooltip top>
@@ -44,7 +48,9 @@
                   <v-col cols="6" md="2">
                         <div class="caption grey--text">Aksi</div>
                         <div justify="space-between">
-                        <Edit :bank="bank" @bankEdit="snackbar=true"/>                        
+                        <Edit :bank="bank" @bankEdit="snackbar=true"/>
+                        <Delete :bank="bank" @deleteBank="snackbar2=true"/>                        
+                        
                     </div>
                   </v-col>
               </v-row>
@@ -103,12 +109,14 @@
 
 import Popup from '../bank/Addbank'
 import Edit from '../bank/edit/EditBank'
+import Delete from '../bank/delete/DeleteBanks'
 
 export default {
-  components: {Popup, Edit},
+  components: {Popup, Edit,Delete},
     data: () => ({
       page: 1,
       snackbar: false,
+      snackbar2: false
     }),
     // sort method
     methods:{
