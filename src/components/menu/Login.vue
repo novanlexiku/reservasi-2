@@ -46,6 +46,28 @@
                     id="password3" prepend-icon="mdi-textbox-password" 
                     ></v-text-field>
                     <v-text-field label="Nama" v-model.trim="signupForm.nama" id="nama" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
+                    <v-text-field label="No Ktp" v-model.trim="signupForm.no_ktp" prepend-icon="mdi-information" :rules="inputRules"></v-text-field>
+                    <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="signupForm.tgllhr"
+                      transition="scale-transition"
+                      offset-y
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          :rules="dateRules" :value="formattedDate"
+                          label="Tanggal Lahir"
+                          prepend-icon="mdi-calendar-account"
+                          readonly
+                          clearable
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker v-model.trim="signupForm.tgllhr" no-title scrollable>
+                        <v-spacer></v-spacer>
+                        <v-btn text color="primary" @click="$refs.menu.save(signupForm.tgllhr)">OK</v-btn>
+                      </v-date-picker>
+                    </v-menu>
+                    <v-text-field label="Alamat" v-model.trim="signupForm.alamat" prepend-icon="mdi-border-color" :rules="inputRules"></v-text-field>
                     <v-btn raised class="primary ml-8" @click="onPickFile">Upload Image</v-btn>
                     <input
                       type="file"
@@ -92,6 +114,8 @@
 </template>
 
 <script>
+import format from 'date-fns/format'
+import parseISO from 'date-fns/parseISO'
 
     export default {
         data() {
@@ -108,7 +132,9 @@
                     password: '',
                     confirmPassword: '',
                     nama: '',
-                    
+                    alamat:'',
+                    tgllhr: '',
+                    no_ktp: ''
                 },
                 passwordForm: {
                     email: ''
@@ -133,6 +159,9 @@
                 imageRules: [
                     value => !value || value.size < 10000000 || 'Image size should be less than 10 MB!',
                 ],
+                 dateRules:[
+                v => !!v || 'Date is required'
+            ],
             }
         },
         computed: {
@@ -144,7 +173,10 @@
             },
             loading () {
                 return this.$store.getters.loading
-            }
+            },
+            formattedDate(){
+            return this.signupForm.tgllhr ? format(parseISO(this.signupForm.tgllhr), 'do MMM yyyy') : ''
+        }
         },
         watch: {
             user (value) {
@@ -182,6 +214,9 @@
                     email: this.signupForm.email,
                     password: this.signupForm.password,
                     nama: this.signupForm.nama,
+                    alamat:this.signupForm.alamat,
+                    tgllhr: this.signupForm.tgllhr,
+                    no_ktp: this.signupForm.no_ktp,
                     image: this.image,
                     role:this.role
                     }

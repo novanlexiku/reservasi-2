@@ -152,7 +152,7 @@ export default {
     data: () => ({
                 loggedIn: false,
             drawer: false,
-            
+             
     }),
     computed: {
         user(){

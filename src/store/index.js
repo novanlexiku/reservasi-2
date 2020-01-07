@@ -669,7 +669,10 @@ export default new Vuex.Store({
             id: getters.user.id,
             nama: payload.nama,
             email: payload.email,
-            role: payload.role
+            role: payload.role,
+            alamat:payload.alamat,
+            tgllhr: payload.tgllhr,
+            no_ktp: payload.no_ktp
           }
           let imageUrl
           let key
@@ -710,7 +713,10 @@ export default new Vuex.Store({
                     nama: doc.data().nama,
                     image: doc.data().image,
                     email: doc.data().email,
-                    role: doc.data().role
+                    role: doc.data().role,
+                    alamat:doc.data().alamat,
+                    tgllhr: doc.data().tgllhr,
+                    no_ktp: doc.data().no_ktp
                   }
                   commit('setUser', newUser)
               } else {
@@ -751,7 +757,10 @@ export default new Vuex.Store({
                     nama: doc.data().nama,
                     image: doc.data().image,
                     email: doc.data().email,
-                    role: doc.data().role
+                    role: doc.data().role,
+                    alamat:doc.data().alamat,
+                    tgllhr: doc.data().tgllhr,
+                    no_ktp: doc.data().no_ktp
                   }
                   commit('setUser', newUser)
               } else {
@@ -784,7 +793,10 @@ export default new Vuex.Store({
                 nama: doc.data().nama,
                 image: doc.data().image,
                 email: doc.data().email,
-                role: doc.data().role
+                role: doc.data().role,
+                alamat:doc.data().alamat,
+                tgllhr: doc.data().tgllhr,
+                no_ktp: doc.data().no_ktp
               }
               commit('setUser', newUser)
           } else {
