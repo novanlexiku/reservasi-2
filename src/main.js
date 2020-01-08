@@ -8,10 +8,10 @@ import db from './fb'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
-import AlertCmp from './components/shared/Alert'
+import VueLazyLoad from 'vue-lazyload'
 
 Vue.config.productionTip = false
-Vue.component('app-alert', AlertCmp)
+Vue.use(VueLazyLoad)
 
 
 

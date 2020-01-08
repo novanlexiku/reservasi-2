@@ -24,16 +24,33 @@
                                                     {{room.deskripsi}}
                                                 </v-card-text>
                                             </div>
-                                                <!-- <img class="materialboxed mr-1" 
-                                                height="194"
-                                                max-width="300"
-                                                :src="room.image"> -->
-                                                <v-img
+                                                <v-dialog
+                                                v-model="dialog"
+                                                width="700"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                     <v-img
                                                 :src="room.image"
                                                 height="194"
                                                 max-width="300"
                                                 class="mr-1"
+                                                v-on="on"
                                                 ></v-img>
+                                                </template>
+
+                                                        
+                                                        <v-img
+                                                        :src="room.image"
+                                                        >
+                                                        <v-btn
+                                                            dark
+                                                            icon
+                                                            @click="dialog = false"
+                                                        >
+                                                        <v-icon>mdi-close</v-icon>
+                                                        </v-btn>
+                                                        </v-img>
+                                                </v-dialog>
                                             </div>
                                     <v-card-actions>
                                     <v-btn
@@ -108,6 +125,7 @@ export default {
     data: () => ({
         image:true,
         snackbar: false,
+        dialog:false,
     }),
     props:['id'],
 computed:{
