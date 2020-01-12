@@ -41,14 +41,16 @@
                             <v-chip small :color="`${user.role}`" :class="`v-chip--active white--text caption my-2`">{{user.role}}</v-chip>
                         </div>
                   </v-col>
-                  <v-col cols="6" md="2">
+                  <template>
+                  <v-col cols="6" md="2" v-if="userIsAdmin">
                         <div class="caption grey--text">Aksi</div>
                         <div class="justify-end">
                     <Edit :user="user" @editKaryawan="snackbar=true"/>
                     <Delete :user="user" @deleteKaryawan="snackbar2=true"/>
-
                     </div>
                   </v-col>
+                  </template>
+                  
               </v-row>
             <v-divider></v-divider>
           </v-card>
@@ -71,6 +73,21 @@ export default {
       users () {
         return this.$store.getters.loadedKaryawan
       },
+      userIsAuthenticated () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+        },
+      userIsAdmin () {
+            if (!this.userIsAuthenticated) {
+            return false
+            }
+            return this.$store.getters.user.role === 'admin'
+        },
+        userIsKaryawan () {
+            if (!this.userIsAuthenticated) {
+            return false
+            }
+            return this.$store.getters.user.role === 'karyawan'
+        },
     },
     // sort method
     methods:{
@@ -80,6 +97,7 @@ export default {
     sortByB(prop){
       this.users.sort((a,b) => a[prop] < b[prop] ? -1:1)
     },
+    
     },
     
 }

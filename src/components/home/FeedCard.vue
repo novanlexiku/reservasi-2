@@ -37,6 +37,14 @@
                     {{value.jenis}}
                     </v-chip>
                     <v-chip small :color="`${value.status}`" :class="`v-chip--active white--text caption my-2`">{{value.status}}</v-chip>
+                    <v-chip
+                      class="v-chip--active white--text caption my-2"
+                      color="grey darken-3"
+                      small
+                      @click.stop=""
+                    >
+                    {{ value.harga }}
+                    </v-chip>
                     <h3 class="title font-weight-bold ma-2">
                       {{ value.title }}
                     </h3>

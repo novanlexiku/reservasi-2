@@ -8,17 +8,17 @@
         </v-snackbar>
         <!-- Stepper -->
       <v-stepper v-model="e1">
-    <v-stepper-header>
-      <v-stepper-step :complete="e1 > 1" step="1">Mengisi Form</v-stepper-step>
+      <v-stepper-header>
+        <v-stepper-step :complete="e1 > 1" step="1">Mengisi Form</v-stepper-step>
 
-      <v-divider></v-divider>
+        <v-divider></v-divider>
 
-      <v-stepper-step :complete="e1 > 2" step="2">Konfirmasi Data</v-stepper-step>
+        <v-stepper-step :complete="e1 > 2" step="2">Konfirmasi Data</v-stepper-step>
 
-      <v-divider></v-divider>
+        <v-divider></v-divider>
 
-      <v-stepper-step step="3">Reservasi</v-stepper-step>
-    </v-stepper-header>
+        <v-stepper-step step="3">Reservasi</v-stepper-step>
+      </v-stepper-header>
 
     <v-stepper-items>
         <!-- Stepper 1 -->
@@ -28,8 +28,34 @@
                                 <v-card
                                 >
                                     <v-list-item>
-                                    <v-list-item-avatar color="grey"></v-list-item-avatar>
                                     <v-list-item-content>
+                                      <v-dialog
+                                                v-model="dialog"
+                                                width="700"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                <v-img
+                                                :src="room.image"
+                                                height="194"
+                                                max-width="300"
+                                                class="mr-1"
+                                                v-on="on"
+                                                ></v-img>
+                                                </template>
+
+                                                        
+                                                        <v-img
+                                                        :src="room.image"
+                                                        >
+                                                        <v-btn
+                                                            dark
+                                                            icon
+                                                            @click="dialog = false"
+                                                        >
+                                                        <v-icon>mdi-close</v-icon>
+                                                        </v-btn>
+                                                        </v-img>
+                                                </v-dialog>
                                         <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
                                         <v-list-item-subtitle>Harga : Rp.{{room.harga}} / Hari</v-list-item-subtitle>
                                     </v-list-item-content>
@@ -37,7 +63,7 @@
                                             <div class="d-flex flex-no-wrap justify-space-between" >
                                             <v-card-text width="300">
                                                 <!-- form Checkin -->
-                                            <v-form class="px-3" ref="form">
+                                            <v-form class="px-1" ref="form">
                                               <v-col cols="12" sm="6"> 
                                                 <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
                                               </v-col>
@@ -76,7 +102,7 @@
                                               <v-select 
                                                       :items="banks"
                                                       v-model="bank"
-                                                      label="Pilih Pembayaran"
+                                                      label="Jenis Pembayaran"
                                                       item-text="title"
                                                       item-value="rekening"
                                                       prepend-icon="mdi-bank"
@@ -98,12 +124,6 @@
 
                                                 <v-btn text class="ml-3" router to="/">Batal</v-btn> 
                                             </v-card-text>
-                                                <v-img
-                                                :src="room.image"
-                                                height="200"
-                                                max-width="400"
-                                                class="mr-1 mb-1"
-                                                ></v-img>
                                             </div>
                                 </v-card>
                             </v-col>
@@ -116,8 +136,34 @@
                                 <v-card
                                 >
                                     <v-list-item>
-                                    <v-list-item-avatar color="grey"></v-list-item-avatar>
                                     <v-list-item-content>
+                                      <v-dialog
+                                                v-model="dialog"
+                                                width="700"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                <v-img
+                                                :src="room.image"
+                                                height="194"
+                                                max-width="300"
+                                                class="mr-1"
+                                                v-on="on"
+                                                ></v-img>
+                                                </template>
+
+                                                        
+                                                        <v-img
+                                                        :src="room.image"
+                                                        >
+                                                        <v-btn
+                                                            dark
+                                                            icon
+                                                            @click="dialog = false"
+                                                        >
+                                                        <v-icon>mdi-close</v-icon>
+                                                        </v-btn>
+                                                        </v-img>
+                                                </v-dialog>
                                         <v-list-item-title class="headline">Konfirmasi Pemesanan {{room.title}}</v-list-item-title>
                                         <v-list-item-subtitle>Harga : Rp.{{room.harga}} / Hari</v-list-item-subtitle>
                                     </v-list-item-content>
@@ -125,7 +171,7 @@
                                             <div class="d-flex flex-no-wrap justify-space-between" >
                                             <v-card-text width="300">
                                                 <!-- konfirmasi -->
-                                                <v-form class="px-3" ref="form" @submit.prevent="submit">
+                                                <v-form class="px-1" ref="form" @submit.prevent="submit">
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field label="Nama Ruangan" v-model="room.title" prepend-icon="mdi-account" readonly></v-text-field>
                                                     </v-col>
@@ -164,12 +210,6 @@
                                               <v-btn text @click="e1 = 1" class="ml-3">Kembali</v-btn>
                                               </v-form>
                                             </v-card-text>
-                                                <v-img
-                                                :src="room.image"
-                                                height="200"
-                                                max-width="400"
-                                                class="mr-1 mb-1"
-                                                ></v-img>
                                             </div>
                                 </v-card>
                             </v-col>
@@ -224,7 +264,9 @@
                                                 <v-btn text @click="e1 = 2" class="ml-3">Kembali</v-btn>
                                               </v-form>
                                             </v-card-text>
-                                            <v-card
+                                            </div>
+                                </v-card>
+                              <v-card
                                               class="mr-1 mb-1"
                                               width="400"
                                               height="250"
@@ -241,19 +283,8 @@
                                                 </div>
                                               </v-card-text>
                                               <v-card-actions>
-                                                <v-btn
-                                                  text
-                                                  color="deep-purple accent-4"
-                                                >
-                                                  Learn More
-                                                </v-btn>
                                               </v-card-actions>
                                             </v-card>
-                                            </div>
-                                            
-                                            
-                                </v-card>
-
                             </v-col>
                             
       </v-stepper-content>
@@ -271,7 +302,7 @@ import parseISO from 'date-fns/parseISO'
       return {
         
         e1: 0,
-        
+        dialog:false,
         nama: '',
         no_ktp: '',
         telp: '',
