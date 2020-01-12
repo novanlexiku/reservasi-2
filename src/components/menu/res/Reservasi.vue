@@ -1,6 +1,6 @@
 <template>
   <div class="reservasi">
-    <v-container class="my-5">
+    <v-container grid-list-sm>
       <!-- Snackbar -->
         <v-snackbar v-model="snackbar" top color="success">
           <span>Reservasi berhasil ditambahkan</span>
@@ -23,7 +23,115 @@
     <v-stepper-items>
         <!-- Stepper 1 -->
       <v-stepper-content step="1">
-                            <!-- Deskripsi Ruangan -->
+                              <v-row>
+                              <!-- Deskripsi Reservasi -->
+                                <v-col cols="12" sm="12">
+                                    <v-card>
+                                        <v-list-item>
+                                        <v-list-item-content>
+                                          <v-dialog
+                                                    v-model="dialog"
+                                                    width="700"
+                                                    >
+                                                    <template v-slot:activator="{ on }">
+                                                    <v-img
+                                                    :src="room.image"
+                                                    height="194"
+                                                    max-width="300"
+                                                    class="mx-1"
+                                                    v-on="on"
+                                                    ></v-img>
+                                                    </template>
+                                                            <v-img
+                                                            :src="room.image"
+                                                            >
+                                                            <v-btn
+                                                                dark
+                                                                icon
+                                                                @click="dialog = false"
+                                                            >
+                                                            <v-icon>mdi-close</v-icon>
+                                                            </v-btn>
+                                                            </v-img>
+                                                    </v-dialog>
+                                            <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
+                                            <v-list-item-subtitle>Harga : {{room.harga|toCurrency}} / Hari</v-list-item-subtitle>
+                                        </v-list-item-content>
+                                        </v-list-item>
+                                                <div class="d-flex flex-no-wrap justify-space-between" >
+                                                <v-card-text max-width="300">
+                                                    <!-- form Checkin -->
+                                                <v-form ref="form">
+                                                  <v-col cols="12" sm="6"> 
+                                                    <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
+                                                  </v-col>
+                                                  <v-col cols="12" sm="6"> 
+                                                    <v-text-field label="No Ktp" v-model="no_ktp" prepend-icon="mdi-information" :rules="inputRules"></v-text-field>
+                                                  </v-col>
+                                                  <v-col cols="12" sm="6"> 
+                                                    <v-text-field label="Telp" v-model="telp" prepend-icon="mdi-cellphone" :rules="inputRules"></v-text-field>
+                                                  </v-col>
+                                                  <v-col cols="12" sm="6"> 
+                                                    <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="checkin"
+                                                        transition="scale-transition"
+                                                        offset-y
+                                                        max-width="290px"
+                                                        >
+                                                        <template v-slot:activator="{ on }">
+                                                            <v-text-field
+                                                            :rules="dateRules" :value="formattedDate"
+                                                            label="Tanggal Check-in"
+                                                            prepend-icon="mdi-calendar-account"
+                                                            readonly
+                                                            clearable
+                                                            v-on="on"
+                                                            ></v-text-field>
+                                                        </template>
+                                                        <v-date-picker v-model="checkin" no-title scrollable>
+                                                            <v-spacer></v-spacer>
+                                                            <v-btn text color="primary" @click="$refs.menu.save(checkin)">OK</v-btn>
+                                                        </v-date-picker>
+                                                        </v-menu>
+                                                  </v-col>
+                                                  <v-col cols="12" sm="6"> 
+                                                    <v-text-field label="Lama Sewa" v-model="sewa" suffix="hari" prepend-icon="mdi-arrow-right-bold-box-outline"></v-text-field>
+                                                  </v-col>
+                                                  <v-col cols="12" sm="6"> 
+                                                  <v-select 
+                                                          :items="banks"
+                                                          v-model="bank"
+                                                          label="Jenis Pembayaran"
+                                                          item-text="title"
+                                                          item-value="rekening"
+                                                          prepend-icon="mdi-bank"
+                                                          bottom
+                                                          autocomplete
+                                                          ></v-select>
+                                                  </v-col>
+                                                  <v-col cols="12" sm="6">
+                                                        <v-text-field v-model="total"  prefix="IDR " prepend-icon="mdi-currency-usd" readonly></v-text-field>
+                                                        </v-col>
+                                                    </v-form>
+                                                    <v-btn
+                                                      color="primary"
+                                                      class="ma-3"
+                                                      @click="e1 = 2"
+                                                    >
+                                                      Selanjutnya
+                                                    </v-btn>
+
+                                                    <v-btn text class="ma-3" router to="/">Batal</v-btn> 
+                                                </v-card-text>
+                                                </div>
+                                    </v-card>
+                                </v-col>
+                              </v-row>
+                            
+      </v-stepper-content>
+        <!-- Stepper 2 -->
+      <v-stepper-content step="2">
+                            <v-row>
+                            <!-- Deskripsi Reservasi -->
                             <v-col cols="12" sm="12">
                                 <v-card
                                 >
@@ -38,7 +146,7 @@
                                                 :src="room.image"
                                                 height="194"
                                                 max-width="300"
-                                                class="mr-1"
+                                                class="mx-1"
                                                 v-on="on"
                                                 ></v-img>
                                                 </template>
@@ -57,121 +165,13 @@
                                                         </v-img>
                                                 </v-dialog>
                                         <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
-                                        <v-list-item-subtitle>Harga : Rp.{{room.harga}} / Hari</v-list-item-subtitle>
+                                        <v-list-item-subtitle>Harga : {{room.harga|toCurrency}} / Hari</v-list-item-subtitle>
                                     </v-list-item-content>
                                     </v-list-item>
                                             <div class="d-flex flex-no-wrap justify-space-between" >
-                                            <v-card-text width="300">
-                                                <!-- form Checkin -->
-                                            <v-form class="px-1" ref="form">
-                                              <v-col cols="12" sm="6"> 
-                                                <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
-                                              </v-col>
-                                              <v-col cols="12" sm="6"> 
-                                                <v-text-field label="No Ktp" v-model="no_ktp" prepend-icon="mdi-information" :rules="inputRules"></v-text-field>
-                                              </v-col>
-                                              <v-col cols="12" sm="6"> 
-                                                <v-text-field label="Telp" v-model="telp" prepend-icon="mdi-cellphone" :rules="inputRules"></v-text-field>
-                                              </v-col>
-                                              <v-col cols="12" sm="6"> 
-                                                <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="checkin"
-                                                    transition="scale-transition"
-                                                    offset-y
-                                                    max-width="290px"
-                                                    >
-                                                    <template v-slot:activator="{ on }">
-                                                        <v-text-field
-                                                        :rules="dateRules" :value="formattedDate"
-                                                        label="Tanggal Check-in"
-                                                        prepend-icon="mdi-calendar-account"
-                                                        readonly
-                                                        clearable
-                                                        v-on="on"
-                                                        ></v-text-field>
-                                                    </template>
-                                                    <v-date-picker v-model="checkin" no-title scrollable>
-                                                        <v-spacer></v-spacer>
-                                                        <v-btn text color="primary" @click="$refs.menu.save(checkin)">OK</v-btn>
-                                                    </v-date-picker>
-                                                    </v-menu>
-                                              </v-col>
-                                              <v-col cols="12" sm="6"> 
-                                                <v-text-field label="Lama Sewa" v-model="sewa" suffix="hari" prepend-icon="mdi-arrow-right-bold-box-outline"></v-text-field>
-                                              </v-col>
-                                              <v-col cols="12" sm="6"> 
-                                              <v-select 
-                                                      :items="banks"
-                                                      v-model="bank"
-                                                      label="Jenis Pembayaran"
-                                                      item-text="title"
-                                                      item-value="rekening"
-                                                      prepend-icon="mdi-bank"
-                                                      bottom
-                                                      autocomplete
-                                                      ></v-select>
-                                              </v-col>
-                                              <v-col cols="12" sm="6">
-                                                    <v-text-field v-model="total"  prefix="Rp." prepend-icon="mdi-currency-usd" readonly></v-text-field>
-                                                    </v-col>
-                                                </v-form>
-                                                <v-btn
-                                                  color="primary"
-                                                  class="ml-3"
-                                                  @click="e1 = 2"
-                                                >
-                                                  Selanjutnya
-                                                </v-btn>
-
-                                                <v-btn text class="ml-3" router to="/">Batal</v-btn> 
-                                            </v-card-text>
-                                            </div>
-                                </v-card>
-                            </v-col>
-        
-      </v-stepper-content>
-        <!-- Stepper 2 -->
-      <v-stepper-content step="2">
-                            <!-- Deskripsi Ruangan -->
-                            <v-col cols="12" sm="12">
-                                <v-card
-                                >
-                                    <v-list-item>
-                                    <v-list-item-content>
-                                      <v-dialog
-                                                v-model="dialog"
-                                                width="700"
-                                                >
-                                                <template v-slot:activator="{ on }">
-                                                <v-img
-                                                :src="room.image"
-                                                height="194"
-                                                max-width="300"
-                                                class="mr-1"
-                                                v-on="on"
-                                                ></v-img>
-                                                </template>
-
-                                                        
-                                                        <v-img
-                                                        :src="room.image"
-                                                        >
-                                                        <v-btn
-                                                            dark
-                                                            icon
-                                                            @click="dialog = false"
-                                                        >
-                                                        <v-icon>mdi-close</v-icon>
-                                                        </v-btn>
-                                                        </v-img>
-                                                </v-dialog>
-                                        <v-list-item-title class="headline">Konfirmasi Pemesanan {{room.title}}</v-list-item-title>
-                                        <v-list-item-subtitle>Harga : Rp.{{room.harga}} / Hari</v-list-item-subtitle>
-                                    </v-list-item-content>
-                                    </v-list-item>
-                                            <div class="d-flex flex-no-wrap justify-space-between" >
-                                            <v-card-text width="300">
+                                            <v-card-text max-width="300">
                                                 <!-- konfirmasi -->
-                                                <v-form class="px-1" ref="form" @submit.prevent="submit">
+                                                <v-form ref="form" @submit.prevent="submit">
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field label="Nama Ruangan" v-model="room.title" prepend-icon="mdi-account" readonly></v-text-field>
                                                     </v-col>
@@ -193,39 +193,37 @@
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field label="Lama Sewa" v-model="sewa" suffix="hari" prepend-icon="mdi-arrow-right-bold-box-outline" readonly></v-text-field>
                                                     </v-col>
-                                                     <v-col cols="12" sm="6">
+                                                    <v-col cols="12" sm="6">
                                                     <v-text-field label="Transfer ke Rekening" v-model="bank" prepend-icon="mdi-bank" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field v-model="total" prefix="Rp." prepend-icon="mdi-currency-usd" readonly></v-text-field>
+                                                    <v-text-field v-model="total" prefix="IDR " prepend-icon="mdi-currency-usd" readonly></v-text-field>
                                                     </v-col>
                                                 <v-btn
                                                 color="primary"
-                                                class="ml-3"
+                                                class="ma-3"
                                                 @click="e1 =3"
                                                 
                                               >
                                                 Selanjutnya
                                               </v-btn>
-                                              <v-btn text @click="e1 = 1" class="ml-3">Kembali</v-btn>
+                                              <v-btn text @click="e1 = 1" class="ma-3">Kembali</v-btn>
                                               </v-form>
                                             </v-card-text>
                                             </div>
                                 </v-card>
                             </v-col>
-        
-
+                            </v-row>
       </v-stepper-content>
         <!-- Stepper 3 -->
       <v-stepper-content step="3">
-        <!-- Deskripsi Ruangan -->
+                            <v-row>
+                              <!-- Deskripsi Reservasi -->
                             <v-col cols="12" sm="12">
-                                <v-card
-                                >
-                                    
+                                <v-card>
                                             <div class="d-flex flex-no-wrap justify-space-between" >
-                                            <v-card-text width="300">
-                                                <v-form class="px-3" ref="form" @submit.prevent="submit">
+                                            <v-card-text max-width="300">
+                                                <v-form ref="form" @submit.prevent="submit">
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field outlined label="Nama Ruangan" v-model="room.title" readonly></v-text-field>
                                                     </v-col>
@@ -247,46 +245,45 @@
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field outlined label="Lama Sewa" v-model="sewa" suffix="hari" readonly></v-text-field>
                                                     </v-col>
-                                                     <v-col cols="12" sm="6">
+                                                    <v-col cols="12" sm="6">
                                                     <v-text-field outlined label="Transfer ke Rekening" v-model="bank" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field outlined v-model="total" prefix="Rp." readonly></v-text-field>
+                                                    <v-text-field outlined v-model="total" prefix="IDR " readonly></v-text-field>
                                                     </v-col>
                                                 <v-btn
                                                   color="primary"
-                                                  class="ml-3"
+                                                  class="ma-3"
                                                   type="submit" :loading="loading"
                                                 >
                                                   Complete
                                                 </v-btn>
-
-                                                <v-btn text @click="e1 = 2" class="ml-3">Kembali</v-btn>
+                                                <v-btn text @click="e1 = 2" class="ma-3">Kembali</v-btn>
                                               </v-form>
                                             </v-card-text>
                                             </div>
-                                </v-card>
-                              <v-card
-                                              class="mr-1 mb-1"
-                                              width="400"
-                                              height="250"
-                                              >
-                                              <v-card-text>
-                                                <div>Pemesanan</div>
-                                                <p class="display-1 text--primary">
-                                                  {{room.title}}
-                                                </p>
-                                                <p> Atas Nama : {{this.nama}}</p>
-                                                <div class="text--primary">
-                                                  Lakukan pembayaran ke <br>
-                                                  No. Rekening {{this.bank}}
-                                                </div>
-                                              </v-card-text>
-                                              <v-card-actions>
-                                              </v-card-actions>
-                                            </v-card>
+                                                </v-card>                                              
                             </v-col>
-                            
+                            <v-col cols="12" sm="12">
+                                                  <v-card
+                                                    height="250"
+                                                    >
+                                                    <v-card-text>
+                                                      <div>Pemesanan</div>
+                                                      <p class="display-1 text--primary">
+                                                        {{room.title}}
+                                                      </p>
+                                                      <p> Atas Nama : {{this.nama}}</p>
+                                                      <div class="text--primary">
+                                                        Lakukan pembayaran ke <br>
+                                                        No. Rekening {{this.bank}}
+                                                      </div>
+                                                    </v-card-text>
+                                                    <v-card-actions>
+                                                    </v-card-actions>
+                                                  </v-card>
+                                                </v-col>
+                            </v-row>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>

@@ -12,9 +12,8 @@ import Konfirmasi from '../components/menu/res/Konfirmasi'
 import KonfirmasiPelanggan from '../components/menu/res/KonfirmasiPelanggan'
 import ListRes from '../components/menu/res/HistoryReservasi'
 import ListProRes from '../components/menu/res/ListReservasi'
-import Team from '../components/menu/Team'
 import Explore from '../components/menu/Explore'
-import Tutorial from '../components/menu/Tutorial'
+import Tutorial from '../components/menu/tutorial/Tutorial'
 import Bank from '../components/menu/bank/Banks'
 import CheckIn from '../components/menu/check/CheckIn'
 import CheckOut from '../components/menu/check/CheckOut'
@@ -94,10 +93,6 @@ const routes = [
     props: true,
     component: Reservasi,
     beforeEnter: AuthGuard
-  },{
-    path: '/team',
-    name: 'Team',
-    component: Team
   },{
     path: '/explore',
     name: 'Explore',

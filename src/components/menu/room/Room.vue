@@ -23,12 +23,10 @@
                                                 :src="room.image"
                                                 height="194"
                                                 max-width="300"
-                                                class="mr-1"
+                                                class="mx-1"
                                                 v-on="on"
                                                 ></v-img>
                                                 </template>
-
-                                                        
                                                         <v-img
                                                         :src="room.image"
                                                         >
@@ -42,7 +40,12 @@
                                                         </v-img>
                                                 </v-dialog>
                                         <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
-                                        <v-list-item-subtitle>Harga : Rp.{{room.harga}}</v-list-item-subtitle>
+                                        <v-list-item-subtitle>
+                                        <v-chip class="v-chip--active white--text caption my-2"
+                                        color="primary darken-3"
+                                        small>{{room.harga|toCurrency}}</v-chip>
+                                        </v-list-item-subtitle>
+                                        <v-divider class="mx-2"></v-divider>
                                     </v-list-item-content>
                                     </v-list-item>
                                             <div class="d-flex flex-no-wrap justify-space-between">

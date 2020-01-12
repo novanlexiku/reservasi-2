@@ -158,7 +158,6 @@ export default {
                 { text: 'Home', icon: 'mdi-home', route: '/' },
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'Login', icon: 'mdi-map-marker', route: '/login' },
-                { text: 'Team', icon: 'mdi-account-group', route: '/team' },
                 { text: 'Tutorial', icon: 'mdi-timeline-help-outline', route: '/tutorial' },
             ]
             if (this.userIsAuthenticated && this.loggedIn) {
@@ -167,7 +166,6 @@ export default {
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'History', icon: 'mdi-history', route: '/history' },
                 { text: 'Konfirmasi', icon: 'mdi-marker-check', route: '/konfirmasipelanggan' },
-                { text: 'Team', icon: 'mdi-account-group', route: '/team' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
                 { text: 'Tutorial', icon: 'mdi-timeline-help-outline', route: '/tutorial' },
                 ]
@@ -177,7 +175,6 @@ export default {
                 { text: 'Home', icon: 'mdi-home', route: '/' },
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'Rooms', icon: 'mdi-archive', route: '/rooms' },
-                { text: 'Team', icon: 'mdi-account-group', route: '/team' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
                 { text: 'Bank', icon: 'mdi-bank', route: '/bank' },
                 { text: 'Tutorial', icon: 'mdi-timeline-help-outline', route: '/tutorial' },
@@ -190,7 +187,6 @@ export default {
                 { text: 'Konfirmasi', icon: 'mdi-marker-check', route: '/konfirmasipelanggan' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
                 { text: 'Tutorial', icon: 'mdi-timeline-help-outline', route: '/tutorial' },
-                { text: 'Team', icon: 'mdi-account-group', route: '/team' },
                 ]
             }
             return items

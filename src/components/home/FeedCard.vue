@@ -39,17 +39,16 @@
                     <v-chip small :color="`${value.status}`" :class="`v-chip--active white--text caption my-2`">{{value.status}}</v-chip>
                     <v-chip
                       class="v-chip--active white--text caption my-2"
-                      color="grey darken-3"
+                      color="primary darken-3"
                       small
-                      @click.stop=""
                     >
-                    {{ value.harga }}
+                    {{ value.harga|toCurrency }}
                     </v-chip>
                     <h3 class="title font-weight-bold ma-2">
                       {{ value.title }}
                     </h3>
                     <div class="caption ma-2">
-                    <span>Harga : Rp.</span>{{ value.harga }}<br>{{ value.deskripsi }}
+                    {{ value.deskripsi }}
                     </div>
                   </v-flex>
                   <v-flex align-self-end>

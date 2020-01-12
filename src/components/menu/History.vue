@@ -1,7 +1,7 @@
 <template>
   <div class="history">
 <!-- Expansion Panel -->
-  <v-container class="my-5">
+  <v-container grid-list-sm>
     <v-card
     class="mx-auto"
     max-width="800"
@@ -13,11 +13,12 @@
         <v-spacer></v-spacer>
       </v-card-title>
       <v-card-text class="py-0">
-        <v-timeline>
+        <v-timeline :dense="$vuetify.breakpoint.smAndDown">
           <v-timeline-item
             v-for="history in historys" :key="history.nama"
             color="red lighten-2"
-            large
+            fill-dot
+            right
           >
             <template v-if="history.status_reservasi === 'complete'" v-slot:opposite>
               <span>Pembayaran Selesai</span>
@@ -34,61 +35,117 @@
             <template v-else-if="history.status_reservasi === 'checkout'" v-slot:opposite>
               <span>Berhasil Check-Out</span>
             </template>
-            <v-card v-if="history.status_reservasi === 'complete'" class="elevation-2">
+            <v-container fluid>
+                          <v-row>
+                            <v-col cols="12" sm="4">
+              <v-card v-if="history.status_reservasi === 'complete'" class="elevation-2">
               <v-card-title class="headline">Pembayaran Selesai</v-card-title>
               <v-card-text>
-                        <div>ID Pemesan : {{history.reserv_id}}</div>
-                        <div>Nama Pemesan : {{history.nama}}</div>
-                        <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
-                        <div>Lama Sewa : {{history.sewa}} hari</div>
-                        <div>Tanggal Check-in : {{history.checkin}}</div>
-                        <div>Status Pemesanan : {{history.status_reservasi}}</div>
+                ID Pemesan : {{history.reserv_id}}
+              </v-card-text>
+              <v-card-text>
+                Nama Pemesan : {{history.nama}}
+              </v-card-text>
+              <v-card-text>
+                Total Biaya Pemesanan : {{history.total|toCurrency}}
+              </v-card-text>
+              <v-card-text>
+                Lama Sewa : {{history.sewa}} hari
+              </v-card-text>
+              <v-card-text>
+                Tanggal Check-in : {{history.checkin}}
+              </v-card-text>
+              <v-card-text>
+                Status Pemesanan : {{history.status_reservasi}}
               </v-card-text>
             </v-card>
             <v-card v-else-if="history.status_reservasi === 'diproses'" class="elevation-2">
               <v-card-title class="headline">Lakukan Konfirmasi</v-card-title>
               <v-card-text>
-                        <div>ID Pemesan : {{history.reserv_id}}</div>
-                        <div>Nama Pemesan : {{history.nama}}</div>
-                        <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
-                        <div>Lama Sewa : {{history.sewa}} hari</div>
-                        <div>Tanggal Check-in : {{history.checkin}}</div>
-                        <div>Status Pemesanan : {{history.status_reservasi}}</div>
+                ID Pemesan : {{history.reserv_id}}
+              </v-card-text>
+              <v-card-text>
+                Nama Pemesan : {{history.nama}}
+              </v-card-text>
+              <v-card-text>
+                Total Biaya Pemesanan : {{history.total|toCurrency}}
+              </v-card-text>
+              <v-card-text>
+                Lama Sewa : {{history.sewa}} hari
+              </v-card-text>
+              <v-card-text>
+                Tanggal Check-in : {{history.checkin}}
+              </v-card-text>
+              <v-card-text>
+                Status Pemesanan : {{history.status_reservasi}}
               </v-card-text>
             </v-card>
             <v-card v-else-if="history.status_reservasi === 'menunggu'" class="elevation-2">
               <v-card-title class="headline">Lakukan Konfirmasi</v-card-title>
               <v-card-text>
-                        <div>ID Pemesan : {{history.reserv_id}}</div>
-                        <div>Nama Pemesan : {{history.nama}}</div>
-                        <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
-                        <div>Lama Sewa : {{history.sewa}} hari</div>
-                        <div>Tanggal Check-in : {{history.checkin}}</div>
-                        <div>Status Pemesanan : {{history.status_reservasi}}</div>
+                ID Pemesan : {{history.reserv_id}}
+              </v-card-text>
+              <v-card-text>
+                Nama Pemesan : {{history.nama}}
+              </v-card-text>
+              <v-card-text>
+                Total Biaya Pemesanan : {{history.total|toCurrency}}
+              </v-card-text>
+              <v-card-text>
+                Lama Sewa : {{history.sewa}} hari
+              </v-card-text>
+              <v-card-text>
+                Tanggal Check-in : {{history.checkin}}
+              </v-card-text>
+              <v-card-text>
+                Status Pemesanan : {{history.status_reservasi}}
               </v-card-text>
             </v-card>
             <v-card v-else-if="history.status_reservasi === 'checkin'" class="elevation-2">
               <v-card-title class="headline">Berhasil Check-in</v-card-title>
               <v-card-text>
-                        <div>ID Pemesan : {{history.reserv_id}}</div>
-                        <div>Nama Pemesan : {{history.nama}}</div>
-                        <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
-                        <div>Lama Sewa : {{history.sewa}} hari</div>
-                        <div>Tanggal Check-in : {{history.checkin}}</div>
-                        <div>Status Pemesanan : {{history.status_reservasi}}</div>
+                ID Pemesan : {{history.reserv_id}}
+              </v-card-text>
+              <v-card-text>
+                Nama Pemesan : {{history.nama}}
+              </v-card-text>
+              <v-card-text>
+                Total Biaya Pemesanan : {{history.total|toCurrency}}
+              </v-card-text>
+              <v-card-text>
+                Lama Sewa : {{history.sewa}} hari
+              </v-card-text>
+              <v-card-text>
+                Tanggal Check-in : {{history.checkin}}
+              </v-card-text>
+              <v-card-text>
+                Status Pemesanan : {{history.status_reservasi}}
               </v-card-text>
             </v-card>
             <v-card v-else-if="history.status_reservasi === 'checkout'" class="elevation-2">
               <v-card-title class="headline">Berhasil Check-Out</v-card-title>
               <v-card-text>
-                        <div>ID Pemesan : {{history.reserv_id}}</div>
-                        <div>Nama Pemesan : {{history.nama}}</div>
-                        <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
-                        <div>Lama Sewa : {{history.sewa}} hari</div>
-                        <div>Tanggal Check-in : {{history.checkin}}</div>
-                        <div>Status Pemesanan : {{history.status_reservasi}}</div>
+                ID Pemesan : {{history.reserv_id}}
+              </v-card-text>
+              <v-card-text>
+                Nama Pemesan : {{history.nama}}
+              </v-card-text>
+              <v-card-text>
+                Total Biaya Pemesanan : {{history.total|toCurrency}}
+              </v-card-text>
+              <v-card-text>
+                Lama Sewa : {{history.sewa}} hari
+              </v-card-text>
+              <v-card-text>
+                Tanggal Check-in : {{history.checkin}}
+              </v-card-text>
+              <v-card-text>
+                Status Pemesanan : {{history.status_reservasi}}
               </v-card-text>
             </v-card>
+                            </v-col>
+                          </v-row>
+            </v-container>
           </v-timeline-item>
         </v-timeline>
       </v-card-text>

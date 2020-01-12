@@ -12,7 +12,18 @@ import VueLazyLoad from 'vue-lazyload'
 
 Vue.config.productionTip = false
 Vue.use(VueLazyLoad)
-
+Vue.filter('toCurrency', function (value) {
+  if ((typeof value !== "number")&&(typeof value !== "string")) {
+      return value;
+  }
+  
+  var formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0
+  });
+  return formatter.format(value);
+});
 
 
 new Vue({
