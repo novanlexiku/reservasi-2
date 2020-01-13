@@ -16,7 +16,7 @@
                                     <v-list-item-content>
                                         <v-dialog
                                                 v-model="dialog"
-                                                width="700"
+                                                max-width="700"
                                                 >
                                                 <template v-slot:activator="{ on }">
                                                 <v-img
@@ -27,17 +27,30 @@
                                                 v-on="on"
                                                 ></v-img>
                                                 </template>
-                                                        <v-img
-                                                        :src="room.image"
-                                                        >
-                                                        <v-btn
+                                                <v-carousel hide-delimiters>
+                                                    <v-carousel-item
+                                                    :src="room.image"
+                                                    >
+                                                    <v-btn
                                                             dark
                                                             icon
                                                             @click="dialog = false"
                                                         >
                                                         <v-icon>mdi-close</v-icon>
                                                         </v-btn>
-                                                        </v-img>
+                                                    </v-carousel-item>
+                                                    <v-carousel-item
+                                                    :src="room.image"
+                                                    >
+                                                    <v-btn
+                                                            dark
+                                                            icon
+                                                            @click="dialog = false"
+                                                        >
+                                                        <v-icon>mdi-close</v-icon>
+                                                        </v-btn>
+                                                    </v-carousel-item>
+                                                </v-carousel>
                                                 </v-dialog>
                                         <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
                                         <v-list-item-subtitle>
@@ -54,7 +67,6 @@
                                                     {{room.deskripsi}}
                                                 </v-card-text>
                                             </div>
-                                                
                                             </div>
                                     <v-card-actions>
                                     <v-btn
