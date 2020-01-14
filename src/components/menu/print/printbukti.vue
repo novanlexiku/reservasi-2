@@ -232,13 +232,9 @@ export default {
   },
   methods: {
     print() {
+    let tanggal = this.history.checkin
+    let pdfName = 'bukti pemesanan' + tanggal
     
-    let pdfName = 'bukti pemesanan'
-    // html2canvas(document.querySelector('#content')).then(canvas => {
-		// 	let doc = new jsPDF('p', 'px', 'a4');
-		// 	doc.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 200, 250);
-		// 	doc.save(pdfName + '.pdf')
-    // });
     
     const doc = new jsPDF();
     const contentHtml = this.$refs.content.innerHTML
