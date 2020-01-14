@@ -72,7 +72,7 @@
                                                     <v-text-field label="Telp" v-model="telp" prepend-icon="mdi-cellphone" :rules="inputRules"></v-text-field>
                                                   </v-col>
                                                   <v-col cols="12" sm="6"> 
-                                                    <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="checkin"
+                                                    <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="tanggal"
                                                         transition="scale-transition"
                                                         offset-y
                                                         max-width="290px"
@@ -87,12 +87,44 @@
                                                             v-on="on"
                                                             ></v-text-field>
                                                         </template>
-                                                        <v-date-picker v-model="checkin" no-title scrollable>
+                                                        <v-date-picker v-model="tanggal" no-title scrollable>
                                                             <v-spacer></v-spacer>
-                                                            <v-btn text color="primary" @click="$refs.menu.save(checkin)">OK</v-btn>
+                                                            <v-btn text color="primary" @click="$refs.menu.save(tanggal)">OK</v-btn>
                                                         </v-date-picker>
                                                         </v-menu>
                                                   </v-col>
+                                                  <v-col cols="12" sm="6">
+                                                      <v-menu
+                                                        ref="menu2"
+                                                        v-model="menu2"
+                                                        :close-on-content-click="false"
+                                                        :nudge-right="40"
+                                                        :return-value.sync="time"
+                                                        transition="scale-transition"
+                                                        offset-y
+                                                        max-width="290px"
+                                                        min-width="290px"
+                                                      >
+                                                        <template v-slot:activator="{ on }">
+                                                          <v-text-field
+                                                            v-model="time"
+                                                            label="Waktu Check-in"
+                                                            prepend-icon="mdi-clock-fast"
+                                                            readonly
+                                                            v-on="on"
+                                                          ></v-text-field>
+                                                        </template>
+                                                        <v-time-picker
+                                                          v-if="menu2"
+                                                          v-model="time"
+                                                          full-width
+                                                          format="24hr"
+                                                        >
+                                                        <v-spacer></v-spacer>
+                                                        <v-btn text color="primary" @click="$refs.menu2.save(time)">OK</v-btn>
+                                                        </v-time-picker>
+                                                      </v-menu>
+                                                    </v-col>
                                                   <v-col cols="12" sm="6"> 
                                                     <v-text-field label="Lama Sewa" v-model="sewa" suffix="hari" prepend-icon="mdi-arrow-right-bold-box-outline"></v-text-field>
                                                   </v-col>
@@ -110,6 +142,9 @@
                                                   </v-col>
                                                   <v-col cols="12" sm="6">
                                                         <v-text-field v-model="total"  prefix="IDR " prepend-icon="mdi-currency-usd" readonly></v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="12" sm="6">
+                                                        <v-text-field v-model="checkin" prepend-icon="mdi-calendar-clock" placeholder="Tanggal dan Waktu Check-In" readonly></v-text-field>
                                                         </v-col>
                                                     </v-form>
                                                     <v-btn
@@ -188,7 +223,7 @@
                                                     <v-text-field label="Telp" v-model="telp" prepend-icon="mdi-cellphone" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field :value="formattedDate" label="Tanggal Check-in" prepend-icon="mdi-calendar-account" readonly></v-text-field>
+                                                    <v-text-field :value="checkin" label="Tanggal dan Waktu Check-in" prepend-icon="mdi-calendar-account" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field label="Lama Sewa" v-model="sewa" suffix="hari" prepend-icon="mdi-arrow-right-bold-box-outline" readonly></v-text-field>
@@ -240,7 +275,7 @@
                                                     <v-text-field outlined label="Telp" v-model="telp" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
-                                                    <v-text-field outlined :value="formattedDate" label="Tanggal Check-in" readonly></v-text-field>
+                                                    <v-text-field outlined :value="checkin" label="Tanggal dan Waktu Check-in" readonly></v-text-field>
                                                     </v-col>
                                                     <v-col cols="12" sm="6">
                                                     <v-text-field outlined label="Lama Sewa" v-model="sewa" suffix="hari" readonly></v-text-field>
@@ -297,13 +332,14 @@ import parseISO from 'date-fns/parseISO'
   export default {
     data () {
       return {
-        
+        menu2: false,
         e1: 0,
         dialog:false,
         nama: '',
         no_ktp: '',
         telp: '',
-        checkin:null,
+        tanggal:null,
+        time: '',
         status: 'booked',
         bank:null,
         sewa: '',
@@ -343,8 +379,11 @@ import parseISO from 'date-fns/parseISO'
       
     },
     formattedDate(){
-            return this.checkin ? format(parseISO(this.checkin), 'do MMM yyyy') : ''
+            return this.tanggal ? format(parseISO(this.tanggal), 'do MMM yyyy') : ''
         },
+    checkin(){
+      return this.formattedDate + ' ~ ' + this.time
+    },
     
 },
 
@@ -357,6 +396,8 @@ methods: {
               nama: this.nama,
               no_ktp: this.no_ktp,
               telp: this.telp,
+              tanggal: this.tanggal,
+              waktu: this.time,
               checkin: this.checkin,
               status: this.status,
               bank: this.bank,

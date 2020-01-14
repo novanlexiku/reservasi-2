@@ -300,6 +300,7 @@ export default new Vuex.Store({
         return firebase.storage().ref('rooms/' + key + ext).put(payload.image)
       })
       .then(filedata => {
+        console.log('Upload Berhasil')
         // ambil url gambar dari storage
         let imagePath = filedata.metadata.fullPath
         return firebase.storage().ref().child(imagePath).getDownloadURL()
@@ -360,6 +361,8 @@ export default new Vuex.Store({
         nama: payload.nama,
         no_ktp: payload.no_ktp,
         telp: payload.telp,
+        tanggal : payload.tanggal,
+        waktu: payload.waktu,
         checkin: payload.checkin,
         bank: payload.bank,
         sewa: payload.sewa,
@@ -504,6 +507,7 @@ export default new Vuex.Store({
         return firebase.storage().ref('konfirmasi/' + key + ext).put(payload.image)
       })
       .then(filedata => {
+        console.log('Upload Berhasil')
         // ambil url gambar dari storage
         let imagePath = filedata.metadata.fullPath
         console.log('gambar sudah di upload')
@@ -672,7 +676,8 @@ export default new Vuex.Store({
             role: payload.role,
             alamat:payload.alamat,
             tgllhr: payload.tgllhr,
-            no_ktp: payload.no_ktp
+            no_ktp: payload.no_ktp,
+            no_hp: payload.no_hp
           }
           let imageUrl
           let key
@@ -690,6 +695,7 @@ export default new Vuex.Store({
             return firebase.storage().ref('users/' + key + ext).put(payload.image)
           })
           .then(filedata => {
+            console.log('Upload Berhasil')
             // ambil url gambar dari storage
             let imagePath = filedata.metadata.fullPath
             return firebase.storage().ref().child(imagePath).getDownloadURL()
@@ -716,7 +722,8 @@ export default new Vuex.Store({
                     role: doc.data().role,
                     alamat:doc.data().alamat,
                     tgllhr: doc.data().tgllhr,
-                    no_ktp: doc.data().no_ktp
+                    no_ktp: doc.data().no_ktp,
+                    no_hp: doc.data().no_hp
                   }
                   commit('setUser', newUser)
               } else {
@@ -760,7 +767,8 @@ export default new Vuex.Store({
                     role: doc.data().role,
                     alamat:doc.data().alamat,
                     tgllhr: doc.data().tgllhr,
-                    no_ktp: doc.data().no_ktp
+                    no_ktp: doc.data().no_ktp,
+                    no_hp: doc.data().no_hp
                   }
                   commit('setUser', newUser)
               } else {
@@ -796,7 +804,8 @@ export default new Vuex.Store({
                 role: doc.data().role,
                 alamat:doc.data().alamat,
                 tgllhr: doc.data().tgllhr,
-                no_ktp: doc.data().no_ktp
+                no_ktp: doc.data().no_ktp,
+                no_hp: doc.data().no_hp
               }
               commit('setUser', newUser)
           } else {

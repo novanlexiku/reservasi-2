@@ -47,6 +47,7 @@
                     ></v-text-field>
                     <v-text-field label="Nama" v-model.trim="signupForm.nama" id="nama" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
                     <v-text-field label="No Ktp" v-model.trim="signupForm.no_ktp" prepend-icon="mdi-information" :rules="inputRules"></v-text-field>
+                    <v-text-field label="Telepon" v-model.trim="signupForm.no_hp" prepend-icon="mdi-phone" :rules="inputRules"></v-text-field>
                     <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="signupForm.tgllhr"
                       transition="scale-transition"
                       offset-y
@@ -134,7 +135,8 @@ import parseISO from 'date-fns/parseISO'
                     nama: '',
                     alamat:'',
                     tgllhr: '',
-                    no_ktp: ''
+                    no_ktp: '',
+                    no_hp: ''
                 },
                 passwordForm: {
                     email: ''
@@ -217,6 +219,7 @@ import parseISO from 'date-fns/parseISO'
                     alamat:this.signupForm.alamat,
                     tgllhr: this.signupForm.tgllhr,
                     no_ktp: this.signupForm.no_ktp,
+                    no_hp: this.signupForm.no_hp,
                     image: this.image,
                     role:this.role
                     }
