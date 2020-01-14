@@ -37,6 +37,7 @@
                 class="ma-0"
                 color="secondary"
                 style="height: 48px"
+                router to="/login"
               >
                 Subscribe
               </v-btn>
