@@ -186,17 +186,21 @@ export default {
                 { text: 'Explore', icon: 'mdi-map', route: '/explore' },
                 { text: 'Konfirmasi', icon: 'mdi-marker-check', route: '/konfirmasipelanggan' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
-                { text: 'Tutorial', icon: 'mdi-timeline-help-outline', route: '/tutorial' },
                 ]
             }
             return items
         },
         admins(){
             let admins = []
-            if(this.userIsAdmin && this.loggedIn || this.userIsKaryawan && this.loggedIn){
+            if(this.userIsAdmin && this.loggedIn){
             admins = [
             { text: 'Pelanggan', icon: 'mdi-account-circle-outline', route: '/pelanggan' },
             { text: 'Karyawan', icon: 'mdi-account-group-outline', route: '/karyawan' },
+            ]
+            }
+            if(this.userIsKaryawan && this.loggedIn){
+            admins = [
+            { text: 'Pelanggan', icon: 'mdi-account-circle-outline', route: '/pelanggan' },
             ]
             }
             return admins

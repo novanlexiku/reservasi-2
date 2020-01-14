@@ -1,17 +1,25 @@
 <template>
   <div class="karyawan">
       <v-container class="my-5">
-        <!-- Snackbar -->
+       <!-- Snackbar -->
         <v-snackbar v-model="snackbar" top color="success">
-          <span>Selamat! Pengguna berhasil ditambahkan</span>
+          <span>Selamat! Pelanggan berhasil ditambahkan</span>
           <v-btn text color="white" @click="snackbar = false">Close</v-btn>
         </v-snackbar>
-        <v-snackbar v-model="snackbar2" top color="warning">
-          <span>Data Karyawan Berhasil di Hapus</span>
+        <v-snackbar v-model="snackbar2" top color="error">
+          <span>Data Pelanggan Berhasil di Hapus</span>
           <v-btn text color="white" @click="snackbar2 = false">Close</v-btn>
         </v-snackbar>
+        <v-snackbar v-model="snackbar3" top color="success">
+          <span>Data Pelanggan Berhasil di Update</span>
+          <v-btn text color="white" @click="snackbar3 = false">Close</v-btn>
+        </v-snackbar>
+        <v-snackbar v-model="snackbar4" top color="cyan">
+          <span>Silahkan cek email untuk tautan ganti password</span>
+          <v-btn text color="white" @click="snackbar4 = false">Close</v-btn>
+        </v-snackbar>
           <!-- Sort data + tooltip -->
-           <v-row class="mb-3">
+           <v-row class="mb-3" v-if="userIsAdmin">
             <v-spacer></v-spacer>
             <Karyawan @tambahKaryawan="snackbar=true"/>
            </v-row>
@@ -30,11 +38,6 @@
                       <div class="caption grey--text">Email</div>
                       <div>{{user.email}}</div>
                   </v-col>
-                  
-                  <v-col cols="6" md="2">
-                      <div class="caption grey--text">No KTP</div>
-                      <div>{{user.no_ktp}}</div>
-                  </v-col>
                   <v-col cols="6" md="2">
                         <div class="caption grey--text">Status</div>
                         <div class="justify-end">
@@ -42,11 +45,12 @@
                         </div>
                   </v-col>
                   <template>
-                  <v-col cols="6" md="2" v-if="userIsAdmin">
+                  <v-col cols="6" md="4" v-if="userIsAdmin">
                         <div class="caption grey--text">Aksi</div>
                         <div class="justify-end">
-                    <Edit :user="user" @editKaryawan="snackbar=true"/>
+                    <Edit :user="user" @editKaryawan="snackbar3=true"/>
                     <Delete :user="user" @deleteKaryawan="snackbar2=true"/>
+                    <Reset :user="user" @deleteKaryawan="snackbar4=true"/>
                     </div>
                   </v-col>
                   </template>
@@ -62,12 +66,15 @@
 import Karyawan from '../pengguna/AddKaryawan'
 import Edit from '../pengguna/edit/EditKaryawan'
 import Delete from '../pengguna/delete/DeleteKaryawan'
+import Reset from '../pengguna/reset/ResetKaryawan'
 
 export default {
-  components: {Karyawan, Edit, Delete},
+  components: {Karyawan, Edit, Delete, Reset},
     data: () => ({
       snackbar: false,
-      snackbar2: false
+      snackbar2: false,
+      snackbar3: false,
+      snackbar4: false
     }),
     computed: {
       users () {

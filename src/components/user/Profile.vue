@@ -1,6 +1,17 @@
 <template>
   <div class="profile">
-     <v-card
+    <v-container grid-list-sm>
+      <!-- snackbar -->
+      <v-snackbar v-model="snackbar" top color="success">
+          <span>Data Pengguna Berhasil di Update</span>
+          <v-btn text color="white" @click="snackbar = false">Close</v-btn>
+        </v-snackbar>
+        <v-snackbar v-model="snackbar2" top color="cyan">
+          <span>Silahkan cek email untuk mereset password</span>
+          <v-btn text color="white" @click="snackbar2 = false">Close</v-btn>
+        </v-snackbar>
+        <!-- Komponen Card -->
+      <v-card
     class="mx-auto"
     max-width="700"
     tile
@@ -42,13 +53,8 @@
     </v-img>
 <v-card-actions>
 
-      <v-btn
-        color="purple"
-        text
-      >
-        Update
-      </v-btn>
-
+      <Update :user="user" @updatePengguna="snackbar=true"></Update>
+      <Reset :user="user" @resetPassword="snackbar2=true"/>
       <v-spacer></v-spacer>
 
       <v-btn
@@ -62,18 +68,9 @@
       <div v-show="show">
         <v-divider></v-divider>
 
-        <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12" sm="6">
-          <v-text-field
-            :value="user.password"
-            label="Password"
-            type="password"
-            outlined
-            readonly
-          ></v-text-field>
-        </v-col>
+              
         <v-col cols="12" sm="6">
           <v-text-field
             :value="user.no_ktp"
@@ -84,8 +81,6 @@
         </v-col>
             </v-row>
           </v-container>
-          
-        </v-card-text>
       </div>
     </v-expand-transition>
     <v-form>
@@ -156,14 +151,21 @@
 
     
   </v-card>
+    </v-container>
+    
        
     </div>
 </template>
 
 <script>
+import Update from '../user/editprofile'
+import Reset from '../user/ResetEmail'
 export default {
+  components:{Update, Reset},
 data: () => ({
       show: false,
+      snackbar:false,
+      snackbar2: false
     }),
 
 computed:{

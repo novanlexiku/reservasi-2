@@ -16,10 +16,10 @@
                 <h2>Edit Pelanggan</h2>
             </v-card-title>
             <v-card-text>
-                <v-form class="px-3" ref="form">
+                <v-form class="px-2" ref="form">
                     <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
                     <v-text-field label="No Ktp" v-model="no_ktp" prepend-icon="mdi-information" :rules="inputRules"></v-text-field>
-                    <v-text-field label="Email" v-model="email" prepend-icon="mdi-cellphone" :rules="emailRules"></v-text-field>
+                    <v-text-field label="Telepon" v-model="no_hp" prepend-icon="mdi-cellphone" :rules="inputRules"></v-text-field>
                     <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="tgllhr"
                       transition="scale-transition"
                       offset-y
@@ -57,7 +57,7 @@ export default {
     return{
     nama: this.user.nama,
     no_ktp: this.user.no_ktp,
-    email: this.user.email,
+    no_hp: this.user.no_hp,
     tgllhr: this.user.tgllhr,
     alamat: this.user.alamat,
     // image: 'https://i.pravatar.cc/400?img=47',
@@ -89,7 +89,7 @@ export default {
               id: this.user.id,
               nama: this.nama,
               no_ktp: this.no_ktp,
-              email: this.email,
+              no_hp: this.no_hp,
               tgllhr: this.tgllhr,
               alamat: this.alamat,
           }
@@ -97,7 +97,6 @@ export default {
                    this.loading = false;
                    this.dialog = false;
                    this.$emit('editPelanggan');
-                   this.$refs.form.reset();
       }
     }
   },

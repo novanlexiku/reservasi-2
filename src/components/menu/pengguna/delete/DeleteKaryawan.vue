@@ -4,7 +4,7 @@
                       <v-chip
                       v-on="on"
                           class="text-uppercase mt-2 ml-2"
-                          color="warning"
+                          color="error"
                           label
                           small
                         >

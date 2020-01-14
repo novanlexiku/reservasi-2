@@ -14,8 +14,23 @@
                 <v-form class="px-3" ref="form">
                     <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
                     <v-text-field label="No Ktp" v-model="no_ktp" prepend-icon="mdi-information" :rules="inputRules"></v-text-field>
-                    <v-text-field label="Email" v-model="email" prepend-icon="mdi-cellphone" :rules="emailRules"></v-text-field>
-                    <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="tgllhr"
+                    <v-text-field label="Telepon" v-model="no_hp" prepend-icon="mdi-cellphone" :rules="inputRules"></v-text-field>
+                    <v-text-field label="Email" v-model="email" prepend-icon="mdi-email" :rules="emailRules"></v-text-field>
+                    <v-text-field label="Password"
+                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="show ? 'text' : 'password'"
+                    @click:append="show = !show"
+                    v-model="password"
+                    id="password1" prepend-icon="mdi-textbox-password" 
+                    :rules="inputRules"></v-text-field>
+
+                    <v-text-field label="Confirm Password"
+                    :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="show2 ? 'text' : 'password'"
+                    @click:append="show2 = !show2"
+                    v-model="confirmPassword"
+                    id="password2" prepend-icon="mdi-textbox-password" 
+                    ></v-text-field>                    <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="tgllhr"
                       transition="scale-transition"
                       offset-y
                       min-width="290px"
@@ -54,6 +69,9 @@ export default {
     tgllhr:null,
     role: 'karyawan',
     alamat: '',
+    password: '',
+    confirmPassword:'',
+    no_hp: '',
     image: 'https://firebasestorage.googleapis.com/v0/b/homestay-9f549.appspot.com/o/users%2FAvatar%2FKaryawan1.png?alt=media&token=e3e7a1a3-63b5-4570-a4ad-d0c3295257ce',
     // Rules input + rules date
     inputRules:[
@@ -72,7 +90,8 @@ export default {
             ],
     loading: false,
     dialog: false,
-    show: false
+    show: false,
+    show2: false,
   }),
   methods: {
     submit(){
@@ -85,7 +104,9 @@ export default {
               tgllhr: this.tgllhr,
               role: this.role,
               alamat: this.alamat,
-              image: this.image
+              image: this.image,
+              password: this.password,
+              no_hp: this.no_hp
           }
     this.$store.dispatch('tambahKaryawan', daftar)
                    this.loading = false;

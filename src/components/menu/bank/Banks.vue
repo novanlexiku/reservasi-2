@@ -6,6 +6,10 @@
           <span>Data berhasil ditambahkan</span>
           <v-btn text color="white" @click="snackbar = false">Close</v-btn>
         </v-snackbar>
+        <v-snackbar v-model="snackbar3" top color="success">
+          <span>Data berhasil di update</span>
+          <v-btn text color="white" @click="snackbar3 = false">Close</v-btn>
+        </v-snackbar>
         <v-snackbar v-model="snackbar2" top color="alert">
           <span>Data Bank telah di Hapus</span>
           <v-btn text color="white" @click="snackbar2 = false">Close</v-btn>
@@ -35,20 +39,17 @@
                       <div class="caption grey--text">Nomor Rekening</div>
                       <div>{{bank.rekening}}</div>
                   </v-col>
-                  <v-col cols="6" md="2">
-                      <div class="caption grey--text">Atas Nama</div>
-                      <div>{{bank.nama}}</div>
-                  </v-col>
+                  
                   <v-col cols="6" md="2">
                         <div class="caption grey--text">Status</div>
                         <div justify="space-between">
                             <v-chip small :color="`${bank.status}`" :class="`v-chip--active white--text caption my-2`">{{bank.status}}</v-chip>
                         </div>
                   </v-col>
-                  <v-col cols="6" md="2">
+                  <v-col cols="6" md="4">
                         <div class="caption grey--text">Aksi</div>
                         <div justify="space-between">
-                        <Edit :bank="bank" @bankEdit="snackbar=true"/>
+                        <Edit :bank="bank" @bankEdit="snackbar3=true"/>
                         <Delete :bank="bank" @deleteBank="snackbar2=true"/>                        
                         
                     </div>
@@ -116,7 +117,8 @@ export default {
     data: () => ({
       page: 1,
       snackbar: false,
-      snackbar2: false
+      snackbar2: false,
+      snackbar3: false
     }),
     // sort method
     methods:{

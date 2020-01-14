@@ -19,7 +19,7 @@
                 <v-form class="px-3" ref="form">
                     <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
                     <v-text-field label="No Ktp" v-model="no_ktp" prepend-icon="mdi-information" :rules="inputRules"></v-text-field>
-                    <v-text-field label="Email" v-model="email" prepend-icon="mdi-cellphone" :rules="emailRules"></v-text-field>
+                    <v-text-field label="Telepon" v-model="no_hp" prepend-icon="mdi-cellphone" :rules="inputRules"></v-text-field>
                     <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="tgllhr"
                       transition="scale-transition"
                       offset-y
@@ -57,6 +57,7 @@ export default {
     return{
     nama: this.user.nama,
     no_ktp: this.user.no_ktp,
+    no_hp: this.user.no_hp,
     email: this.user.email,
     tgllhr: this.user.tgllhr,
     alamat: this.user.alamat,
@@ -89,6 +90,7 @@ export default {
               id: this.user.id,
               nama: this.nama,
               no_ktp: this.no_ktp,
+              no_hp: this.no_hp,
               email: this.email,
               tgllhr: this.tgllhr,
               alamat: this.alamat,
@@ -97,7 +99,6 @@ export default {
                    this.loading = false;
                    this.dialog = false;
                    this.$emit('editKaryawan');
-                   this.$refs.form.reset();
       }
     }
   },

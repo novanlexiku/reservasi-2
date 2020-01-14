@@ -1,36 +1,23 @@
 <template>
   <v-dialog max-width="600px" v-model="dialog">
         <template v-slot:activator="{on}">
-                <v-btn small text v-on="on" color="grey">
-                    <span class="subtitle-2">Tambah Pelanggan</span>
-                    <v-icon right small>mdi-plus-box</v-icon>
-                </v-btn>        
+            <v-btn
+                v-on="on"
+                color="purple"
+                text
+            >
+                Update
+            </v-btn>
         </template>
-      <v-card>
+        <v-card>
             <v-card-title>
-                <h2>Tambah Pelanggan</h2>
+                <h2>Update Data Pengguna</h2>
             </v-card-title>
             <v-card-text>
                 <v-form class="px-2" ref="form">
                     <v-text-field label="Nama" v-model="nama" prepend-icon="mdi-account" :rules="inputRules"></v-text-field>
                     <v-text-field label="No Ktp" v-model="no_ktp" prepend-icon="mdi-information" :rules="inputRules"></v-text-field>
                     <v-text-field label="Telepon" v-model="no_hp" prepend-icon="mdi-cellphone" :rules="inputRules"></v-text-field>
-                    <v-text-field label="Email" v-model="email" prepend-icon="mdi-email" :rules="emailRules"></v-text-field>
-                    <v-text-field label="Password"
-                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    :type="show ? 'text' : 'password'"
-                    @click:append="show = !show"
-                    v-model="password"
-                    id="password1" prepend-icon="mdi-textbox-password" 
-                    :rules="inputRules"></v-text-field>
-
-                    <v-text-field label="Confirm Password"
-                    :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                    :type="show2 ? 'text' : 'password'"
-                    @click:append="show2 = !show2"
-                    v-model="confirmPassword"
-                    id="password2" prepend-icon="mdi-textbox-password" 
-                    ></v-text-field>
                     <v-menu ref="menu" :close-on-content-click="false" :return-value.sync="tgllhr"
                       transition="scale-transition"
                       offset-y
@@ -52,7 +39,7 @@
                       </v-date-picker>
                     </v-menu>
                     <v-textarea label="Alamat" v-model="alamat" prepend-icon="mdi-border-color" :rules="inputRules"></v-textarea>
-                    <v-btn text class="success mx-0 mt-3" @click="submit" :loading="loading">Tambah</v-btn>
+                    <v-btn text class="success mx-0 mt-3" @click="submit" :loading="loading">Edit</v-btn>
                 </v-form>
             </v-card-text>
         </v-card>
@@ -63,18 +50,15 @@
 import format from 'date-fns/format'
 import parseISO from 'date-fns/parseISO'
 export default {
-  data: () => ({
-    
-    nama: '',
-    no_ktp: '',
-    email: '',
-    tgllhr:null,
-    role: 'pelanggan',
-    alamat: '',
-    password: '',
-    confirmPassword:'',
-    no_hp: '',
-    image: 'https://firebasestorage.googleapis.com/v0/b/homestay-9f549.appspot.com/o/users%2FAvatar%2FUser5.png?alt=media&token=60b1668b-bd06-42ae-9ee7-25d68f999e3f',
+  props: ['user'],
+  data () {
+    return{
+    nama: this.user.nama,
+    no_ktp: this.user.no_ktp,
+    no_hp: this.user.no_hp,
+    tgllhr: this.user.tgllhr,
+    alamat: this.user.alamat,
+    // image: 'https://i.pravatar.cc/400?img=47',
     // Rules input + rules date
     inputRules:[
             v => !!v || 'Input is required',
@@ -92,32 +76,25 @@ export default {
             ],
     loading: false,
     dialog: false,
-    show: false,
-    show2: false,
-
-  }),
+    show: false
+    }    
+  },
   methods: {
     submit(){
       if(this.$refs.form.validate()){
           this.loading = true;
           const daftar = {
+              id: this.user.id,
               nama: this.nama,
               no_ktp: this.no_ktp,
-              email: this.email,
+              no_hp: this.no_hp,
               tgllhr: this.tgllhr,
-              role: this.role,
               alamat: this.alamat,
-              image: this.image,
-              password: this.password,
-              no_hp: this.no_hp
-
-            
           }
-    this.$store.dispatch('tambahPelanggan', daftar)
+    this.$store.dispatch('updatePengguna', daftar)
                    this.loading = false;
                    this.dialog = false;
-                   this.$emit('tambahPelanggan');
-                   this.$refs.form.reset();
+                   this.$emit('updatePengguna');
       }
     }
   },
