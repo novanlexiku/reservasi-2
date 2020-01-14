@@ -42,13 +42,7 @@
                       </v-card-text>
                       <v-divider></v-divider>
                       <v-card-text class="white text--primary">
-                        <v-btn
-                          color="success"
-                          class="mx-0"
-                          outlined
-                        >
-                          Detail
-                        </v-btn>
+                        <print :history="history"></print>
                       </v-card-text>
               </v-card>
               <v-card
@@ -73,13 +67,7 @@
                       </v-card-text>
                       <v-divider></v-divider>
                       <v-card-text class="white text--primary">
-                        <v-btn
-                          color="red lighten-2"
-                          class="mx-0"
-                          outlined
-                        >
-                          Detail
-                        </v-btn>
+                        <print :history="history"></print>
                       </v-card-text>
               </v-card>
               <v-card
@@ -104,13 +92,7 @@
                       </v-card-text>
                       <v-divider></v-divider>
                       <v-card-text class="white text--primary">
-                        <v-btn
-                          color="purple darken-1"
-                          class="mx-0"
-                          outlined
-                        >
-                          Detail
-                        </v-btn>
+                        <print :history="history"></print>
                       </v-card-text>
               </v-card>
               <v-card
@@ -135,13 +117,7 @@
                       </v-card-text>
                       <v-divider></v-divider>
                       <v-card-text class="white text--primary">
-                        <v-btn
-                          color="indigo"
-                          class="mx-0"
-                          outlined
-                        >
-                          Detail
-                        </v-btn>
+                      <print :history="history"></print>
                       </v-card-text>
               </v-card>
               <v-card
