@@ -10,6 +10,7 @@ import 'firebase/firestore'
 import 'firebase/auth'
 import VueLazyLoad from 'vue-lazyload'
 
+
 Vue.config.productionTip = false
 Vue.use(VueLazyLoad)
 Vue.filter('toCurrency', function (value) {
