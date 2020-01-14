@@ -13,7 +13,7 @@
         </template>
       <v-card>
             <v-card-title>
-                <h2>Edit Karyawan</h2>
+                <h4>Edit Karyawan</h4>
             </v-card-title>
             <v-card-text>
                 <v-form class="px-3" ref="form">

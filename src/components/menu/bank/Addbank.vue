@@ -8,7 +8,7 @@
         </template>
       <v-card>
             <v-card-title>
-                <h2>Tambah Bank</h2>
+                <h4>Tambah Bank</h4>
             </v-card-title>
             <v-card-text>
                 <v-form class="px-3" ref="form" @submit.prevent="submit">

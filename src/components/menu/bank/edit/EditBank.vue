@@ -13,7 +13,7 @@
         </template>
       <v-card>
             <v-card-title>
-                <h2>Edit Bank</h2>
+                <h4>Edit Bank</h4>
             </v-card-title>
             <v-card-text>
                 <v-form class="px-3" ref="form" @submit.prevent="submit">

@@ -11,7 +11,7 @@
         </template>
         <v-card>
             <v-card-title>
-                <h2>Update Data Pengguna</h2>
+                <h4>Update Data Pengguna</h4>
             </v-card-title>
             <v-card-text>
                 <v-form class="px-2" ref="form">

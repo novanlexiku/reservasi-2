@@ -96,15 +96,6 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" sm="6">
-          <v-text-field
-            :value="user.role"
-            label="Role"
-            outlined
-            readonly
-          ></v-text-field>
-        </v-col>
-
         <v-col cols="12" sm="8">
           <v-text-field
             :value="user.email"
