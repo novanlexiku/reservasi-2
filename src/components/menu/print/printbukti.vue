@@ -50,7 +50,7 @@
                           Detail
                         </v-btn>
         </template>
-        <div id="content">
+        <div ref="content">
         <v-card
               color="success"
               dark
@@ -163,6 +163,39 @@
                 </v-card>
                 </div>
                             <v-btn
+                            v-if="history.status_reservasi === 'complete'"
+                            color="success"
+                            dark
+                            @click.native="print"
+                            >
+                            Cetak
+                            </v-btn>
+                            <v-btn
+                            v-else-if="history.status_reservasi === 'diproses'"
+                            color="red lighten-2"
+                            dark
+                            @click.native="print"
+                            >
+                            Cetak
+                            </v-btn>
+                            <v-btn
+                            v-else-if="history.status_reservasi === 'menunggu'"
+                            color="purple darken-1"
+                            dark
+                            @click.native="print"
+                            >
+                            Cetak
+                            </v-btn>
+                            <v-btn
+                            v-else-if="history.status_reservasi === 'checkin'"
+                            color="indigo"
+                            dark
+                            @click.native="print"
+                            >
+                            Cetak
+                            </v-btn>
+                            <v-btn
+                            v-else-if="history.status_reservasi === 'checkout'"
                             color="cyan"
                             dark
                             @click.native="print"
@@ -175,7 +208,7 @@
 
 <script>
 import jsPDF from 'jspdf'
-import html2canvas from "html2canvas"
+// import html2canvas from "html2canvas"
 
 export default {
   props:['history'],
@@ -201,20 +234,19 @@ export default {
     print() {
     
     let pdfName = 'bukti pemesanan'
-    html2canvas(document.querySelector('#content')).then(canvas => {
-			let doc = new jsPDF('p', 'px', 'a4');
-			doc.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 200, 250);
-			doc.save(pdfName + '.pdf')
-    });
+    // html2canvas(document.querySelector('#content')).then(canvas => {
+		// 	let doc = new jsPDF('p', 'px', 'a4');
+		// 	doc.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 200, 250);
+		// 	doc.save(pdfName + '.pdf')
+    // });
     
-    // const doc = new jsPDF();
-    // const contentHtml = this.$refs.content.innerHTML
-    // doc.fromHTML(contentHtml, 10, 10, {
-    //   width: 400
-    // })
-    // doc.text('Bukti Pemesanan',20,20)
-    // doc.text('----------------------------------------',10,25)
-    // doc.save(pdfName + '.pdf')
+    const doc = new jsPDF();
+    const contentHtml = this.$refs.content.innerHTML
+    doc.fromHTML(contentHtml, 10, 10, {
+      width: 400
+    })
+    doc.text('----------------------------------------',10,25)
+    doc.save(pdfName + '.pdf')
     
   
     this.dialog = false
