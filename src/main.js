@@ -9,9 +9,11 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 import VueLazyLoad from 'vue-lazyload'
-
+import AlertCmp from './components/shared/Alert'
 
 Vue.config.productionTip = false
+Vue.component('app-alert', AlertCmp)
+
 Vue.use(VueLazyLoad)
 Vue.filter('toCurrency', function (value) {
   if ((typeof value !== "number")&&(typeof value !== "string")) {

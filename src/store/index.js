@@ -401,6 +401,7 @@ export default new Vuex.Store({
       batch.commit().then(function () {
         commit('setLoading', false)
         console.log("Reservasi berhasil di buat");
+        
       })
       
     },
