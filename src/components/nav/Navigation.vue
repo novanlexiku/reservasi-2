@@ -4,18 +4,18 @@
         <v-app-bar flat app>
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-        <v-toolbar-title class="text-uppercase grey--text">
+        <v-toolbar-title class="text-uppercase grey--text caption">
            <router-link to="/" style="cursor: pointer"><span>GRIYA Pesona Indah</span></router-link>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
 
        
-        <v-btn v-if="loggedIn" @click="signOut" text color="grey">
+        <v-btn v-if="loggedIn" @click="signOut" text small color="grey">
             <span>Sign Out</span>
             <v-icon right>mdi-exit-to-app</v-icon>
         </v-btn>
-        <v-btn v-else text color="grey" router to="/login">
+        <v-btn v-else text small color="grey" router to="/login">
             <span>Sign In</span>
             <v-icon right>mdi-exit-to-app</v-icon>
         </v-btn>

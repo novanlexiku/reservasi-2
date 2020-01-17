@@ -94,7 +94,7 @@
                         <v-text-field label="Email" v-model.trim="passwordForm.email" id="email3" prepend-icon="mdi-email" :rules="emailRules"></v-text-field>
                         <button @click="resetPassword" class="button" :loading="loading">Submit</button>
                         <div class="extras">
-                            <a @click="togglePasswordReset">Back to Log In</a>
+                            <a @click="togglePasswordReset">Kembali ke Login</a>
                         </div>
                     </div>
                     <div v-else>

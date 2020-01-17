@@ -287,10 +287,10 @@ export default new Vuex.Store({
     // AKSI UNTUK DELETE ROOM
     deleteBank({commit}, payload){
       db.collection("banks").doc(payload.id).delete().then(function() {
-        console.log("Document successfully deleted!");
+        console.log("Dokumen berhasil dihapus!");
     }).catch(function(error) {
       commit('clearError')
-        console.error("Error removing document: ", error);
+        console.error("Eror menghapus dokumen: ", error);
     });
     
     },
@@ -364,10 +364,10 @@ export default new Vuex.Store({
     // AKSI UNTUK DELETE ROOM
     deleteRoom({commit}, payload){
       db.collection("rooms").doc(payload.id).delete().then(function() {
-        console.log("Document successfully deleted!");
+        console.log("Dokumen berhasil dihapus!");
     }).catch(function(error) {
       commit('clearError')
-        console.error("Error removing document: ", error);
+        console.error("Eror menghapus dokumen: ", error);
     });
     
     },
@@ -590,6 +590,7 @@ export default new Vuex.Store({
         .then((doc)=> {
           // console untuk keperluan white box test
             if (doc.exists) {
+                console.log("Data pengguna berhasil di update")
                 console.log("Document data:", doc.data())
                 const newUser = {
                   id: doc.data().id,
@@ -633,7 +634,8 @@ export default new Vuex.Store({
       }
       // menghubungkan ke firebase dan simpan di cloud firestore
       db.collection('users').add(pengguna).then(() => {
-        console.log(pengguna)
+        console.log("Data pengguna berhasil di tambah")
+        console.log("Data Pengguna",pengguna)
         commit('setLoading', false)
         firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
         })
@@ -677,10 +679,10 @@ export default new Vuex.Store({
     // AKSI UNTUK DELETE PELANGGAN
     deletePelanggan({commit}, payload){
       db.collection("users").doc(payload.id).delete().then(function() {
-        console.log("Document successfully deleted!");
+        console.log("Dokumen berhasil dihapus!");
     }).catch(function(error) {
       commit('clearError')
-        console.error("Error removing document: ", error);
+        console.error("Eror menghapus dokumen: ", error);
     });
     
     },
@@ -705,7 +707,8 @@ export default new Vuex.Store({
       }
       // menghubungkan ke firebase dan simpan di cloud firestore
       db.collection('users').add(pengguna).then(() => {
-        console.log(pengguna)
+        console.log("Data karyawan berhasil di tambahkan")
+        console.log("Data karyawan :",pengguna)
         commit('setLoading', false)
         })
     },
@@ -735,6 +738,7 @@ export default new Vuex.Store({
       var update = db.collection("users").doc(payload.id);
       update.update(updateObj)
       .then(() => {
+        console.log("Data karyawan berhasil di update")
         console.log(updateObj)
         commit('updateKaryawan', payload)
       })
@@ -746,10 +750,10 @@ export default new Vuex.Store({
     // AKSI UNTUK DELETE KARYAWAN
     deleteKaryawan({commit}, payload){
       db.collection("users").doc(payload.id).delete().then(function() {
-        console.log("Document successfully deleted!");
+        console.log("Dokumen berhasil dihapus!");
     }).catch(function(error) {
       commit('clearError')
-        console.error("Error removing document: ", error);
+        console.error("Eror menghapus dokumen: ", error);
     });
     
     },

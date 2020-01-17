@@ -24,23 +24,14 @@
               Berlangganan
             </h2>
             <p>
-              Masukkan alamat emailmu untuk berlangganan
-              dan dapatkan penawaran terbaru melalui email.
+              Hubungi alamat berikut untuk informasi lebih lanjut.
             </p>
 
             <v-layout
               wrap
               pa-2
             >
-              <v-btn
-                :block="$vuetify.breakpoint.xsOnly"
-                class="ma-0"
-                color="secondary"
-                style="height: 48px"
-                router to="/login"
-              >
-                Subscribe
-              </v-btn>
+              
             </v-layout>
           </v-flex>
           <v-flex
