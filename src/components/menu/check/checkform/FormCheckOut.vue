@@ -17,7 +17,7 @@
             <v-card-text>
                 <v-form class="px-3" ref="form" @submit.prevent="submit">
                     <v-text-field label="Nama Ruangan" v-model="nama" prepend-icon="mdi-account" outlined readonly></v-text-field>
-                    <v-text-field label="Total Harga" v-model="total" prefix="Rp." prepend-icon="mdi-wallet" outlined readonly></v-text-field>
+                    <v-text-field label="Tanggal dan Waktu Check-Out" v-model="konfirmasiCheckout" prepend-icon="mdi-calendar-clock" outlined readonly></v-text-field>
                     <div class="ml-8">
                         <v-alert type="success">
                         Pelanggan sudah mengembalikan kunci ruangan    
@@ -54,7 +54,13 @@ export default {
       }
     },
   computed:{
-
+    konfirmasiCheckout(){
+      var today = new Date();
+      var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+      var time = today.getHours() + ":" + today.getMinutes()
+      var dateTime = date+' '+time;
+      return dateTime
+    }
   },
   methods: {
     submit(){
@@ -65,6 +71,7 @@ export default {
               reservasi_id: this.checkout.id,
               room_id: this.checkout.room_id,
               status: this.status,
+              waktu_checkout: this.konfirmasiCheckout,
               status_reservasi: this.status_reservasi,
           }
       this.$store.dispatch('checkout', checkout)

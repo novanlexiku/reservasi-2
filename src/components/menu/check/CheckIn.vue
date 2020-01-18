@@ -10,9 +10,9 @@
     <h2 class="subtitle-1 ma-4">Pemesanan Selesai dan Menunggu Pelanggan Check-In</h2>
       <v-expansion-panels>
       <v-expansion-panel v-for="checkin in checkins" :key="checkin.nama">
-        <v-expansion-panel-header disable-icon-rotate>Pemesanan oleh {{checkin.nama}} untuk reservasi tanggal {{checkin.checkin}}
+        <v-expansion-panel-header disable-icon-rotate>Pemesanan oleh {{checkin.nama}} menunggu waktu untuk Check-In pada {{checkin.checkin}}
           <template v-slot:actions>
-            <v-icon color="teal">mdi-checkin</v-icon>
+            <v-icon color="teal">mdi-chevron-right-box-outline</v-icon>
           </template>
         </v-expansion-panel-header>
         <v-expansion-panel-content class="px-4 grey--text">

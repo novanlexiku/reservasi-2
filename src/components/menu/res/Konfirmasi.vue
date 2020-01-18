@@ -23,12 +23,34 @@
           <div>Nama Pemesan : {{konfirmasi.nama}}</div>
           <div>
             Bukti Pembayaran :
-            <v-img
+                                            <v-dialog
+                                                v-model="dialog"
+                                                max-width="700"
+                                                >
+                                                <template v-slot:activator="{ on }">
+                                                <v-img
                                                 :src="konfirmasi.image"
                                                 height="194"
                                                 max-width="300"
                                                 class="mr-1"
+                                                v-on="on"
                                                 ></v-img>
+                                                </template>
+                                                <v-img
+                                                :src="konfirmasi.image"
+                                               
+                                                class="mr-1"
+                                                >
+                                                <v-btn
+                                                            dark
+                                                            icon
+                                                            @click="dialog = false"
+                                                        >
+                                                        <v-icon>mdi-close</v-icon>
+                                                        </v-btn>
+                                                </v-img>
+                                                </v-dialog>
+            
           </div>
           <Konfirmasi :konfirmasi="konfirmasi" @konfirmasi="snackbar=true"/>
           </v-expansion-panel-content>
@@ -44,7 +66,8 @@ import Konfirmasi from '../res/konfirmasi/AdminKonfirmasi'
 export default {
   components:{Konfirmasi},
     data: () => ({
-        snackbar:false
+        snackbar:false,
+        dialog:false
     }),
     // sorting data
     computed:{

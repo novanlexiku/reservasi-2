@@ -12,7 +12,7 @@
       <v-expansion-panel v-for="checkout in checkouts" :key="checkout.nama">
         <v-expansion-panel-header disable-icon-rotate>Check-out oleh {{checkout.nama}}
           <template v-slot:actions>
-            <v-icon color="teal">mdi-checkout</v-icon>
+            <v-icon color="teal">mdi-chevron-left-box-outline</v-icon>
           </template>
         </v-expansion-panel-header>
         <v-expansion-panel-content class="px-4 grey--text">
