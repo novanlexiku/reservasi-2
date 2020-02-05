@@ -15,7 +15,7 @@
           <div class="font-weight-bold">Belum melakukan konfirmasi pembayaran</div>
           <div>ID Pemesan : {{history.reserv_id}}</div>
           <div>Nama Pemesan : {{history.nama}}</div>
-          <div>Total Biaya Pemesanan : Rp.{{history.total}}</div>
+          <div>Total Biaya Pemesanan : {{history.total|toCurrency}}</div>
           <div>Lama Sewa : {{history.sewa}} hari</div>
           <div>Tanggal Chek-in : {{history.checkin}}</div>
           <div>Status Pemesanan : {{history.status_reservasi}}</div>        </v-expansion-panel-content>

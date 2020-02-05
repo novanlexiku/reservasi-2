@@ -177,6 +177,7 @@ export default {
                 { text: 'Rooms', icon: 'mdi-archive', route: '/rooms' },
                 { text: 'Profile', icon: 'mdi-face-profile', route: '/user/profile' },
                 { text: 'Bank', icon: 'mdi-bank', route: '/bank' },
+                { text: 'Pendapatan', icon: 'mdi-square-inc-cash', route: '/pendapatan' },
                 { text: 'Tutorial', icon: 'mdi-timeline-help-outline', route: '/tutorial' },
                 ]
             }

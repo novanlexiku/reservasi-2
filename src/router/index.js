@@ -18,6 +18,7 @@ import Bank from '../components/menu/bank/Banks'
 import CheckIn from '../components/menu/check/CheckIn'
 import CheckOut from '../components/menu/check/CheckOut'
 import Profile from '../components/user/Profile'
+import Pendapatan from '../components/menu/invoice/Pendapatan'
 import AuthGuard from './auth-guard'
 import Secret from '../components/menu/Secret'
 
@@ -106,6 +107,11 @@ const routes = [
     path: '/user/profile',
     name: 'Profile',
     component: Profile,
+    beforeEnter: AuthGuard
+  },{
+    path: '/pendapatan',
+    name: 'Pendapatan',
+    component: Pendapatan,
     beforeEnter: AuthGuard
   },{
     path: '/tutorial',
