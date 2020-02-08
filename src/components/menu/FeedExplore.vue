@@ -15,7 +15,7 @@
               v-bind="$attrs"
               v-on="$listeners">
                 <v-img
-                  :src="value.image"
+                  :src="value.image[0]"
                   class="white--text align-end"
                   gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                   height="100%"

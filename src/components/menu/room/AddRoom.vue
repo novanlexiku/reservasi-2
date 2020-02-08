@@ -24,7 +24,13 @@
                       autocomplete
                       prepend-icon="mdi-home"
                     ></v-select>
-                    <v-btn raised class="primary ml-8" @click="onPickFile">Upload Image</v-btn>
+                    <template>
+                      <input type="file" class="ml-8" @change="uploadImage">
+                  </template>
+                  <div class="ml-8 pa-1" v-for="image in images" :key="image">
+                    <img width="200" :src="image" >
+                    </div>
+                    <!-- <v-btn raised class="primary ml-8" @click="onPickFile">Upload Image</v-btn>
                     <input
                       type="file"
                       ref="fileInput"
@@ -33,7 +39,7 @@
                       @change="onFilePicked">
                     <div class="ml-8">
                     <img height="200" width="300" :src="imageUrl" >
-                    </div>
+                    </div> -->
                     <v-textarea label="Spesifikasi" v-model="deskripsi" prepend-icon="mdi-border-color" :rules="inputRules"></v-textarea>
                     <v-btn text class="success mx-0 mt-3" type="submit" :loading="loading">Tambah Ruangan</v-btn>
                 </v-form>
@@ -43,6 +49,8 @@
 </template>
 
 <script>
+import 'firebase/storage'
+import firebase from 'firebase';
 export default {
   data: () => ({
     items: [{text: 'Standar',value: 'Standar'},
@@ -54,7 +62,7 @@ export default {
     status: 'available',
     deskripsi: '',
     jenis: '',
-    image:null,
+    images:[],
     imageUrl:'',
     prominent: false,
     // Rules input + rules date
@@ -75,43 +83,42 @@ export default {
     submit(){
       if(this.$refs.form.validate()){
           this.loading = true
-          if (!this.image){
-            return
-          }
+          
           const room = {
               title: this.title,
               harga: this.harga,
               status: this.status,
               deskripsi: this.deskripsi,
               jenis: this.jenis,
-              image: this.image,
+              images: this.images,
               prominent: this.prominent
           }
       this.$store.dispatch('createRoom', room)
       this.loading = false;
       this.dialog = false;
-      this.imageUrl = null;
+      this.image = [];
       this.$emit('roomAdded');
       this.$refs.form.reset();
       }
     },
-    onPickFile () {
-        this.$refs.fileInput.click()
-      },
-    onFilePicked (event) {
-        const files = event.target.files
-        let filename = files[0].name
-        if (filename.lastIndexOf('.') <= 0) {
-          return alert('Please add a valid file!')
-        }
-        const fileReader = new FileReader()
-        fileReader.addEventListener('load', () => {
-          this.imageUrl = fileReader.result
-        })
-        fileReader.readAsDataURL(files[0])
-        this.image = files[0]        
-
+    
+    uploadImage(e){
+      if(e.target.files[0]){
+        let file = e.target.files[0]
+        firebase.storage().ref('rooms/' + Math.random() + '_'  + file.name).put(file)
+        .then(filedata => {
+        // ambil url gambar dari storage
+        let imagePath = filedata.metadata.fullPath
+        return firebase.storage().ref().child(imagePath).getDownloadURL()
+        .then((downloadURL) => {
+              console.log('Upload Berhasil')
+              this.images.push(downloadURL);
+            });
+      })
+      
       }
+      
+    }
   },
 
 }

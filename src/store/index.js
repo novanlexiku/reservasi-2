@@ -302,35 +302,14 @@ export default new Vuex.Store({
         status: payload.status,
         deskripsi: payload.deskripsi,
         jenis: payload.jenis,
+        image: payload.images,
         prominent: payload.prominent,
         creatorId: getters.user.id
       }
-      let imageUrl
-      let key
+      
       // menghubungkan ke firebase dan simpan di cloud firestore
       db.collection('rooms').add(room)
-      .then((data) => {
-        // ambil id database sebagai key
-        key = data.id
-        return key
-      })
-      .then(key => {
-        // edit nama gambar kemudian simpan ke storage
-        const filename = payload.image.name
-        const ext = filename.slice(filename.lastIndexOf('.'))
-        return firebase.storage().ref('rooms/' + key + ext).put(payload.image)
-      })
-      .then(filedata => {
-        console.log('Upload Berhasil')
-        // ambil url gambar dari storage
-        let imagePath = filedata.metadata.fullPath
-        return firebase.storage().ref().child(imagePath).getDownloadURL()
-      })
-      .then(url => {
-        // update database field image dengan di isi url gambar
-        imageUrl = url
-        return db.collection('rooms').doc(key).update({image: imageUrl})
-      })
+      
       .then(() => {
         commit('setLoading', false)
       })

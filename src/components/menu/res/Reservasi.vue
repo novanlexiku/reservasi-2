@@ -35,24 +35,28 @@
                                                     >
                                                     <template v-slot:activator="{ on }">
                                                     <v-img
-                                                    :src="room.image"
+                                                    :src="room.image[0]"
                                                     height="194"
                                                     max-width="300"
                                                     class="mx-1"
                                                     v-on="on"
                                                     ></v-img>
                                                     </template>
-                                                            <v-img
-                                                            :src="room.image"
+                                                            <v-carousel hide-delimiters>
+                                                            <v-carousel-item
+                                                            v-for="(image, i) in room.image"
+                                                            :key="i"
+                                                            :src="image"
                                                             >
                                                             <v-btn
-                                                                dark
-                                                                icon
-                                                                @click="dialog = false"
-                                                            >
-                                                            <v-icon>mdi-close</v-icon>
-                                                            </v-btn>
-                                                            </v-img>
+                                                                    dark
+                                                                    icon
+                                                                    @click="dialog = false"
+                                                                >
+                                                                <v-icon>mdi-close</v-icon>
+                                                                </v-btn>
+                                                            </v-carousel-item>
+                                                            </v-carousel>
                                                     </v-dialog>
                                             <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
                                             <v-list-item-subtitle>Harga : {{room.harga|toCurrency}} / Hari</v-list-item-subtitle>
@@ -177,26 +181,29 @@
                                                 >
                                                 <template v-slot:activator="{ on }">
                                                 <v-img
-                                                :src="room.image"
+                                                :src="room.image[0]"
                                                 height="194"
                                                 max-width="300"
                                                 class="mx-1"
                                                 v-on="on"
                                                 ></v-img>
                                                 </template>
+                                                <v-carousel hide-delimiters>
+                                                            <v-carousel-item
+                                                            v-for="(image, i) in room.image"
+                                                            :key="i"
+                                                            :src="image"
+                                                            >
+                                                            <v-btn
+                                                                    dark
+                                                                    icon
+                                                                    @click="dialog = false"
+                                                                >
+                                                                <v-icon>mdi-close</v-icon>
+                                                                </v-btn>
+                                                            </v-carousel-item>
+                                                            </v-carousel>
 
-                                                        
-                                                        <v-img
-                                                        :src="room.image"
-                                                        >
-                                                        <v-btn
-                                                            dark
-                                                            icon
-                                                            @click="dialog = false"
-                                                        >
-                                                        <v-icon>mdi-close</v-icon>
-                                                        </v-btn>
-                                                        </v-img>
                                                 </v-dialog>
                                         <v-list-item-title class="headline">{{room.title}}</v-list-item-title>
                                         <v-list-item-subtitle>Harga : {{room.harga|toCurrency}} / Hari</v-list-item-subtitle>
