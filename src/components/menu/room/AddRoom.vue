@@ -27,19 +27,13 @@
                     <template>
                       <input type="file" class="ml-8" @change="uploadImage">
                   </template>
-                  <div class="ml-8 pa-1" v-for="image in images" :key="image">
-                    <img width="200" :src="image" >
+                  <div class="ml-8 pa-1 mt-2" v-for="(image, index) in images" :key="image">
+                    <div>
+                      <img width="200" :src="image" >
+                    <v-btn icon @click="deleteImage(image,index)"><v-icon>mdi-close</v-icon></v-btn>
                     </div>
-                    <!-- <v-btn raised class="primary ml-8" @click="onPickFile">Upload Image</v-btn>
-                    <input
-                      type="file"
-                      ref="fileInput"
-                      style="display:none"
-                      accept="image/*"
-                      @change="onFilePicked">
-                    <div class="ml-8">
-                    <img height="200" width="300" :src="imageUrl" >
-                    </div> -->
+                    </div>
+                    
                     <v-textarea label="Spesifikasi" v-model="deskripsi" prepend-icon="mdi-border-color" :rules="inputRules"></v-textarea>
                     <v-btn text class="success mx-0 mt-3" type="submit" :loading="loading">Tambah Ruangan</v-btn>
                 </v-form>
@@ -118,12 +112,19 @@ export default {
       
       }
       
+    },
+    deleteImage(img,index){
+      let image = firebase.storage().refFromURL(img);
+      this.images.splice(index,1);
+      image.delete().then(function() {
+        console.log('Gambar dihapus');
+      }).catch(function(error) {
+        // Uh-oh, an error occurred!
+        console.log(error);
+      });
     }
   },
 
 }
 </script>
 
-<style>
-
-</style>
